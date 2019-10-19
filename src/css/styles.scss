@@ -31,9 +31,13 @@ header span {
 main {
   break-inside: avoid;
   column-count: 3;
-  column-width: 15em; 
+  column-width: 15em;
   padding: 10px;
   width: 100%;
+}
+
+section {
+  break-inside: avoid;
 }
 
 container {
@@ -77,6 +81,9 @@ p {
   font-size: 16px;
 }
 
+#user-admin-info {
+  display: none;
+}
 #user-admin-info p {
   font-weight: bold;
 }
@@ -131,7 +138,3 @@ img {
   padding-left: 2px;
   padding-right: 2px;
 }
-
-
-
-
