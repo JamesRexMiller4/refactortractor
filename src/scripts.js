@@ -76,10 +76,11 @@ function generateRandomUserId() {
 function displaySleepStatus() {
   sleep.checkUserRestedByDate(user.id, currentDate)
   if (sleep.isRested === true) {
-    $('#sleep-status').attr('src', '../images/ghost-happy.svg');
+    $('#sleep-status').attr({src: '../images/ghost-happy.svg', alt: 'happy ghost icon'});
+    $('#sleep-staus')
     $('#sleep-comment').text('You\'ve been getting enough sleep!');
   } else {
-    $('#sleep-status').attr('src', '../images/ghost-sad.svg');
+    $('#sleep-status').attr({src: '../images/ghost-sad.svg', alt: 'sad ghost icon'});
     $('#sleep-comment').text('Getting 8 hours of sleep will make you more productive!');
   }
 }
@@ -87,10 +88,10 @@ function displaySleepStatus() {
 function displayWaterStatus() {
   let checkWater = hydration.returnDidUserDrinkEnoughWater(user.id, currentDate)
   if (checkWater === true) {
-    $('#water-status').attr('src', '../images/glass-full.svg');
+    $('#water-status').attr({src: '../images/glass-full.svg', alt: 'full water glass icon'});
     $('#water-comment').text('Keep up the good work! You\'ve averaged more than 64 ounces per day this week');
   } else {
-    $('#water-status').attr('src', '../images/glass-empty.svg');
+    $('#water-status').attr({src: '../images/glass-empty.svg', alt: 'empty water glass icon'});
     $('#water-comment').text('You need more water. Make sure you\'re staying hydrated!');
   }
 }
