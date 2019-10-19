@@ -7,7 +7,8 @@ import activityTestData from '../test-data/activity-test-data';
 import userTestData from '../test-data/user-test-data.js';
 
 describe('Activity', () => {
-  let activity, user1, user3;
+  let activity, user1, user2, user3, userID1;
+
   beforeEach(() => {
     activity = new Activity(activityTestData);
     user1 = new User(userTestData[0]);
