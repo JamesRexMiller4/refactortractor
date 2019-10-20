@@ -23,6 +23,8 @@ import './images/ghost-sad.svg'
 import './images/glass-empty.svg'
 import './images/glass-full.svg'
 
+import Chart from 'chart.js';
+
 
 
 const userIdNum = generateRandomUserId();
