@@ -9,7 +9,7 @@
     <title>Activity Tracker</title>
   </head>
   <body>
-    <header role='banner'>
+    <header class="header" role='banner'>
       <form class="switch">
         <input name="switch" id="dark" type="radio" value="Dark" checked />
         <label for="dark" class="switch__label">Dark</label>
@@ -82,7 +82,7 @@
         <container class="container-center" role='document'>
           <h3>Water</h3>
           <p>You've consumed</p>
-          <span id="user-water-by-day"></span> <p> ounces of water today</p>
+          <span class="number" id="user-water-by-day"></span> <p> ounces of water today</p>
         </container>
         <container>
           <h3>Weekly Water Consumption</h3>
@@ -96,13 +96,13 @@
         <container class="container-center">
           <h3>Your Water Average</h3>
           <p>You've consumed</p>
-          <span id="user-water-by-day">57</span> <p> ounces of water average</p>
+          <span class="number" id="user-water-by-average">57</span> <p> ounces of water average</p>
         </container>
       </section>
       <section>
         <container class="container-center" id="user-sleep-day" role='document'>
           <h3>Last Night's Sleep</h3>
-          <p class="number"id="user-sleep-by-day"></p>
+          <p class="number" id="user-sleep-by-day"></p>
           <h4>hours slept</h4>
           <p class="number" id="user-sleep-quality-by-day"></p>
           <h4>sleep quality</h4>
