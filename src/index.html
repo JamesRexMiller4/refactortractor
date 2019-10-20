@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
     <link rel="stylesheet" href="styles.css">
     <link
@@ -9,7 +9,7 @@
     <title>Activity Tracker</title>
   </head>
   <body>
-    <header>
+    <header role='banner'>
       <h1> Activity Tracker</h1>
       <p>Welcome, <span id="user-name"></span>!</p>
       <p>Today's Date: <span id="current-date"></span></p>
@@ -30,7 +30,7 @@
         <label for="dark" class="switch__label">Dark</label>
         <div class="switch__indicator"></div>
       </form>
-      <container id="user-admin-info">
+      <container id="user-admin-info" role='document'>
         <h3>User Info</h3>
         <p class="user-info">Name: <span id="user-info-name"></span></p>
         <p class="user-info">Email: <span id="user-info-email"></span></p>
@@ -38,9 +38,9 @@
         <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
       </container>
     </header>
-    <main>
+    <main role='main'>
       <section>
-        <container class="container-center">
+        <container class="container-center" role='document'>
           <h3>Water</h3>
           <p>You've consumed</p>
           <span id="user-water-by-day"></span> <p> ounces of water today</p>
@@ -61,14 +61,14 @@
         </container>
       </section>
       <section>
-        <container class="container-center" id="user-sleep-day">
+        <container class="container-center" id="user-sleep-day" role='document'>
           <h3>Last Night's Sleep</h3>
           <p class="number"id="user-sleep-by-day"></p>
           <h4>hours slept</h4>
           <p class="number" id="user-sleep-quality-by-day"></p>
           <h4>sleep quality</h4>
         </container>
-        <container class="container-center" id="user-rested">
+        <container class="container-center" id="user-rested" role='document'>
           <h3 >How Rested Are You Today?</h3>
           <img id="sleep-status"></img>
           <p id="sleep-comment">Getting 8 hours of sleep will make you more productive!</p>
@@ -77,7 +77,7 @@
           <h3>Your Sleep Quality & Hours</h3>
           <canvas id="user-sleep-by-week"></canvas>
         </container>
-        <container class="container-center">
+        <container class="container-center" role='document'>
           <h3>Your Sleep Averages</h3>
           <p class="number" id="user-average-hours-slept">
           <h4>hours slept</h4>
@@ -87,7 +87,7 @@
         </container>
       </section>
       <section>
-        <container class="container-center" id="user-activity-day">
+        <container class="container-center" id="user-activity-day" role='document'>
           <h3>Today's Activity</h3>
           <p class="number" id="user-current-step-count"></p>
           <h4>steps</h4>
@@ -96,9 +96,9 @@
           <p class="number" id="user-current-miles-walked"></p>
           <h4>miles</h4>
         </container>
-        <container id="building-challenge">
+        <container id="building-challenge" role='document'>
           <h3>Republic Plaza Challenge</h3>
-          <img src='../images/building.svg'>
+          <img src='../images/building.svg' alt='svg image of the Republic Plaza building'>
           <p>In the last year you have climbed the Republic Plaza Building in Denver, CO <span id="republic-plaza-challenge"></span> times!</p>
         </container>
         <container>
@@ -111,13 +111,13 @@
         </container>
       </section>
     </main>
-    <main>
-      <container>
+    <article role='article'>
+      <container role='document'>
         <h3>Friends: Weekly Step Challenge</h3>
         <p id="winner-name"></p>
         <canvas id="friend-info"></canvas>
       </container>
-      <container class="you-vs-world">
+      <container class="you-vs-world" role='document'>
         <h3>You vs The World</h3>
         <h4>Step Count</h4>
         <p>You: <span id="user-current-step-count-vs-average"></span></p>
@@ -134,5 +134,6 @@
         <canvas id="step-trend"></canvas>
       </container>
     </main>
+    </article>
   </body>
 </html>
