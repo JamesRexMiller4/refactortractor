@@ -1,3 +1,6 @@
+$break-mobile: 320px;
+$break-desktop: 321px;
+
 * {
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
@@ -137,4 +140,38 @@ img {
   font-weight: bold;
   padding-left: 2px;
   padding-right: 2px;
+}
+
+//************ Media Queries *******************//
+
+@media screen and (min-width: $break-desktop){
+  body { 
+    background-color: green; 
+  }
+
+  header {
+    height: 175px;
+
+    h1 {
+      font-size: 1em;
+    }
+  }
+}
+
+@media only screen and (max-width: $break-mobile) {
+  
+  body { 
+    background-color: red; 
+  }
+
+  header {
+    height: 150px;
+    h1 {
+      font-size: .6em;
+    }
+    p {
+      font-size: .6em;
+    }
+  }
+
 }
