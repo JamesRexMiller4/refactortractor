@@ -22,10 +22,12 @@ import './images/ghost-happy.svg'
 import './images/ghost-sad.svg'
 import './images/glass-empty.svg'
 import './images/glass-full.svg'
+import './images/avatar.svg'
+import './images/sleep-add.svg'
+import './images/water.svg'
+import './images/run.svg'
 
 import Chart from 'chart.js';
-
-
 
 const userIdNum = generateRandomUserId();
 const currentDate = '2019/06/30';
@@ -102,7 +104,7 @@ function populateFriends(userFriends) {
   let friends = userFriends.map(friend => {
     let userFriend = new User(userRepo.returnUserData(friend))
     return ({
-      id: userFriend.id, 
+      id: userFriend.id,
       name: userFriend.returnUserFirstName(),
       steps: (activity.returnNumberOfStepsByWeek(userFriend.id, currentDate)).reduce((acc, day) => acc += day)})
   });
@@ -218,7 +220,7 @@ var sleepQualityHrsByWeek = new Chart(ctx, {
       data: sleep.returnSleepQualityByWeek(user.id, currentDate),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
-       
+
       ],
       borderColor: [
         'rgba(54, 162, 235, 1)',

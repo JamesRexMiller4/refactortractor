@@ -9,10 +9,14 @@
     <title>Activity Tracker</title>
   </head>
   <body>
-    <header role='banner'>
-      <h1> Activity Tracker</h1>
-      <p>Welcome, <span id="user-name"></span>!</p>
-      <p>Today's Date: <span id="current-date"></span></p>
+    <header class="header" role='banner'>
+      <form class="switch">
+        <input name="switch" id="dark" type="radio" value="Dark" checked />
+        <label for="dark" class="switch__label">Dark</label>
+        <input name="switch" id="light" type="radio" value="light" />
+        <label for="light" class="switch__label">Light</label>
+        <div class="switch__indicator"></div>
+      </form>
       <section class="dropdown">
         <input type="hidden" value="All info">
         <header><p>All info</p></header>
@@ -23,19 +27,54 @@
           <p>Average</p>
         </div>
       </section>
-      <form class="switch">
-        <input name="switch" class="players pl-1" id="light" type="radio" value="light" />
-        <label for="light" class="switch__label">Light</label>
-        <input name="switch" class="players pl-2"  id="dark" type="radio" value="Dark" checked />
-        <label for="dark" class="switch__label">Dark</label>
-        <div class="switch__indicator"></div>
-      </form>
+      <p class="header-date">Today's Date: <span id="current-date"></span></p>
+      <h1> Activity Tracker</h1>
+      <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
+      <ul>
+        <li><img src="../images/water.svg" alt="add water icon">
+        </li>
+        <li><img src="../images/sleep-add.svg" alt="add sleep icon"></li>
+        <li><img src="../images/run.svg" alt="add activity icon"></li>
+        <li><img src="../images/avatar.svg" alt="user icon"></li>
+      </ul>
       <container id="user-admin-info" role='document'>
-        <h3>User Info</h3>
-        <p class="user-info">Name: <span id="user-info-name"></span></p>
-        <p class="user-info">Email: <span id="user-info-email"></span></p>
-        <p class="user-info">Address: <span id="user-info-address"></span></p>
-        <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
+        <section>
+          <h3>User Info</h3>
+          <p class="user-info">Name: <span id="user-info-name"></span></p>
+          <p class="user-info">Email: <span id="user-info-email"></span></p>
+          <p class="user-info">Address: <span id="user-info-address"></span></p>
+          <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
+        </section>
+        <section class="activities-inputs">
+          <h3>Add Activity Info</h3>
+          <form class="activity-input" action="index.html" method="post">
+            <label for="steps-input">Steps</label>
+            <input type="text" id="steps-input" placeholder="steps">
+            <label for="minutes-input">Minutes</label>
+            <input type="text" id="minutes-input" placeholder="minutes">
+            <label for="flights-input">Flights</label>
+            <input type="text" id="flights-input" placeholder="flights">
+            <button type="button" name="button">Update Info</button>
+          </form>
+        </section>
+        <section class="water-inputs">
+          <h3>Add Water Info</h3>
+          <form class="activity-input" action="index.html" method="post">
+            <label for="ounces-input">Ounces</label>
+            <input type="text" id="ounces-input" placeholder="ounces">
+            <button type="button" name="button">Update Info</button>
+          </form>
+        </section>
+        <section class="sleep-inputs">
+          <h3>Add Water Info</h3>
+          <form class="activity-input" action="index.html" method="post">
+            <label for="hours-input">Hours</label>
+            <input type="text" id="hours-input" placeholder="hours">
+            <label for="quality-input">Sleep Quality</label>
+            <input type="text" id="quality-input" placeholder="quality">
+            <button type="button" name="button">Update Info</button>
+          </form>
+        </section>
       </container>
     </header>
     <main role='main'>
@@ -43,7 +82,7 @@
         <container class="container-center" role='document'>
           <h3>Water</h3>
           <p>You've consumed</p>
-          <span id="user-water-by-day"></span> <p> ounces of water today</p>
+          <span class="number" id="user-water-by-day"></span> <p> ounces of water today</p>
         </container>
         <container>
           <h3>Weekly Water Consumption</h3>
@@ -57,13 +96,13 @@
         <container class="container-center">
           <h3>Your Water Average</h3>
           <p>You've consumed</p>
-          <span id="user-water-by-day">57</span> <p> ounces of water average</p>
+          <span class="number" id="user-water-by-average">57</span> <p> ounces of water average</p>
         </container>
       </section>
       <section>
         <container class="container-center" id="user-sleep-day" role='document'>
           <h3>Last Night's Sleep</h3>
-          <p class="number"id="user-sleep-by-day"></p>
+          <p class="number" id="user-sleep-by-day"></p>
           <h4>hours slept</h4>
           <p class="number" id="user-sleep-quality-by-day"></p>
           <h4>sleep quality</h4>
@@ -104,10 +143,10 @@
         <container>
           <h3>Your Step Count This Week</h3>
           <canvas id="user-step-count-by-week"></canvas>
-          <!-- <h3>Your Active Minutes This Week</h3>
+          <h3>Your Active Minutes This Week</h3>
           <canvas id="user-mins-active-by-week"></canvas>
           <h3>Your Stairs Climbed This Week</h3>
-          <canvas id="user-stairs-climbed-by-week"></canvas> -->
+          <canvas id="user-stairs-climbed-by-week"></canvas>
         </container>
       </section>
     </main>
