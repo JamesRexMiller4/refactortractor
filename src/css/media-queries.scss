@@ -8,7 +8,7 @@ $break-desktop: 321px;
 
   .header {
     height: 175px;
-
+    // display: flex;
     h1 {
       font-size: 1em;
     }
@@ -17,18 +17,28 @@ $break-desktop: 321px;
 
 @media only screen and (max-width: $break-mobile) {
   
-  body { 
-    background-color: red; 
-  }
-
   .header {
-    display: block;
-    height: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
     h1 {
+      font-size: 2em;
+    }
+    p .header-welcome {
       font-size: .6em;
     }
-    p {
-      font-size: .6em;
+    .dropdown {
+      position: unset;
+    }
+    .header-date {
+      font-size: .7em;
+    }
+    .switch__dropdown {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .switch {
+      margin-right: 35px;
     }
   }
 

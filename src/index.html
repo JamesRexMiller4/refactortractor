@@ -11,23 +11,25 @@
   </head>
   <body>
     <header class="header" role='banner'>
-      <form class="switch">
-        <input name="switch" id="dark" type="radio" value="Dark" checked />
-        <label for="dark" class="switch__label">Dark</label>
-        <input name="switch" id="light" type="radio" value="light" />
-        <label for="light" class="switch__label">Light</label>
-        <div class="switch__indicator"></div>
-      </form>
-      <section class="dropdown">
-        <input type="hidden" value="All info">
-        <header><p>All info</p></header>
-        <div>
-          <p>All info</p>
-          <p>Today</p>
-          <p>Week</p>
-          <p>Average</p>
-        </div>
-      </section>
+      <div class="switch__dropdown">
+        <form class="switch">
+          <input name="switch" id="dark" type="radio" value="Dark" checked />
+          <label for="dark" class="switch__label">Dark</label>
+          <input name="switch" id="light" type="radio" value="light" />
+          <label for="light" class="switch__label">Light</label>
+          <div class="switch__indicator"></div>
+        </form>
+        <section class="dropdown">
+          <input type="hidden" value="All info">
+          <header><p>All info</p></header>
+          <div>
+            <p>All info</p>
+            <p>Today</p>
+            <p>Week</p>
+            <p>Average</p>
+          </div>
+        </section>
+      </div>
       <p class="header-date">Today's Date: <span id="current-date"></span></p>
       <h1> Activity Tracker</h1>
       <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
