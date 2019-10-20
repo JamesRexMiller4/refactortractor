@@ -1,34 +1,62 @@
+// COLORS VARS
+:root {
+  --bcg-color: #111f28;
+  --section-bcg-color: #484e52;
+  --base-color: #ffffff;
+  --accent-color: #dda0dd;
+}
+
 * {
+  border: none;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
 }
+
 body {
-  background-color: #111f28;
+  background-color: var(--bcg-color);
 }
 
 header {
   align-items: center;
-  background-color: #484e52;
+  background-color: var(--section-bcg-color);
   color: #ffffff;
   display: flex;
-  height: 60px;
   justify-content: space-between;
   margin-bottom:10px;
-  padding: 0 10px;
+  padding: 20px 10px;
+}
+header h1 {
+  margin-bottom: 15px;
+}
+
+header img {
+  cursor: pointer;
+  height: 30px;
+  margin-right: 12px;
+  width: 30px;
+  &:hover {
+    transform: scale(1.3);
+  }
+}
+
+header img:last-child {
+  margin-right: 0;
 }
 
 header p {
   color: #ffffff;
   font-size: 20px;
+  margin-bottom: 20px;
 }
 
 header span {
-  color: plum
+  color: var(--accent-color);
 }
 
-main {
+main,
+article {
   break-inside: avoid;
   column-count: 3;
   column-width: 15em;
@@ -36,7 +64,7 @@ main {
   width: 100%;
 }
 
-section {
+main section {
   break-inside: avoid;
 }
 
@@ -83,7 +111,44 @@ p {
 
 #user-admin-info {
   display: none;
+  position: absolute;
+  border-radius: 0 0 10px 10px;
+  box-shadow: none;
+  width: 30%;
+  top: 125px;
+  right: 0;
+  z-index: 2000;
 }
+
+#user-admin-info label,
+#user-admin-info button {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+#user-admin-info input {
+  width: 100%;
+}
+
+#user-admin-info input,
+#user-admin-info button {
+  font-size: 16px;
+  font-family: 'Open Sans';
+  margin-bottom: 20px;
+  padding: 5px 20px;
+  border-radius: 20px;
+}
+
+#user-admin-info button {
+  cursor: pointer;
+  margin: auto;
+  background-color: var(--section-bcg-color);
+  color: var(--base-color);
+  border: 1px solid var(--base-color);
+}
+
+
 #user-admin-info p {
   font-weight: bold;
 }
@@ -108,12 +173,12 @@ img {
 }
 
 .you-vs-world span {
-  color: plum;
+  color: var(--accent-color);
 }
 
 .number,
 #user-water-by-day {
-  color: plum;
+  color: var(--accent-color);
   font-size: 40px;
   font-weight: bold;
   margin: 3px;
@@ -125,14 +190,14 @@ img {
 }
 
 #winner-name {
-  color: plum;
+  color: var(--accent-color);
   font-size: 18px;
   font-weight: bold;
   text-align: center;
 }
 
 #republic-plaza-challenge {
-  color: plum;
+  color: var(--accent-color);
   font-size: 20px;
   font-weight: bold;
   padding-left: 2px;

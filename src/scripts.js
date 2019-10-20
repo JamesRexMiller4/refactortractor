@@ -22,8 +22,10 @@ import './images/ghost-happy.svg'
 import './images/ghost-sad.svg'
 import './images/glass-empty.svg'
 import './images/glass-full.svg'
-
-
+import './images/avatar.svg'
+import './images/sleep-add.svg'
+import './images/water.svg'
+import './images/run.svg'
 
 const userIdNum = generateRandomUserId();
 const currentDate = '2019/06/30';

@@ -10,18 +10,8 @@
   </head>
   <body>
     <header role='banner'>
-      <h1> Activity Tracker</h1>
-      <p>Welcome, <span id="user-name"></span>!</p>
-      <p>Today's Date: <span id="current-date"></span></p>
-      <section class="dropdown">
-        <input type="hidden" value="All info">
-        <header><p>All info</p></header>
-        <div>
-          <p>All info</p>
-          <p>Today</p>
-          <p>Week</p>
-          <p>Average</p>
-        </div>
+      <section>
+        <p>Today's Date: <span id="current-date"></span></p>
         <section class="dropdown">
           <input type="hidden" value="All info">
           <header><p>All info</p></header>
@@ -33,6 +23,8 @@
           </div>
         </section>
       </section>
+      <section>
+        <h1> Activity Tracker</h1>
         <form class="switch">
           <input name="switch" id="dark" type="radio" value="Dark" checked />
           <label for="dark" class="switch__label">Dark</label>
@@ -41,19 +33,51 @@
           <div class="switch__indicator"></div>
         </form>
       </section>
-      <form class="switch">
-        <input name="switch" class="players pl-1" id="light" type="radio" value="light" />
-        <label for="light" class="switch__label">Light</label>
-        <input name="switch" class="players pl-2"  id="dark" type="radio" value="Dark" checked />
-        <label for="dark" class="switch__label">Dark</label>
-        <div class="switch__indicator"></div>
-      </form>
+      <section>
+        <p>Welcome, <span id="user-name"></span>!</p>
+        <img src="../images/water.svg" alt="add water icon">
+        <img src="../images/sleep-add.svg" alt="add sleep icon">
+        <img src="../images/run.svg" alt="add activity icon">
+        <img src="../images/avatar.svg" alt="user icon">
+      </section>
       <container id="user-admin-info" role='document'>
-        <h3>User Info</h3>
-        <p class="user-info">Name: <span id="user-info-name"></span></p>
-        <p class="user-info">Email: <span id="user-info-email"></span></p>
-        <p class="user-info">Address: <span id="user-info-address"></span></p>
-        <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
+        <section>
+          <h3>User Info</h3>
+          <p class="user-info">Name: <span id="user-info-name"></span></p>
+          <p class="user-info">Email: <span id="user-info-email"></span></p>
+          <p class="user-info">Address: <span id="user-info-address"></span></p>
+          <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
+        </section>
+        <section class="activities-inputs">
+          <h3>Add Activity Info</h3>
+          <form class="activity-input" action="index.html" method="post">
+            <label for="steps-input">Steps</label>
+            <input type="text" id="steps-input" placeholder="steps">
+            <label for="minutes-input">Minutes</label>
+            <input type="text" id="minutes-input" placeholder="minutes">
+            <label for="flights-input">Flights</label>
+            <input type="text" id="flights-input" placeholder="flights">
+            <button type="button" name="button">Update Info</button>
+          </form>
+        </section>
+        <section class="water-inputs">
+          <h3>Add Water Info</h3>
+          <form class="activity-input" action="index.html" method="post">
+            <label for="ounces-input">Ounces</label>
+            <input type="text" id="ounces-input" placeholder="ounces">
+            <button type="button" name="button">Update Info</button>
+          </form>
+        </section>
+        <section class="sleep-inputs">
+          <h3>Add Water Info</h3>
+          <form class="activity-input" action="index.html" method="post">
+            <label for="hours-input">Hours</label>
+            <input type="text" id="hours-input" placeholder="hours">
+            <label for="quality-input">Sleep Quality</label>
+            <input type="text" id="quality-input" placeholder="quality">
+            <button type="button" name="button">Update Info</button>
+          </form>
+        </section>
       </container>
     </header>
     <main role='main'>
