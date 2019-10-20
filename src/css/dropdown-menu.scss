@@ -1,0 +1,99 @@
+// *** DROPDOWN MENU STYLES ***
+.dropdown {
+  background-color: var(--section-bcg-color);
+  border: 1px solid var(--base-color);
+  border-radius: 20px;
+  grid-area: filter;
+  min-width: 120px;
+  position: absolute;
+  top: 72px;
+  width: fit-content;
+}
+
+.dropdown {
+  &>header {
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 0;
+    padding: 6px;
+    &>p {
+      color: var(--base-color);
+      font-size: 16px;
+      margin: auto;
+      text-align: center;
+      &:hover {
+        color: var(--accent-color);
+      }
+    }
+  }
+  div {
+    color: var(--base-color);
+    display: none;
+    p {
+      cursor: pointer;
+      font-size: 14px;
+      border-top: 1px solid var(--base-color);
+      font-size: 14px;
+      margin: 0 15px;
+      padding: 10px 0;
+      text-align: right;
+    }
+  }
+}
+
+
+/* SWITCH STYLES */
+
+.switch {
+  align-self: center;
+  border: 1px solid var(--base-color);
+  border-radius: 50px;
+  color: var(--base-color);
+  display: flex;
+  flex-direction: row;
+  grid-area: switcher;
+  padding: 5px 0 5px 20px;
+  position: relative;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  input {
+    display: none;
+  }
+  label {
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 20px;
+    transition: color 200ms ease-out;
+    &:hover {
+      color: var(--accent-color);
+    }
+  }
+}
+
+.switch__indicator {
+  position: absolute;
+  top: -22%;
+  left: 0px;
+  height: 2.8rem;
+  background: var(--base-color);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  transition: transform 600ms cubic-bezier(0.02, 0.94, 0.09, 0.97), background 300ms cubic-bezier(0.17, 0.67, 0.14, 1.03);
+  transform: translate3d(0.5rem, 0, 0);
+  width: 2.8rem;
+}
+
+.switch input#dark:checked ~ .switch__indicator {
+  background-image: url('../images/dark.svg');
+  transform: translate3d(1rem, 0, 0);
+}
+.switch input#light:checked ~ .switch__indicator {
+  background-image: url('../images/light.svg');
+  transform: translate3d(4.5rem, 0, 0);
+}

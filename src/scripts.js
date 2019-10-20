@@ -22,8 +22,12 @@ import './images/ghost-happy.svg'
 import './images/ghost-sad.svg'
 import './images/glass-empty.svg'
 import './images/glass-full.svg'
+import './images/avatar.svg'
+import './images/sleep-add.svg'
+import './images/water.svg'
+import './images/run.svg'
 
-
+import Chart from 'chart.js';
 
 const userIdNum = generateRandomUserId();
 const currentDate = '2019/06/30';
@@ -76,10 +80,11 @@ function generateRandomUserId() {
 function displaySleepStatus() {
   sleep.checkUserRestedByDate(user.id, currentDate)
   if (sleep.isRested === true) {
-    $('#sleep-status').attr('src', '../images/ghost-happy.svg');
+    $('#sleep-status').attr({src: '../images/ghost-happy.svg', alt: 'happy ghost icon'});
+    $('#sleep-staus')
     $('#sleep-comment').text('You\'ve been getting enough sleep!');
   } else {
-    $('#sleep-status').attr('src', '../images/ghost-sad.svg');
+    $('#sleep-status').attr({src: '../images/ghost-sad.svg', alt: 'sad ghost icon'});
     $('#sleep-comment').text('Getting 8 hours of sleep will make you more productive!');
   }
 }
@@ -87,10 +92,10 @@ function displaySleepStatus() {
 function displayWaterStatus() {
   let checkWater = hydration.returnDidUserDrinkEnoughWater(user.id, currentDate)
   if (checkWater === true) {
-    $('#water-status').attr('src', '../images/glass-full.svg');
+    $('#water-status').attr({src: '../images/glass-full.svg', alt: 'full water glass icon'});
     $('#water-comment').text('Keep up the good work! You\'ve averaged more than 64 ounces per day this week');
   } else {
-    $('#water-status').attr('src', '../images/glass-empty.svg');
+    $('#water-status').attr({src: '../images/glass-empty.svg', alt: 'empty water glass icon'});
     $('#water-comment').text('You need more water. Make sure you\'re staying hydrated!');
   }
 }
@@ -99,7 +104,7 @@ function populateFriends(userFriends) {
   let friends = userFriends.map(friend => {
     let userFriend = new User(userRepo.returnUserData(friend))
     return ({
-      id: userFriend.id, 
+      id: userFriend.id,
       name: userFriend.returnUserFirstName(),
       steps: (activity.returnNumberOfStepsByWeek(userFriend.id, currentDate)).reduce((acc, day) => acc += day)})
   });
@@ -215,7 +220,7 @@ var sleepQualityHrsByWeek = new Chart(ctx, {
       data: sleep.returnSleepQualityByWeek(user.id, currentDate),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
-       
+
       ],
       borderColor: [
         'rgba(54, 162, 235, 1)',
