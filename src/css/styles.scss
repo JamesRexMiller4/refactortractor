@@ -18,17 +18,35 @@ body {
   background-color: var(--bcg-color);
 }
 
-header {
+body>header {
   align-items: center;
   background-color: var(--section-bcg-color);
   color: #ffffff;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1.6fr 5fr 1.4fr;
+  grid-template-rows: 1fr 1.4fr;
+  grid-template-areas: 'date logo name' 'filter switcher icons';
   margin-bottom:10px;
   padding: 20px 10px;
 }
+
+header ul {
+  display: flex;
+  justify-content: space-between;
+  justify-self: end;
+  grid-area: icons;
+  width: 80%;
+  li {
+    list-style-type: none;
+  }
+}
 header h1 {
-  margin-bottom: 15px;
+  grid-area: logo;
+  margin: auto;
+}
+
+.header-date {
+  grid-area: date;
 }
 
 header img {
@@ -48,7 +66,12 @@ header img:last-child {
 header p {
   color: #ffffff;
   font-size: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.header-welcome {
+  grid-area: name;
+  justify-self: end;
 }
 
 header span {
@@ -115,7 +138,7 @@ p {
   border-radius: 0 0 10px 10px;
   box-shadow: none;
   width: 30%;
-  top: 125px;
+  top: 135px;
   right: 0;
   z-index: 2000;
 }

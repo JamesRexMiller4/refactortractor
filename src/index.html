@@ -10,36 +10,33 @@
   </head>
   <body>
     <header role='banner'>
-      <section>
-        <p>Today's Date: <span id="current-date"></span></p>
-        <section class="dropdown">
-          <input type="hidden" value="All info">
-          <header><p>All info</p></header>
-          <div>
-            <p>All info</p>
-            <p>Today</p>
-            <p>Week</p>
-            <p>Average</p>
-          </div>
-        </section>
+      <form class="switch">
+        <input name="switch" id="dark" type="radio" value="Dark" checked />
+        <label for="dark" class="switch__label">Dark</label>
+        <input name="switch" id="light" type="radio" value="light" />
+        <label for="light" class="switch__label">Light</label>
+        <div class="switch__indicator"></div>
+      </form>
+      <section class="dropdown">
+        <input type="hidden" value="All info">
+        <header><p>All info</p></header>
+        <div>
+          <p>All info</p>
+          <p>Today</p>
+          <p>Week</p>
+          <p>Average</p>
+        </div>
       </section>
-      <section>
-        <h1> Activity Tracker</h1>
-        <form class="switch">
-          <input name="switch" id="dark" type="radio" value="Dark" checked />
-          <label for="dark" class="switch__label">Dark</label>
-          <input name="switch" id="light" type="radio" value="light" />
-          <label for="light" class="switch__label">Light</label>
-          <div class="switch__indicator"></div>
-        </form>
-      </section>
-      <section>
-        <p>Welcome, <span id="user-name"></span>!</p>
-        <img src="../images/water.svg" alt="add water icon">
-        <img src="../images/sleep-add.svg" alt="add sleep icon">
-        <img src="../images/run.svg" alt="add activity icon">
-        <img src="../images/avatar.svg" alt="user icon">
-      </section>
+      <p class="header-date">Today's Date: <span id="current-date"></span></p>
+      <h1> Activity Tracker</h1>
+      <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
+      <ul>
+        <li><img src="../images/water.svg" alt="add water icon">
+        </li>
+        <li><img src="../images/sleep-add.svg" alt="add sleep icon"></li>
+        <li><img src="../images/run.svg" alt="add activity icon"></li>
+        <li><img src="../images/avatar.svg" alt="user icon"></li>
+      </ul>
       <container id="user-admin-info" role='document'>
         <section>
           <h3>User Info</h3>
