@@ -104,5 +104,14 @@ container {
   font-weight: bold;
 }
 
+#republic-plaza-challenge {
+  color: plum;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
 @import "./header";
 @import "./dropdown-menu";
+@import "./media-queries.scss";
