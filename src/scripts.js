@@ -148,7 +148,7 @@ function returnDatesOfWeek(userId, date) {
   return userData.splice(index - 6, 7).map(day => day.date);
 }
 
-Chart.defaults.global.defaultFontColor = 'white';
+Chart.defaults.global.defaultFontColor = 'black';
 var ctx = $('#user-water-by-week');
 var hydrationByWeek = new Chart(ctx, {
   type: 'bar',
