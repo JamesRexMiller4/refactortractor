@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import User from './User';
-import UserRepository from './User-repository';
+import Repository from './Repository';
 import Activity from './Activity-Repository';
 import Hydration from './Hydration-Repository';
 import Sleep from './Sleep-Repository';
@@ -31,8 +31,8 @@ import Chart from 'chart.js';
 
 const userIdNum = generateRandomUserId();
 const currentDate = '2019/06/30';
-const userRepo = new UserRepository(userData);
-const user = userRepo.returnUserData(userIdNum);
+const userRepo = new Repository(userData);
+const user = userRepo.findUser(userIdNum);
 const newUser = new User(user);
 const hydration = new Hydration(hydrationData);
 const sleep = new Sleep(sleepData);
