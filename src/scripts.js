@@ -74,7 +74,7 @@ $('#user-stairs-climbed-by-week').text(activity.returnStairsClimbedByWeek(user.i
 $('#user-mins-active-by-week').text(activity.returnActiveMinutesByWeek(user.id, currentDate))
 $('#winner-name').text(returnFriendChallengeWinner(friendNames))
 $('#user-water-trend-week').text(displayWaterStatus());
-$('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id))
+$('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
 
 function generateRandomUserId() {
   let randomNumOneToFifty = (Math.random() * 50);
@@ -442,3 +442,58 @@ var stepTrend = new Chart(ctx, {
     }
   }
 });
+
+// *** EVENT LISTENERS FOR HEADER ***
+$('.toggle label').on('click', function() {
+  if ($(this).siblings().prop('checked')) {
+    changeMode('light');
+  } else {
+    changeMode('dark');
+  }
+  Chart.defaults.global.defaultFontColor = $('body').css('--base-color');
+});
+
+$('.icons li img').on('click', function() {
+  const $widget = $(this).data('type');
+  const $block = $('#user-admin-info');
+  if ($block.data('type') === $widget) {
+    $block.data('type', '').hide();
+  } else {
+    $block.show().children(`.${$widget}-inputs`).show().siblings().hide();
+    $block.data('type', $widget);
+  }
+});
+
+$('#user-admin-info').on('mouseleave', function() {
+  $('#user-admin-info').data('type', '').hide();
+
+});
+
+$('.dropdown header').on('click', function() {
+  $('.dropdown div').toggle();
+});
+
+$('.dropdown div p').on('click', function() {
+  $('.dropdown header p').text($(this).text());
+  $('.dropdown input').val($(this).text());
+  $(this).parent().hide();
+});
+
+$('.triple-block ul li').on('click', function() {
+  const $number = $(this).data('number');
+  $(`.triple-block section:nth-child(${$number})`).show().siblings('section').hide();
+  $(this).css({'font-weight': '700',
+  'border-bottom': '1px solid var(--base-color)'});
+  $(this).siblings().css({'font-weight': '400',
+  'border-bottom': 'none'});
+});
+
+function changeMode(mode) {
+  const dark = {'--bcg-color': '#111f28', '--section-bcg-color': '#484e52', '--base-color': '#ffffff', '--accent-color': '#dda0dd'};
+  const light = {'--bcg-color': '#c0dbf5', '--section-bcg-color': '#eff7ff', '--base-color': '#000000', '--accent-color': '#214FBA'};
+  (mode === 'dark') ? $('body').css(dark) : $('body').css(light);
+  $('.icon').each(function() {
+    let $iconType = $(this).data('type');
+    $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
+  });
+}
