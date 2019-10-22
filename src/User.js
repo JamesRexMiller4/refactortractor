@@ -1,17 +1,16 @@
 class User {
   constructor(userData) {
-    this.id = userData.id;
-    this.name = userData.name;
-    this.address = userData.address;
-    this.email = userData.email;
-    this.strideLength = userData.strideLength;
-    this.dailyStepGoal = userData.dailyStepGoal;
-    this.friends = userData.friends;
+    Object.assign(userData)
   }
 
   returnUserFirstName() {
-    return this.name.substring(0, this.name.indexOf(' '));
+    return this.name.split(' ')[0];
   }
+
+  findCurrentUserData() {
+    return this.dataset.filter(obj => obj.userID === this.id);
+  }
+  
 }
 
 
