@@ -22,10 +22,14 @@ import './images/ghost-happy.svg'
 import './images/ghost-sad.svg'
 import './images/glass-empty.svg'
 import './images/glass-full.svg'
-import './images/avatar.svg'
-import './images/sleep-add.svg'
-import './images/water.svg'
-import './images/run.svg'
+import './images/user-lightmode.svg'
+import './images/sleep-lightmode.svg'
+import './images/water-lightmode.svg'
+import './images/activities-lightmode.svg'
+import './images/user-darkmode.svg'
+import './images/sleep-darkmode.svg'
+import './images/water-darkmode.svg'
+import './images/activities-darkmode.svg'
 
 import Chart from 'chart.js';
 
