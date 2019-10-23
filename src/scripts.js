@@ -33,6 +33,13 @@ import './images/activities-darkmode.svg'
 
 import Chart from 'chart.js';
 
+let userData;
+let hydrationData;
+let sleepData;
+let activityData;
+
+
+
 const userIdNum = generateRandomUserId();
 const currentDate = '2019/06/30';
 const userRepo = new UserRepository(userData);
