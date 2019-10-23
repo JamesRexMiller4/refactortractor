@@ -33,10 +33,10 @@ import './images/activities-darkmode.svg'
 
 import Chart from 'chart.js';
 
-let userData;
-let hydrationData;
-let sleepData;
-let activityData;
+let usersFetch = fetch('userData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData').then(data => data.json());
+let hydrationFetch = fetch('hydrationData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData').then(data => data.json());
+let sleepFetch = fetch('sleepData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData').then(data => data.json());
+let activityFetch = fetch('activityData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData').then(data => data.json());;
 
 
 
