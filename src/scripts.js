@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import User from './User';
-import Repository from './User-repository';
+import Repository from './Repository';
 import Activity from './Activity-Repository';
 import Hydration from './Hydration-Repository';
 import Sleep from './Sleep-Repository';
