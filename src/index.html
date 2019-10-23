@@ -11,37 +11,32 @@
   </head>
   <body>
     <header class="header" role='banner'>
-      <div class="switch__dropdown">
-        <form class="switch">
-          <input name="switch" id="dark" type="radio" value="Dark" checked />
-          <label for="dark" class="switch__label">Dark</label>
-          <input name="switch" id="light" type="radio" value="light" />
-          <label for="light" class="switch__label">Light</label>
-          <div class="switch__indicator"></div>
-        </form>
-        <section class="dropdown">
-          <input type="hidden" value="All info">
-          <header><p>All info</p></header>
-          <div>
-            <p>All info</p>
-            <p>Today</p>
-            <p>Week</p>
-            <p>Average</p>
-          </div>
-        </section>
-      </div>
+      <form class="toggle">
+      	<input type="checkbox" id="toggle-switch" />
+      	<label for="toggle-switch"><span class="screen-reader-text">Toggle Color Scheme</span></label>
+      </form>
+      <section class="dropdown">
+        <input type="hidden" value="All info">
+        <header><p>All info</p></header>
+        <div>
+          <p>All info</p>
+          <p>Today</p>
+          <p>Week</p>
+          <p>Average</p>
+        </div>
+      </section>
       <p class="header-date">Today's Date: <span id="current-date"></span></p>
       <h1> Activity Tracker</h1>
       <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
-      <ul>
-        <li><img src="../images/water.svg" alt="add water icon">
+      <ul class="icons">
+        <li><img class="icon" tabindex="4" src="../images/water-lightmode.svg" alt="add water icon" data-type="water">
         </li>
-        <li><img src="../images/sleep-add.svg" alt="add sleep icon"></li>
-        <li><img src="../images/run.svg" alt="add activity icon"></li>
-        <li><img src="../images/avatar.svg" alt="user icon"></li>
+        <li><img class="icon" tabindex="3" src="../images/sleep-lightmode.svg" alt="add sleep icon" data-type="sleep"></li>
+        <li><img class="icon" tabindex="2" src="../images/activities-lightmode.svg" alt="add activity icon" data-type="activities"></li>
+        <li><img class="icon" tabindex="1" src="../images/user-lightmode.svg" alt="user icon" data-type="user"></li>
       </ul>
       <container id="user-admin-info" role='document'>
-        <section>
+        <section class="user-inputs">
           <h3>User Info</h3>
           <p class="user-info">Name: <span id="user-info-name"></span></p>
           <p class="user-info">Email: <span id="user-info-email"></span></p>
@@ -143,13 +138,24 @@
           <img src='../images/building.svg' alt='svg image of the Republic Plaza building'>
           <p>In the last year you have climbed the Republic Plaza Building in Denver, CO <span id="republic-plaza-challenge"></span> times!</p>
         </container>
-        <container>
-          <h3>Your Step Count This Week</h3>
-          <canvas id="user-step-count-by-week"></canvas>
-          <h3>Your Active Minutes This Week</h3>
-          <canvas id="user-mins-active-by-week"></canvas>
-          <h3>Your Stairs Climbed This Week</h3>
-          <canvas id="user-stairs-climbed-by-week"></canvas>
+        <container class="triple-block">
+          <section>
+            <h3>Your Step Count This Week</h3>
+            <canvas id="user-step-count-by-week"></canvas>
+          </section>
+          <section>
+            <h3>Your Active Minutes This Week</h3>
+            <canvas id="user-mins-active-by-week"></canvas>
+          </section>
+          <section>
+            <h3>Your Stairs Climbed This Week</h3>
+            <canvas id="user-stairs-climbed-by-week"></canvas>
+          </section>
+          <ul>
+            <li data-number="1">Steps</li>
+            <li data-number="2">Minutes</li>
+            <li data-number="3">Stairs</li>
+          </ul>
         </container>
       </section>
     </main>
