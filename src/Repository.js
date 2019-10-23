@@ -1,17 +1,30 @@
 class Repository {
-  constructor(users) {
-    this.users = users;
+  constructor(dataset) {
+    this.data = dataset;
+    this.date;
   }
 
-  returnUserData(idNum) {
-    return this.users.find((currentElement) => currentElement.id === idNum);
+  findUser(idNum) {
+    return this.data.find(e => e.id === idNum);
   }
 
-  returnAllUsersAverageStepGoal() {
-    let sum = this.users.reduce((acc, currentValue) => {
-      return acc + currentValue.dailyStepGoal;
-    }, 0);
-    return parseInt(sum / this.users.length)
+  returnAverage(metric, dataset = this.data) {
+    return parseFloat((dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length).toFixed(1));
+  }
+
+  findToday(dataset) {
+    this.date = dataset[dataset.length - 1].date;
+  }
+
+  returnMetricByWeek(metric, user) {
+    const dataset = user.findCurrentUserData(this.data);
+    let index = dataset.findIndex(stats => stats.date === this.date);
+    return dataset.map(stats => stats[metric]).splice(index - 6, 7);
+  }
+
+  returnMetricByDate(metric, user)  {
+    const dataset = user.findCurrentUserData(this.data);
+    return dataset.find(userMetric => userMetric.date === this.date)[metric];
   }
 }
 

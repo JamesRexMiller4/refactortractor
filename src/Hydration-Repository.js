@@ -1,33 +1,13 @@
-class Hydration {
-  constructor(hydrationData) {
-    this.hydrationData = hydrationData;
-  }
+import Repository from "./Repository";
 
-  findCurrentUserData(userId) {
-    return this.hydrationData.filter((hydrationObj) => hydrationObj.userID === userId);
-  }
-
-  returnAvgFluidOzPerDayAllTime(userId) {
-    return this.findCurrentUserData(userId).reduce((totalOunces, hydrationObj) => {
-      return totalOunces += hydrationObj.numOunces;
-    }, 0);
-  }
-
-  returnFluidOzByDate(userId, date) {
-    return this.findCurrentUserData(userId).find((hydrationObj) => hydrationObj.date === date).numOunces;
-  }
-
-  returnFluidOzByWeek(userId, date) {
-    let index = this.findCurrentUserData(userId).findIndex((hydrationObj) => hydrationObj.date === date);
-    return this.findCurrentUserData(userId).map(hydrationObj => hydrationObj.numOunces).splice(index - 6, 7);
+class Hydration extends Repository {
+  constructor(dataset) {
+    super(dataset);
   }
 
   returnDidUserDrinkEnoughWater(userId, date) {
-    let waterDatas = this.returnFluidOzByWeek(userId, date);
-    let avgWaterPerDay = (waterDatas.reduce((acc, day) => {
-      acc += day;
-      return acc;
-    }, 0) / 7);
+    let waterDatas = this.findMetricByWeek(userId, date);
+    let avgWaterPerDay = (waterDatas.reduce((acc, day) => acc + day, 0) / 7);
     if (avgWaterPerDay > 64) {
       return true;
     }
