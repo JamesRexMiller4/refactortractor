@@ -1,4 +1,4 @@
-class UserRepository {
+class Repository {
   constructor(users) {
     this.users = users;
   }
@@ -16,4 +16,4 @@ class UserRepository {
 }
 
 
-export default UserRepository;
+export default Repository;

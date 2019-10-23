@@ -1,15 +1,10 @@
 import $ from 'jquery';
 
 import User from './User';
-import UserRepository from './User-repository';
+import Repository from './User-repository';
 import Activity from './Activity-Repository';
 import Hydration from './Hydration-Repository';
 import Sleep from './Sleep-Repository';
-
-import userData from '../data/users';
-import sleepData from '../data/sleep';
-import hydrationData from '../data/hydration';
-import activityData from '../data/activity';
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.scss';
@@ -38,18 +33,18 @@ let repository;
 let hydration;
 let sleep;
 let activity;
-let usersFetch = fetch('userData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+let usersFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
 .then(data => data.json())
-.catch();
-let hydrationFetch = fetch('hydrationData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+.catch(console.error('NO DATA'));
+let hydrationFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
 .then(data => data.json())
-.catch();
-let sleepFetch = fetch('sleepData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+.catch(console.error('NO DATA'));
+let sleepFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
 .then(data => data.json())
-.catch();
-let activityFetch = fetch('activityData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+.catch(console.error('NO DATA'));
+let activityFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
 .then(data => data.json())
-.catch();
+.catch(console.error('NO DATA'));
 
 Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
 .then( allData => {
@@ -64,7 +59,6 @@ Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
   hydration = new Hydration(hydrationData);
   sleep = new Sleep(sleepData);
   activity = new Activity(activityData);
-  console.log(userData)
 })
 
 const currentDate = '2019/06/30';
@@ -133,7 +127,7 @@ function displayWaterStatus() {
 
 function populateFriends(userFriends) {
   let friends = userFriends.map(friend => {
-    let userFriend = new User(userRepo.returnUserData(friend))
+    let userFriend = new User(repository.returnUserData(friend))
     return ({
       id: userFriend.id,
       name: userFriend.returnUserFirstName(),
