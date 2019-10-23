@@ -33,15 +33,23 @@ import './images/activities-darkmode.svg'
 
 import Chart from 'chart.js';
 
-let userRepo;
 let user;
+let repository;
 let hydration;
 let sleep;
 let activity;
-let usersFetch = fetch('userData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData').then(data => data.json());
-let hydrationFetch = fetch('hydrationData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData').then(data => data.json());
-let sleepFetch = fetch('sleepData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData').then(data => data.json());
-let activityFetch = fetch('activityData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData').then(data => data.json());;
+let usersFetch = fetch('userData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+.then(data => data.json())
+.catch();
+let hydrationFetch = fetch('hydrationData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+.then(data => data.json())
+.catch();
+let sleepFetch = fetch('sleepData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+.then(data => data.json())
+.catch();
+let activityFetch = fetch('activityData: https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+.then(data => data.json())
+.catch();
 
 Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
 .then( allData => {
@@ -50,17 +58,16 @@ Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
   const hydrationData = hydrationFetch;
   const sleepData = sleepFetch;
   const activityData = activityFetch;
+  repository = new Repository(userData);
+  const userIdNum = generateRandomUserId();
+  user = new User(userIdNum);
+  hydration = new Hydration(hydrationData);
+  sleep = new Sleep(sleepData);
+  activity = new Activity(activityData);
+  console.log(userData)
 })
 
-
-const userIdNum = generateRandomUserId();
 const currentDate = '2019/06/30';
-const userRepo = new UserRepository(userData);
-const user = userRepo.returnUserData(userIdNum);
-const newUser = new User(user);
-const hydration = new Hydration(hydrationData);
-const sleep = new Sleep(sleepData);
-const activity = new Activity(activityData)
 const friendNames = returnFriendListNames();
 const friendSteps = returnFriendListSteps();
 const stepsTrend = (activity.returnThreeDayStepStreak(user.id)[0]);
