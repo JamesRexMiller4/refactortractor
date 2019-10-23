@@ -1,6 +1,6 @@
 class User {
   constructor(userData) {
-    Object.assign(userData)
+    Object.assign(this, userData)
   }
 
   returnUserFirstName() {

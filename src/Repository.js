@@ -5,32 +5,27 @@ class Repository {
   }
 
   findUser(idNum) {
-    return this.data.filter(e => e.id === idNum);
+    return this.data.find(e => e.id === idNum);
   }
 
-  findAvg(metric, dataset) {
-    return dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length;
+  returnAverage(metric, dataset = this.data) {
+    return parseFloat((dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length).toFixed(1));
   }
 
   findToday(dataset) {
     this.date = dataset[dataset.length - 1].date;
   }
 
-  findMetricAllUsersByWeek(metric, dataset) {
+  returnMetricByWeek(metric, user) {
+    const dataset = user.findCurrentUserData(this.data);
     let index = dataset.findIndex(stats => stats.date === this.date);
     return dataset.map(stats => stats[metric]).splice(index - 6, 7);
   }
 
-  returnMetricAllUsersByDate( infoType, metric)  {
-    let dateMatch = infoType.filter((element) => element.date === date);
-    let allUsersTotal = dateMatch.reduce((acc, cv) => acc + cv[metric], 0);
-    return parseInt(allUsersTotal / dateMatch.length);
+  returnMetricByDate(metric, user)  {
+    const dataset = user.findCurrentUserData(this.data);
+    return dataset.find(userMetric => userMetric.date === this.date)[metric];
   }
-
-
-
-
-
 }
 
 
