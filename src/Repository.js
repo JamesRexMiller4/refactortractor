@@ -1,3 +1,5 @@
+// import User from "./User";
+
 class Repository {
   constructor(dataset) {
     this.data = dataset;
@@ -9,11 +11,16 @@ class Repository {
   }
 
   returnAverage(metric, dataset = this.data) {
-    return parseFloat((dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length).toFixed(1));
+    if (metric === 'hoursSlept' || metric === 'sleepQuality') {
+      return parseFloat((dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length).toFixed(1));
+    } else {
+      return Math.floor(dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length)
+    }
   }
 
   findToday(dataset) {
     this.date = dataset[dataset.length - 1].date;
+    return this.date
   }
 
   returnMetricByWeek(metric, user) {
