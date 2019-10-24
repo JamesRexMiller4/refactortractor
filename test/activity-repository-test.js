@@ -1,90 +1,33 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-// import Repository from '../src/Repository';
+import Repository from '../src/Repository';
 import Activity from '../src/Activity-Repository';
 import User from '../src/User';
 import activityTestData from '../test-data/activity-test-data';
 import userTestData from '../test-data/user-test-data.js';
 
 describe('Activity', () => {
-  let activity, user1, user2, user3, userID1;
+  let activity, user, userRepo;
 
   beforeEach(() => {
+    userRepo = new Repository(userTestData);
+    user = new User(userRepo.findUser(1));
     activity = new Activity(activityTestData);
-    user1 = new User(userTestData[0]);
-    user2 = new User(userTestData[1]);
-    user3 = new User(userTestData[2]);
-    userID1 = 1;
+    activity.findToday(activity.data)
   });
 
-  it.skip('should be a function', function () {
-    expect(Activity).to.be.a('function');
+ 
+  it('should return a boolean based on whether a user achieved their step goal an a specific day', () => {
+    expect(activity.checkStepGoalMetByDate(activity.data, user)).to.equal(false);
   });
 
-  it.skip('should calculate average stairs climbed for all users on a given day', function () {
-    expect(activity.returnAvgStairsClimbedAllUsersByDate('2019/06/15')).to.equal(19);
+  it('should calculate a user\'s miles walked on a given day', function () {
+    expect(activity.returnMilesWalkedByDate(user)).to.equal(6);
   });
 
-  it.skip('should return how many minutes active a specified user was on a specific date', () => {
-    expect(activity.returnActiveMinutesByDate(2, '2019/06/16')).to.equal(220);
-  })
-
-  it.skip('should return a boolean based on whether a user achieved their step goal an a specific day', () => {
-    expect(activity.checkStepGoalMetByDate(user3, '2019/06/15')).to.equal(true);
-  })
-
-  it.skip('should return for a specific user their all time stair climbing record', () => {
-    expect(activity.returnStairClimbingRecord(2)).to.equal(44)
-  })
-  
-  it.skip('should calculate average steps taken for all users on a given day', function () {
-    expect(activity.returnAvgStepsTakenAllUsersByDate('2019/06/16')).to.equal(7684);
-  });
-
-  it.skip('should calculate average minutes active for all users on a given day', function () {
-    expect(activity.returnAvgActiveMinutesAllUsersByDate('2019/06/16')).to.equal(182);
-  });
-
-  it.skip('should find all of the days the user met their step goal', function () {
-    let days = ['2019/06/17', '2019/06/20']
-    expect(activity.returnAllDaysStepGoalExceeded(user1, '2019/06/16')).to.deep.eql(days);
-  });
-
-  it.skip('should calculate a user\'s miles walked on a given day', function () {
-    expect(activity.returnMilesWalkedByDate(user1, '2019/06/16')).to.equal(5);
-  });
-
-  it.skip('should calculate a user\'s average active minutes per week', function () {
-    expect(activity.returnAvgActiveMinutesByWeek(1, '2019/06/15')).to.equal(151);
-  });
-
-  it.skip('should calculate a user\'s active minutes per week', function () { 
-    expect(activity.returnActiveMinutesByWeek(1, '2019/06/21')).to.deep.eql([140, 175, 168, 165, 275, 140, 135]);
-  });
-
-  it.skip('should calculate a user\'s number of steps per week', function () {
-    expect(activity.returnNumberOfStepsByWeek(1, '2019/06/21')).to.deep.eql([3577, 6637, 14329, 4419, 8429, 14478, 6760]);
-  });
-
-  it.skip('should calculate a user\'s stairs climbed per week', function () {
-    expect(activity.returnStairsClimbedByWeek(1, '2019/06/21')).to.deep.eql([16, 36, 18, 33, 2, 12, 6]);
-  });
-
-  it.skip('should determine a user\'s activity status for a given day', function () {
-    expect(activity.checkUserActivityStatusByDate(1, '2019/06/15')).to.equal(true);
-  });
-
-  it.skip('should calculate a user\'s number of steps for a given day', function () {
-    expect(activity.returnNumberOfStepsByDate(1, '2019/06/15')).to.equal(3577);
-  });
-
-  it.skip('should calculate a user\'s flights of stairs for a given day', function () {
-    expect(activity.returnStairsClimbedByDate(1, '2019/06/15')).to.equal(16);
-  });
-
-  it.skip('should be able to find streaks of three days where steps increased for each day', () => {
-    expect(activity.returnThreeDayStepStreak(1)).to.eql([{
+  it('should be able to find streaks of three days where steps increased for each day', () => {
+    expect(activity.returnThreeDayStepStreak(activity.data, user)).to.eql([{
       "2019/06/15": 3577,
       "2019/06/16": 6637,
       "2019/06/17": 14329
@@ -97,8 +40,8 @@ describe('Activity', () => {
     ]);
   });
 
-  it.skip('should return the number of times the user has climbed the equivelant of Republic Plaza', () => {
-    expect(activity.republicPlazaChallenge(1)).to.equal(2);
-  })
+  it('should return the number of times the user has climbed the equivelant of Republic Plaza', () => {
+    expect(activity.republicPlazaChallenge(activity.data, user)).to.equal(2);
+  });
 
 });

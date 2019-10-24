@@ -9,7 +9,7 @@ import userTestData from '../test-data/user-test-data';
 import hydrationTestData from '../test-data/hydration-test-data';
 
 describe('Hydration', () => {
-  let hydration; let user; let userRepo;
+  let hydration, user, userRepo;
   beforeEach(() => {
     userRepo = new Repository(userTestData)
     hydration = new Hydration(hydrationTestData);

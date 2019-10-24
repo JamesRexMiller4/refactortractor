@@ -8,7 +8,7 @@ import userTestData from '../test-data/user-test-data';
 import sleepTestData from '../test-data/sleep-test-data';
 
 describe('Sleep', () => {
-  let sleepRepo; let user; let userRepo;
+  let sleepRepo, user, userRepo;
   beforeEach(() => {
     userRepo = new Repository(userTestData);
     user = new User(userRepo.findUser(1));

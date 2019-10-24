@@ -5,46 +5,26 @@ class Activity extends Repository {
     super(dataset);
   }
 
-  
-
-  returnAvgActiveMinutesByWeek(userId, date) {
-    let index = this.findCurrentUserData(userId).findIndex((activityObj) => activityObj.date === date);
-    let userActiveMins = this.findCurrentUserData(userId).map(activityObj => activityObj.minutesActive).splice(index - 6, 7);
-    return parseInt(userActiveMins.reduce((totalMins, dailyActiveMins) => {
-      totalMins += dailyActiveMins;
-      return totalMins;
-    }, 0) / 7);
-  } 
-
-
-  checkStepGoalMetByDate(user, date) {
-    if ((user.dailyStepGoal) <= (this.findCurrentUserData(user.id).find(elem => elem.date === date).numSteps)) {
+  checkStepGoalMetByDate(dataset, user) {
+    if ((user.dailyStepGoal) <= (user.findCurrentUserData(dataset).find(elem => elem.date === this.date).numSteps)) {
       return true;
     }
     return false; 
   } 
 
-  returnAllDaysStepGoalExceeded(user) {
-    return this.activityData.filter((activityObj) => activityObj.userID === user.id && activityObj.numSteps > user.dailyStepGoal).map(activityObj => activityObj.date);
+  returnAvgActiveMinutesByWeek(dataset, user) {
+    let index = user.findCurrentUserData(dataset).findIndex((activityObj) => activityObj.date === this.date);
+    let userActiveMins = user.findCurrentUserData(dataset).map(activityObj => activityObj.minutesActive).splice(index - 6, 7);
+    return (userActiveMins.reduce((totalMins, dailyActiveMins) => totalMins + dailyActiveMins, 0) / 7);
   } 
 
-  returnStairClimbingRecord(userId) {
-    return this.findCurrentUserData(userId).sort((value1, value2) => {
-      return value2.flightsOfStairs - value1.flightsOfStairs
-    })[0].flightsOfStairs
-  }
+  returnMilesWalkedByDate(user) {	
+    let numOfSteps = this.data.find(activityObj => activityObj.userID === user.id && activityObj.date === this.date).numSteps;	
+    return parseInt(((numOfSteps * user.strideLength) / 5280).toFixed(0));	
+  } 
 
-  checkUserActivityStatusByDate(userID, date) {
-    if ((this.findCurrentUserData(userID).find(day => {
-      return day.date === date;
-    }).minutesActive) >= (90)) {
-      return true;
-    }
-    return false;
-  }
-
-  returnThreeDayStepStreak(userID) {
-    let userData = this.findCurrentUserData(userID);
+  returnThreeDayStepStreak(dataset, user) {
+    let userData = user.findCurrentUserData(dataset);
     return userData.reduce((acc, day, index) => {
       if (index < 2) {
         return acc;
@@ -60,8 +40,8 @@ class Activity extends Repository {
     }, []);
   }
 
-  republicPlazaChallenge(userID) {
-    let userData = this.findCurrentUserData(userID);
+  republicPlazaChallenge(dataset, user) {
+    let userData = user.findCurrentUserData(dataset);
     return parseInt((userData.reduce((acc, day) => {
       acc += day.flightsOfStairs;
       return acc;
