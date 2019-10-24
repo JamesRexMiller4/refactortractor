@@ -102,6 +102,12 @@ function updateBoard() {
   $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
 }
 
+function generateRandomUserId() {
+  let randomNumOneToFifty = (Math.random() * 50);
+  return Math.ceil(randomNumOneToFifty);
+
+
+
 function displaySleepStatus() {
   sleep.checkUserRestedByDate(user)
   if (sleep.isRested === true) {
@@ -485,7 +491,3 @@ function changeMode(mode) {
   });
 }
 
-function generateRandomUserId() {
-  let randomNumOneToFifty = (Math.random() * 50);
-  return Math.ceil(randomNumOneToFifty);
-}
