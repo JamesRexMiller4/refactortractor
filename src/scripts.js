@@ -35,16 +35,16 @@ let sleep;
 let activity;
 let usersFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
 .then(data => data.json())
-.catch(console.error('NO DATA'));
+.catch(error => console.error('NO DATA'));
 let hydrationFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
 .then(data => data.json())
-.catch(console.error('NO DATA'));
+.catch(error => console.error('NO DATA'));
 let sleepFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
 .then(data => data.json())
-.catch(console.error('NO DATA'));
+.catch(error => console.error('NO DATA'));
 let activityFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
 .then(data => data.json())
-.catch(console.error('NO DATA'));
+.catch(error => console.error('NO DATA'));
 
 Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
 .then( allData => {
@@ -59,7 +59,10 @@ Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
   hydration = new Hydration(hydrationData);
   sleep = new Sleep(sleepData);
   activity = new Activity(activityData);
+  console.log('one', repository)
 })
+console.log('two', repository)
+
 
 const currentDate = '2019/06/30';
 const friendNames = returnFriendListNames();
