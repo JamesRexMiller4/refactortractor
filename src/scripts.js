@@ -66,33 +66,32 @@ const friendNames = returnFriendListNames();
 const friendSteps = returnFriendListSteps();
 const stepsTrend = (activity.returnThreeDayStepStreak(user.id)[0]);
 
-$('#user-name').text(newUser.returnUserFirstName());
+$('#user-name').text(user.returnUserFirstName());
 $('#current-date').text(currentDate);
-$('#user-info-name').text(newUser.name);
-$('#user-info-email').text(newUser.email);
-$('#user-info-address').text(newUser.address);
-$('#user-info-step-goal').text(newUser.dailyStepGoal);
-$('#average-step-goal-all-users').text(userRepo.returnAllUsersAverageStepGoal());
-$('#user-water-by-day').text(hydration.returnFluidOzByDate(user.id, currentDate));
-$('#user-sleep-by-day').text(sleep.returnAmountSlept(user.id, currentDate));
-$('#user-sleep-quality-by-day').text(sleep.returnSleepQuality(user.id, currentDate));
-$('#user-sleep-by-week').text(sleep.returnSleepByWeek(user.id, currentDate));
-$('#user-sleep-quality-by-week').text(sleep.returnSleepQualityByWeek(user.id, currentDate));
-$('#user-average-sleep-quality').text(sleep.returnAverageSleepQuality(user.id));
+$('#user-info-name').text(user.name);
+$('#user-info-email').text(user.email);
+$('#user-info-address').text(user.address);
+$('#user-info-step-goal').text(user.dailyStepGoal);
+$('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', user));
+$('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', user));
+$('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', user));
+$('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', user));
+$('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', user));
+$('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', user));
 $('#user-average-hours-slept').text(sleep.returnAverageSleep(user.id));
-$('#user-current-step-count').text(activity.returnNumberOfStepsByDate(user.id, currentDate));
+$('#user-current-step-count').text(activity.returnMetricByDate('numSteps', user));
 $('#user-rested').text(displaySleepStatus());
-$('#user-current-mins-active').text(activity.returnActiveMinutesByDate(user.id, currentDate));
-$('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(user, currentDate));
-$('#user-current-step-count-vs-average').text(activity.returnNumberOfStepsByDate(user.id, currentDate));
-$('#all-users-average-step-count').text(activity.returnAvgStepsTakenAllUsersByDate(currentDate));
-$('#user-current-stairs-climbed').text(activity.returnStairsClimbedByDate(user.id, currentDate));
-$('#all-users-average-stairs-climbed').text(activity.returnAvgStairsClimbedAllUsersByDate(currentDate));
-$('#user-current-active-mins').text(activity.returnActiveMinutesByDate(user.id, currentDate));
-$('#all-users-average-active-mins').text(activity.returnAvgActiveMinutesAllUsersByDate(currentDate));
-$('#user-step-count-by-week').text(activity.returnNumberOfStepsByWeek(user.id, currentDate))
-$('#user-stairs-climbed-by-week').text(activity.returnStairsClimbedByWeek(user.id, currentDate))
-$('#user-mins-active-by-week').text(activity.returnActiveMinutesByWeek(user.id, currentDate))
+$('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', user));
+$('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(user));
+$('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', user));
+$('#all-users-average-step-count').text(activity.returnAverage('numSteps'));
+$('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', user));
+$('#all-users-average-stairs-climbed').text(activity.returnAverage('flightsOfStairs'));
+$('#user-current-active-mins').text(activity.returnAverage('minutesActive', user));
+$('#all-users-average-active-mins').text(activity.returnAverage('minutesActive'));
+$('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', user))
+$('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', user))
+$('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', user))
 $('#winner-name').text(returnFriendChallengeWinner(friendNames))
 $('#user-water-trend-week').text(displayWaterStatus());
 $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
@@ -103,7 +102,7 @@ function generateRandomUserId() {
 }
 
 function displaySleepStatus() {
-  sleep.checkUserRestedByDate(user.id, currentDate)
+  sleep.checkUserRestedByDate(user)
   if (sleep.isRested === true) {
     $('#sleep-status').attr({src: '../images/ghost-happy.svg', alt: 'happy ghost icon'});
     $('#sleep-staus')
