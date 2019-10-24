@@ -33,75 +33,73 @@ let repository;
 let hydration;
 let sleep;
 let activity;
-let usersFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-.then(data => data.json())
-.catch(error => console.error('NO DATA'));
-let hydrationFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
-.then(data => data.json())
-.catch(error => console.error('NO DATA'));
-let sleepFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
-.then(data => data.json())
-.catch(error => console.error('NO DATA'));
-let activityFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-.then(data => data.json())
-.catch(error => console.error('NO DATA'));
 
-Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
-.then( allData => {
-  const [usersFetch, hydrationFetch, sleepFetch, activityFetch] = allData;
-  const userData = usersFetch;
-  const hydrationData = hydrationFetch;
-  const sleepData = sleepFetch;
-  const activityData = activityFetch;
-  repository = new Repository(userData);
+Promise.all([
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+  .then(data => data.json())
+  .then(data => data.userData)
+  .catch(error => console.error('NO DATA')),
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+  .then(data => data.json())
+  .then(data => data.hydrationData)
+  .catch(error => console.error('NO DATA')),
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+  .then(data => data.json())
+  .then(data => data.sleepData)
+  .catch(error => console.error('NO DATA')),
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+  .then(data => data.json())
+  .then(data => data.activityData)
+  .catch(error => console.error('NO DATA'))
+  ]).then(data => {
+  repository = new Repository(data[0]);
+  repository.findToday(data[1]);
   const userIdNum = generateRandomUserId();
-  user = new User(userIdNum);
-  hydration = new Hydration(hydrationData);
-  sleep = new Sleep(sleepData);
-  activity = new Activity(activityData);
-  console.log('one', repository)
+  const currentUser = repository.findUser(userIdNum);
+  user = new User(currentUser);
+  hydration = new Hydration(data[1]);
+  sleep = new Sleep(data[2]);
+  activity = new Activity(data[3]);
+  }).then(() => {
+    updateBoard();
+    updateCharts();
 })
-console.log('two', repository)
 
+function updateBoard() {
+  const currentDate = repository.date;
+  const friendNames = user.findFriendsInfo(repository, 'name');
+  const friendSteps = user.findFriendsInfo(repository, 'dailyStepGoal');
+  const stepsTrend = activity.returnThreeDayStepStreak(user)[0];
 
-const currentDate = '2019/06/30';
-const friendNames = returnFriendListNames();
-const friendSteps = returnFriendListSteps();
-const stepsTrend = (activity.returnThreeDayStepStreak(user.id)[0]);
-
-$('#user-name').text(user.returnUserFirstName());
-$('#current-date').text(currentDate);
-$('#user-info-name').text(user.name);
-$('#user-info-email').text(user.email);
-$('#user-info-address').text(user.address);
-$('#user-info-step-goal').text(user.dailyStepGoal);
-$('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', user));
-$('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', user));
-$('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', user));
-$('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', user));
-$('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', user));
-$('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', user));
-$('#user-average-hours-slept').text(sleep.returnAverageSleep(user.id));
-$('#user-current-step-count').text(activity.returnMetricByDate('numSteps', user));
-$('#user-rested').text(displaySleepStatus());
-$('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', user));
-$('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(user));
-$('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', user));
-$('#all-users-average-step-count').text(activity.returnAverage('numSteps'));
-$('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', user));
-$('#all-users-average-stairs-climbed').text(activity.returnAverage('flightsOfStairs'));
-$('#user-current-active-mins').text(activity.returnAverage('minutesActive', user));
-$('#all-users-average-active-mins').text(activity.returnAverage('minutesActive'));
-$('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', user))
-$('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', user))
-$('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', user))
-$('#winner-name').text(returnFriendChallengeWinner(friendNames))
-$('#user-water-trend-week').text(displayWaterStatus());
-$('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
-
-function generateRandomUserId() {
-  let randomNumOneToFifty = (Math.random() * 50);
-  return Math.ceil(randomNumOneToFifty);
+  $('#user-name').text(user.returnUserFirstName());
+  $('#current-date').text(currentDate);
+  $('#user-info-name').text(user.name);
+  $('#user-info-email').text(user.email);
+  $('#user-info-address').text(user.address);
+  $('#user-info-step-goal').text(user.dailyStepGoal);
+  $('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', user));
+  $('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', user));
+  $('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', user));
+  $('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', user));
+  $('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', user));
+  $('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', user));
+  $('#user-average-hours-slept').text(sleep.returnAverageSleep(user.id));
+  $('#user-current-step-count').text(activity.returnMetricByDate('numSteps', user));
+  $('#user-rested').text(displaySleepStatus());
+  $('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', user));
+  $('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(user));
+  $('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', user));
+  $('#all-users-average-step-count').text(activity.returnAverage('numSteps'));
+  $('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', user));
+  $('#all-users-average-stairs-climbed').text(activity.returnAverage('flightsOfStairs'));
+  $('#user-current-active-mins').text(activity.returnAverage('minutesActive', user));
+  $('#all-users-average-active-mins').text(activity.returnAverage('minutesActive'));
+  $('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', user))
+  $('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', user))
+  $('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', user))
+  $('#winner-name').text(returnFriendChallengeWinner())
+  $('#user-water-trend-week').text(displayWaterStatus());
+  $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
 }
 
 function displaySleepStatus() {
@@ -127,59 +125,24 @@ function displayWaterStatus() {
   }
 }
 
-function populateFriends(userFriends) {
-  let friends = userFriends.map(friend => {
-    let userFriend = new User(repository.returnUserData(friend))
-    return ({
-      id: userFriend.id,
-      name: userFriend.returnUserFirstName(),
-      steps: (activity.returnNumberOfStepsByWeek(userFriend.id, currentDate)).reduce((acc, day) => acc += day)})
-  });
-  friends.push(populateUserDataForFriendChallenge());
-  return friends.sort((userA, userB) => userB.steps - userA.steps);
-}
-
-function populateUserDataForFriendChallenge() {
-  return {
-    id: user.id,
-    name: newUser.returnUserFirstName(),
-    steps: activity.returnNumberOfStepsByWeek(user.id,currentDate)
-      .reduce((acc, day) => acc += day)
-  }
-}
-
-function returnFriendListNames() {
-  let friendObjs = populateFriends(user.friends);
-  return friendObjs.map(friend => friend.name);
-}
-
-function returnFriendListSteps() {
-  let friendObjs = populateFriends(user.friends);
-  return friendObjs.map(friend => friend.steps);
-}
-
-function returnFriendChallengeWinner(friendNames) {
-  if (friendNames[0] === newUser.returnUserFirstName()) {
+function returnFriendChallengeWinner() {
+  const names = rateFriends(repository, activity);
+  if (names[0] === user.name) {
     return `You win!!`;
   }
-  return `${friendNames[0]} is the Winner!`
+  return `${names[0]} is the Winner!`
 }
 
-function returnDatesOfWeek(userId, date) {
-  let userData = activity.findCurrentUserData(userId);
-  let index = userData.findIndex((data) => data.date === date);
-  return userData.splice(index - 6, 7).map(day => day.date);
-}
-
+function updateCharts() {
 Chart.defaults.global.defaultFontColor = 'black';
 var ctx = $('#user-water-by-week');
 var hydrationByWeek = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(hydrationData),
     datasets: [{
       label: 'ounces',
-      data: hydration.returnFluidOzByWeek(user.id, currentDate),
+      data: hydration.returnMetricByWeek('numOunces', user),
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -218,10 +181,10 @@ var ctx = $('#user-sleep-by-week');
 var sleepQualityHrsByWeek = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(sleepData),
     datasets: [{
       label: 'hours',
-      data: sleep.returnSleepByWeek(user.id, currentDate),
+      data: sleep.returnMetricByWeek('hoursSlept', user),
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -244,7 +207,7 @@ var sleepQualityHrsByWeek = new Chart(ctx, {
     },
     {
       label: 'quality score',
-      data: sleep.returnSleepQualityByWeek(user.id, currentDate),
+      data: sleep.returnMetricByWeek('sleepQuality', user),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
 
@@ -279,10 +242,10 @@ var ctx = $('#user-step-count-by-week');
 var stepsByWeek = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(activityData),
     datasets: [{
       label: 'steps',
-      data: activity.returnNumberOfStepsByWeek(user.id, currentDate),
+      data: activity.returnMetricByWeek('numSteps', user),
       backgroundColor: [
         'rgba(221, 160, 221, 0.2)',
       ],
@@ -316,10 +279,10 @@ var ctx = $('#user-mins-active-by-week');
 var activityByWeek = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(activityData),
     datasets: [{
       label: 'active minutes',
-      data: activity.returnActiveMinutesByWeek(user.id, currentDate),
+      data: activity.returnMetricByWeek('minutesActive', user),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
       ],
@@ -352,10 +315,10 @@ var ctx = $('#user-stairs-climbed-by-week');
 var stairsByWeek = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(activityData),
     datasets: [{
       label: 'stairs climbed',
-      data: activity.returnStairsClimbedByWeek(user.id, currentDate),
+      data: activity.returnMetricByWeek('flightsOfStairs', user),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
       ],
@@ -465,6 +428,7 @@ var stepTrend = new Chart(ctx, {
     }
   }
 });
+}
 
 // *** EVENT LISTENERS FOR HEADER ***
 $('.toggle label').on('click', function() {
@@ -519,4 +483,9 @@ function changeMode(mode) {
     let $iconType = $(this).data('type');
     $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
   });
+}
+
+function generateRandomUserId() {
+  let randomNumOneToFifty = (Math.random() * 50);
+  return Math.ceil(randomNumOneToFifty);
 }
