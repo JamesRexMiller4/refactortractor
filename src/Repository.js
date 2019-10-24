@@ -1,5 +1,3 @@
-// import User from "./User";
-
 class Repository {
   constructor(dataset) {
     this.data = dataset;

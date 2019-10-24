@@ -7,7 +7,7 @@ class Sleep extends Repository {
   }
 
   checkUserRestedByDate(user) {
-    if ((user.findCurrentUserData().find(data => {
+    if ((user.findCurrentUserData(this.data).find(data => {
       return data.date === this.date;
     }).hoursSlept) >= (8)) {
       return this.isRested = true;

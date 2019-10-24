@@ -5,6 +5,8 @@ class Activity extends Repository {
     super(dataset);
   }
 
+  
+
   returnAvgActiveMinutesByWeek(userId, date) {
     let index = this.findCurrentUserData(userId).findIndex((activityObj) => activityObj.date === date);
     let userActiveMins = this.findCurrentUserData(userId).map(activityObj => activityObj.minutesActive).splice(index - 6, 7);
