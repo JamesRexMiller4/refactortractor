@@ -6,11 +6,6 @@ import Activity from './Activity-Repository';
 import Hydration from './Hydration-Repository';
 import Sleep from './Sleep-Repository';
 
-import userData from '../data/users';
-import sleepData from '../data/sleep';
-import hydrationData from '../data/hydration';
-import activityData from '../data/activity';
-
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.scss';
 
@@ -22,21 +17,51 @@ import './images/ghost-happy.svg'
 import './images/ghost-sad.svg'
 import './images/glass-empty.svg'
 import './images/glass-full.svg'
-import './images/avatar.svg'
-import './images/sleep-add.svg'
-import './images/water.svg'
-import './images/run.svg'
+import './images/user-lightmode.svg'
+import './images/sleep-lightmode.svg'
+import './images/water-lightmode.svg'
+import './images/activities-lightmode.svg'
+import './images/user-darkmode.svg'
+import './images/sleep-darkmode.svg'
+import './images/water-darkmode.svg'
+import './images/activities-darkmode.svg'
 
 import Chart from 'chart.js';
 
-const userIdNum = generateRandomUserId();
+let user;
+let repository;
+let hydration;
+let sleep;
+let activity;
+let usersFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+.then(data => data.json())
+.catch(console.error('NO DATA'));
+let hydrationFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+.then(data => data.json())
+.catch(console.error('NO DATA'));
+let sleepFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+.then(data => data.json())
+.catch(console.error('NO DATA'));
+let activityFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+.then(data => data.json())
+.catch(console.error('NO DATA'));
+
+Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
+.then( allData => {
+  const [usersFetch, hydrationFetch, sleepFetch, activityFetch] = allData;
+  const userData = usersFetch;
+  const hydrationData = hydrationFetch;
+  const sleepData = sleepFetch;
+  const activityData = activityFetch;
+  repository = new Repository(userData);
+  const userIdNum = generateRandomUserId();
+  user = new User(userIdNum);
+  hydration = new Hydration(hydrationData);
+  sleep = new Sleep(sleepData);
+  activity = new Activity(activityData);
+})
+
 const currentDate = '2019/06/30';
-const userRepo = new Repository(userData);
-const user = userRepo.findUser(userIdNum);
-const newUser = new User(user);
-const hydration = new Hydration(hydrationData);
-const sleep = new Sleep(sleepData);
-const activity = new Activity(activityData)
 const friendNames = returnFriendListNames();
 const friendSteps = returnFriendListSteps();
 const stepsTrend = (activity.returnThreeDayStepStreak(user.id)[0]);
@@ -70,7 +95,7 @@ $('#user-stairs-climbed-by-week').text(activity.returnStairsClimbedByWeek(user.i
 $('#user-mins-active-by-week').text(activity.returnActiveMinutesByWeek(user.id, currentDate))
 $('#winner-name').text(returnFriendChallengeWinner(friendNames))
 $('#user-water-trend-week').text(displayWaterStatus());
-$('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id))
+$('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
 
 function generateRandomUserId() {
   let randomNumOneToFifty = (Math.random() * 50);
@@ -102,7 +127,7 @@ function displayWaterStatus() {
 
 function populateFriends(userFriends) {
   let friends = userFriends.map(friend => {
-    let userFriend = new User(userRepo.returnUserData(friend))
+    let userFriend = new User(repository.returnUserData(friend))
     return ({
       id: userFriend.id,
       name: userFriend.returnUserFirstName(),
@@ -144,7 +169,7 @@ function returnDatesOfWeek(userId, date) {
   return userData.splice(index - 6, 7).map(day => day.date);
 }
 
-Chart.defaults.global.defaultFontColor = 'white';
+Chart.defaults.global.defaultFontColor = 'black';
 var ctx = $('#user-water-by-week');
 var hydrationByWeek = new Chart(ctx, {
   type: 'bar',
@@ -438,3 +463,58 @@ var stepTrend = new Chart(ctx, {
     }
   }
 });
+
+// *** EVENT LISTENERS FOR HEADER ***
+$('.toggle label').on('click', function() {
+  if ($(this).siblings().prop('checked')) {
+    changeMode('light');
+  } else {
+    changeMode('dark');
+  }
+  Chart.defaults.global.defaultFontColor = $('body').css('--base-color');
+});
+
+$('.icons li img').on('click', function() {
+  const $widget = $(this).data('type');
+  const $block = $('#user-admin-info');
+  if ($block.data('type') === $widget) {
+    $block.data('type', '').hide();
+  } else {
+    $block.show().children(`.${$widget}-inputs`).show().siblings().hide();
+    $block.data('type', $widget);
+  }
+});
+
+$('#user-admin-info').on('mouseleave', function() {
+  $('#user-admin-info').data('type', '').hide();
+
+});
+
+$('.dropdown header').on('click', function() {
+  $('.dropdown div').toggle();
+});
+
+$('.dropdown div p').on('click', function() {
+  $('.dropdown header p').text($(this).text());
+  $('.dropdown input').val($(this).text());
+  $(this).parent().hide();
+});
+
+$('.triple-block ul li').on('click', function() {
+  const $number = $(this).data('number');
+  $(`.triple-block section:nth-child(${$number})`).show().siblings('section').hide();
+  $(this).css({'font-weight': '700',
+  'border-bottom': '1px solid var(--base-color)'});
+  $(this).siblings().css({'font-weight': '400',
+  'border-bottom': 'none'});
+});
+
+function changeMode(mode) {
+  const dark = {'--bcg-color': '#111f28', '--section-bcg-color': '#484e52', '--base-color': '#ffffff', '--accent-color': '#dda0dd'};
+  const light = {'--bcg-color': '#c0dbf5', '--section-bcg-color': '#eff7ff', '--base-color': '#000000', '--accent-color': '#214FBA'};
+  (mode === 'dark') ? $('body').css(dark) : $('body').css(light);
+  $('.icon').each(function() {
+    let $iconType = $(this).data('type');
+    $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
+  });
+}
