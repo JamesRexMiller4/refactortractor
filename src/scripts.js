@@ -54,17 +54,19 @@ Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
   const sleepData = sleepFetch;
   const activityData = activityFetch;
   repository = new Repository(userData);
+  repository.findToday(sleepData);
   const userIdNum = generateRandomUserId();
-  user = new User(userIdNum);
+  const currentUser = repository.findUser(userIdNum);
+  user = new User(currentUser);
   hydration = new Hydration(hydrationData);
   sleep = new Sleep(sleepData);
   activity = new Activity(activityData);
 })
 
-const currentDate = '2019/06/30';
-const friendNames = returnFriendListNames();
-const friendSteps = returnFriendListSteps();
-const stepsTrend = (activity.returnThreeDayStepStreak(user.id)[0]);
+const currentDate = repository.date;
+const friendNames = user.findFriendsInfo(repository, 'name');
+const friendSteps = user.findFriendsInfo(repository, 'dailyStepGoal');
+const stepsTrend = activity.returnThreeDayStepStreak(user.id)[0];
 
 $('#user-name').text(user.returnUserFirstName());
 $('#current-date').text(currentDate);
@@ -92,7 +94,7 @@ $('#all-users-average-active-mins').text(activity.returnAverage('minutesActive')
 $('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', user))
 $('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', user))
 $('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', user))
-$('#winner-name').text(returnFriendChallengeWinner(friendNames))
+$('#winner-name').text(returnFriendChallengeWinner())
 $('#user-water-trend-week').text(displayWaterStatus());
 $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
 
@@ -124,48 +126,12 @@ function displayWaterStatus() {
   }
 }
 
-function populateFriends(userFriends) {
-  let friends = userFriends.map(friend => {
-    let userFriend = new User(repository.returnUserData(friend))
-    return ({
-      id: userFriend.id,
-      name: userFriend.returnUserFirstName(),
-      steps: (activity.returnNumberOfStepsByWeek(userFriend.id, currentDate)).reduce((acc, day) => acc += day)})
-  });
-  friends.push(populateUserDataForFriendChallenge());
-  return friends.sort((userA, userB) => userB.steps - userA.steps);
-}
-
-function populateUserDataForFriendChallenge() {
-  return {
-    id: user.id,
-    name: newUser.returnUserFirstName(),
-    steps: activity.returnNumberOfStepsByWeek(user.id,currentDate)
-      .reduce((acc, day) => acc += day)
-  }
-}
-
-function returnFriendListNames() {
-  let friendObjs = populateFriends(user.friends);
-  return friendObjs.map(friend => friend.name);
-}
-
-function returnFriendListSteps() {
-  let friendObjs = populateFriends(user.friends);
-  return friendObjs.map(friend => friend.steps);
-}
-
-function returnFriendChallengeWinner(friendNames) {
-  if (friendNames[0] === newUser.returnUserFirstName()) {
+function returnFriendChallengeWinner() {
+  const names = rateFriends(repository, activity);
+  if (names[0] === user.name) {
     return `You win!!`;
   }
-  return `${friendNames[0]} is the Winner!`
-}
-
-function returnDatesOfWeek(userId, date) {
-  let userData = activity.findCurrentUserData(userId);
-  let index = userData.findIndex((data) => data.date === date);
-  return userData.splice(index - 6, 7).map(day => day.date);
+  return `${names[0]} is the Winner!`
 }
 
 Chart.defaults.global.defaultFontColor = 'black';
@@ -173,10 +139,10 @@ var ctx = $('#user-water-by-week');
 var hydrationByWeek = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(hydrationData),
     datasets: [{
       label: 'ounces',
-      data: hydration.returnFluidOzByWeek(user.id, currentDate),
+      data: hydration.returnMetricByWeek('numOunces', user),
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -215,10 +181,10 @@ var ctx = $('#user-sleep-by-week');
 var sleepQualityHrsByWeek = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(sleepData),
     datasets: [{
       label: 'hours',
-      data: sleep.returnSleepByWeek(user.id, currentDate),
+      data: sleep.returnMetricByWeek('hoursSlept', user),
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -241,7 +207,7 @@ var sleepQualityHrsByWeek = new Chart(ctx, {
     },
     {
       label: 'quality score',
-      data: sleep.returnSleepQualityByWeek(user.id, currentDate),
+      data: sleep.returnMetricByWeek('sleepQuality', user),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
 
@@ -276,10 +242,10 @@ var ctx = $('#user-step-count-by-week');
 var stepsByWeek = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(activityData),
     datasets: [{
       label: 'steps',
-      data: activity.returnNumberOfStepsByWeek(user.id, currentDate),
+      data: activity.returnMetricByWeek('numSteps', user),
       backgroundColor: [
         'rgba(221, 160, 221, 0.2)',
       ],
@@ -313,10 +279,10 @@ var ctx = $('#user-mins-active-by-week');
 var activityByWeek = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(activityData),
     datasets: [{
       label: 'active minutes',
-      data: activity.returnActiveMinutesByWeek(user.id, currentDate),
+      data: activity.returnMetricByWeek('minutesActive', user),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
       ],
@@ -349,10 +315,10 @@ var ctx = $('#user-stairs-climbed-by-week');
 var stairsByWeek = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: returnDatesOfWeek(user.id, currentDate),
+    labels: repository.findWeekDays(activityData),
     datasets: [{
       label: 'stairs climbed',
-      data: activity.returnStairsClimbedByWeek(user.id, currentDate),
+      data: activity.returnMetricByWeek('flightsOfStairs', user),
       backgroundColor: [
         'rgb(221, 160, 221, 0.2)',
       ],
