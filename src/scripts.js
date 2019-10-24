@@ -33,75 +33,80 @@ let repository;
 let hydration;
 let sleep;
 let activity;
-let usersFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-.then(data => data.json())
-.catch(console.error('NO DATA'));
-let hydrationFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
-.then(data => data.json())
-.catch(console.error('NO DATA'));
-let sleepFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
-.then(data => data.json())
-.catch(console.error('NO DATA'));
-let activityFetch = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-.then(data => data.json())
-.catch(console.error('NO DATA'));
 
-Promise.all([usersFetch, hydrationFetch, sleepFetch, activityFetch])
-.then( allData => {
-  const [usersFetch, hydrationFetch, sleepFetch, activityFetch] = allData;
-  const userData = usersFetch;
-  const hydrationData = hydrationFetch;
-  const sleepData = sleepFetch;
-  const activityData = activityFetch;
-  repository = new Repository(userData);
-  repository.findToday(sleepData);
+Promise.all([
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+  .then(data => data.json())
+  .then(data => data.userData)
+  .catch(error => console.error('NO DATA')),
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+  .then(data => data.json())
+  .then(data => data.hydrationData)
+  .catch(error => console.error('NO DATA')),
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+  .then(data => data.json())
+  .then(data => data.sleepData)
+  .catch(error => console.error('NO DATA')),
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+  .then(data => data.json())
+  .then(data => data.activityData)
+  .catch(error => console.error('NO DATA'))
+  ]).then(data => {
+  repository = new Repository(data[0]);
+  repository.findToday(data[1]);
   const userIdNum = generateRandomUserId();
   const currentUser = repository.findUser(userIdNum);
   user = new User(currentUser);
-  hydration = new Hydration(hydrationData);
-  sleep = new Sleep(sleepData);
-  activity = new Activity(activityData);
+  hydration = new Hydration(data[1]);
+  sleep = new Sleep(data[2]);
+  activity = new Activity(data[3]);
+  }).then(() => {
+    updateBoard();
+    updateCharts();
 })
 
-const currentDate = repository.date;
-const friendNames = user.findFriendsInfo(repository, 'name');
-const friendSteps = user.findFriendsInfo(repository, 'dailyStepGoal');
-const stepsTrend = activity.returnThreeDayStepStreak(user.id)[0];
+function updateBoard() {
+  const currentDate = repository.date;
+  const friendNames = user.findFriendsInfo(repository, 'name');
+  const friendSteps = user.findFriendsInfo(repository, 'dailyStepGoal');
+  const stepsTrend = activity.returnThreeDayStepStreak(user)[0];
 
-$('#user-name').text(user.returnUserFirstName());
-$('#current-date').text(currentDate);
-$('#user-info-name').text(user.name);
-$('#user-info-email').text(user.email);
-$('#user-info-address').text(user.address);
-$('#user-info-step-goal').text(user.dailyStepGoal);
-$('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', user));
-$('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', user));
-$('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', user));
-$('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', user));
-$('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', user));
-$('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', user));
-$('#user-average-hours-slept').text(sleep.returnAverageSleep(user.id));
-$('#user-current-step-count').text(activity.returnMetricByDate('numSteps', user));
-$('#user-rested').text(displaySleepStatus());
-$('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', user));
-$('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(user));
-$('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', user));
-$('#all-users-average-step-count').text(activity.returnAverage('numSteps'));
-$('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', user));
-$('#all-users-average-stairs-climbed').text(activity.returnAverage('flightsOfStairs'));
-$('#user-current-active-mins').text(activity.returnAverage('minutesActive', user));
-$('#all-users-average-active-mins').text(activity.returnAverage('minutesActive'));
-$('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', user))
-$('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', user))
-$('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', user))
-$('#winner-name').text(returnFriendChallengeWinner())
-$('#user-water-trend-week').text(displayWaterStatus());
-$('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
+  $('#user-name').text(user.returnUserFirstName());
+  $('#current-date').text(currentDate);
+  $('#user-info-name').text(user.name);
+  $('#user-info-email').text(user.email);
+  $('#user-info-address').text(user.address);
+  $('#user-info-step-goal').text(user.dailyStepGoal);
+  $('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', user));
+  $('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', user));
+  $('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', user));
+  $('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', user));
+  $('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', user));
+  $('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', user));
+  $('#user-average-hours-slept').text(sleep.returnAverageSleep(user.id));
+  $('#user-current-step-count').text(activity.returnMetricByDate('numSteps', user));
+  $('#user-rested').text(displaySleepStatus());
+  $('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', user));
+  $('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(user));
+  $('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', user));
+  $('#all-users-average-step-count').text(activity.returnAverage('numSteps'));
+  $('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', user));
+  $('#all-users-average-stairs-climbed').text(activity.returnAverage('flightsOfStairs'));
+  $('#user-current-active-mins').text(activity.returnAverage('minutesActive', user));
+  $('#all-users-average-active-mins').text(activity.returnAverage('minutesActive'));
+  $('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', user))
+  $('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', user))
+  $('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', user))
+  $('#winner-name').text(returnFriendChallengeWinner())
+  $('#user-water-trend-week').text(displayWaterStatus());
+  $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.id));
+}
 
 function generateRandomUserId() {
   let randomNumOneToFifty = (Math.random() * 50);
   return Math.ceil(randomNumOneToFifty);
-}
+
+
 
 function displaySleepStatus() {
   sleep.checkUserRestedByDate(user)
@@ -134,6 +139,7 @@ function returnFriendChallengeWinner() {
   return `${names[0]} is the Winner!`
 }
 
+function updateCharts() {
 Chart.defaults.global.defaultFontColor = 'black';
 var ctx = $('#user-water-by-week');
 var hydrationByWeek = new Chart(ctx, {
@@ -428,6 +434,7 @@ var stepTrend = new Chart(ctx, {
     }
   }
 });
+}
 
 // *** EVENT LISTENERS FOR HEADER ***
 $('.toggle label').on('click', function() {
@@ -483,3 +490,4 @@ function changeMode(mode) {
     $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
   });
 }
+
