@@ -23,6 +23,10 @@ class Repository {
     return this.date
   }
 
+  findTotalByWeek(metric, user) {
+    return this.returnMetricByWeek(metric, user).reduce((sum, data) => sum + data, 0);
+  }
+
   returnMetricByWeek(metric, user) {
     const dataset = user.findCurrentUserData(this.data);
     let index = dataset.findIndex(stats => stats.date === this.date);

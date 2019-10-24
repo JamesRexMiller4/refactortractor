@@ -3,16 +3,18 @@ const expect = chai.expect;
 
 import User from '../src/User';
 import Repository from '../src/Repository';
+import Activity from '../src/Activity-Repository';
 import userTestData from '../test-data/user-test-data';
 import hydroTestData from '../test-data/hydration-test-data';
 import sleepTestData from '../test-data/sleep-test-data';
 import activityTestData from '../test-data/activity-test-data';
 
 describe('User', function() {
-  let user; let userRepo;
+  let user; let userRepo; let activityRepo;
   beforeEach(() => {
     userRepo = new Repository(userTestData);
     user = new User(userRepo.findUser(1));
+    activityRepo = new Activity(activityTestData);
   });
 
   it('should return the first name', function() {
@@ -50,5 +52,9 @@ describe('User', function() {
       { userID: 1, date: '2019/06/20', numSteps: 14478, minutesActive: 140, flightsOfStairs: 12 },
       { userID: 1, date: '2019/06/21', numSteps: 6760, minutesActive: 135, flightsOfStairs: 6 }
     ]);
+  });
+
+  it("should be able to collect a user's friends' step data for a week", () => {
+    expect(user.rateFriends(userRepo, activityRepo)).to.eql([ { name: 'Luisa Hane', steps: 58629 } ])
   });
 });

@@ -2,6 +2,7 @@ const chai = require('chai');
 const expect = chai.expect;
 
 import Repository from '../src/Repository';
+import User from '../src/User';
 import Sleep from '../src/Sleep-Repository';
 import Hydration from '../src/Hydration-Repository'
 import Activity from '../src/Activity-Repository';
@@ -9,7 +10,6 @@ import userTestData from '../test-data/user-test-data';
 import sleepTestData from '../test-data/sleep-test-data';
 import hydroTestData from '../test-data/hydration-test-data';
 import activityTestData from '../test-data/activity-test-data';
-import User from '../src/User';
 
 describe('Repository', () => {
   let userRepo, user, sleepRepo, hydroRepo, activityRepo;
@@ -66,6 +66,13 @@ describe('Repository', () => {
     });
   });
 
+  describe('findTotalByWeek method', () => {
+    it("should return a week's total of stats for Friend's Challenge", () => {
+      expect(activityRepo.findTotalByWeek('numSteps', user)).to.equal(58629);
+    });
+
+  })
+
   describe('returnMetricByWeek method', () => {
     it("should return a weeks worth of data points for a single user", () => {
       expect(hydroRepo.returnMetricByWeek('numOunces', user)).to.eql([96, 61, 91, 50, 50, 43, 39]);
@@ -82,6 +89,7 @@ describe('Repository', () => {
       hydroRepo.findToday(hydroRepo.data);
       sleepRepo.findToday(sleepRepo.data);
       activityRepo.findToday(activityRepo.data);
+
       expect(hydroRepo.returnMetricByDate('numOunces', user)).to.equal(39);
       expect(sleepRepo.returnMetricByDate('sleepQuality', user)).to.equal(3);
       expect(sleepRepo.returnMetricByDate('hoursSlept', user)).to.equal(10);
