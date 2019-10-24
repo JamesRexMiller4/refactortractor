@@ -54,7 +54,18 @@ describe('User', function() {
     ]);
   });
 
+  it("should be able to find user's friends' name", () => {
+    expect(user.findFriendsInfo(userRepo, 'name')).to.eql([ 'Jarvis Considine', 'Herminia Witting' ])
+  });
+
+  it("should be able to find user's friends' dayly step goal", () => {
+    expect(user.findFriendsInfo(userRepo, 'dailyStepGoal')).to.eql([ 5000, 5000 ])
+  });
+
   it("should be able to collect a user's friends' step data for a week", () => {
-    expect(user.rateFriends(userRepo, activityRepo)).to.eql([ { name: 'Luisa Hane', steps: 58629 } ])
+    expect(user.rateFriends(userRepo, activityRepo)).to.eql([
+      { name: 'Luisa Hane', steps: 58629 },
+      { name: 'Jarvis Considine', steps: 55054 },
+      { name: 'Herminia Witting', steps: 50627} ])
   });
 });
