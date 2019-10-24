@@ -29,11 +29,7 @@ describe('Repository', () => {
       "email": "Diana.Hayes1@hotmail.com",
       "strideLength": 4.3,
       "dailyStepGoal": 10000,
-      "friends": [
-        16,
-        4,
-        8
-      ]
+      "friends": [ 2, 3 ]
     });
   });
 
@@ -44,6 +40,18 @@ describe('Repository', () => {
       expect(activityRepo.findToday(activityRepo.data)).to.equal("2019/06/21");
     });
   });
+
+  describe('findWeekDays method', () => {
+    it("should return a week's dates", () => {
+      expect(userRepo.findWeekDays(sleepTestData)).to.deep.equal([ '2019/06/15',
+      '2019/06/16',
+      '2019/06/17',
+      '2019/06/18',
+      '2019/06/19',
+      '2019/06/20',
+      '2019/06/21' ]);
+    });
+  })
 
   describe('returnAverage method', () => {
     it("should return the average metric for all users' data", () => {
@@ -70,7 +78,6 @@ describe('Repository', () => {
     it("should return a week's total of stats for Friend's Challenge", () => {
       expect(activityRepo.findTotalByWeek('numSteps', user)).to.equal(58629);
     });
-
   })
 
   describe('returnMetricByWeek method', () => {
@@ -83,7 +90,7 @@ describe('Repository', () => {
       expect(activityRepo.returnMetricByWeek('minutesActive', user)).to.eql([140, 175, 168, 165, 275, 140, 135]);
     });
   });
-  
+
   describe('returnMetricByDate method', () => {
     it("should return a user's stats for a particular day", () => {
       hydroRepo.findToday(hydroRepo.data);

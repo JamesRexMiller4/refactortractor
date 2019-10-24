@@ -2,10 +2,13 @@ class Repository {
   constructor(dataset) {
     this.data = dataset;
     this.date;
+    this.currentUser;
   }
 
   findUser(idNum) {
-    return this.data.find(e => e.id === idNum);
+    const user = this.data.find(e => e.id === idNum);
+    this.currentUser = user.id;
+    return user;
   }
 
   returnAverage(metric, dataset = this.data) {
@@ -19,6 +22,16 @@ class Repository {
   findToday(dataset) {
     this.date = dataset[dataset.length - 1].date;
     return this.date
+  }
+
+  findWeekDays(dataset) {
+    const datesWeek = dataset.reduce((allDates, data) => {
+      if (!allDates.includes(data.date)) {
+        allDates.push(data.date);
+      }
+      return allDates;
+    }, []).splice(this.length - 8, 7);
+    return datesWeek;
   }
 
   findTotalByWeek(metric, user) {
