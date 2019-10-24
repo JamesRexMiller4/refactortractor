@@ -435,6 +435,7 @@ var stepTrend = new Chart(ctx, {
   }
 });
 }
+}
 
 // *** EVENT LISTENERS FOR HEADER ***
 $('.toggle label').on('click', function() {
