@@ -13,10 +13,10 @@ $accent-color: var(--accent-color);
 }
 
 body {
-  --bcg-color: #c0dbf5;
-  --section-bcg-color: #eff7ff;
-  --base-color: #000000;
-  --accent-color: #214FBA;
+  --bcg-color: hsl(209, 73%, 86%);
+  --section-bcg-color: hsl(210, 100%, 97%);
+  --base-color: hsl(0, 0%, 0%);
+  --accent-color: hsl(222, 70%, 43%);
   background-color: $bcg-color;
 }
 
@@ -59,8 +59,8 @@ container {
   background-color: $section-bcg-color;
   color: $base-color;
   border-radius: 0.6em;
-  border: solid 2px #afb9c5;
-  box-shadow: 0 0 0.3em #666666;
+  border: solid 2px hsl(213, 16%, 73%);
+  box-shadow: 0 0 0.3em hsl(0, 0%, 40%);
   break-inside: avoid;
   display: flex;
   flex-direction: column;
@@ -69,7 +69,7 @@ container {
   padding: 1.3em;
   text-align: center;
   &:hover {
-    box-shadow: 0 0 0.6em #999999;
+    box-shadow: 0 0 0.6em hsl(0, 0%, 60%);
     transition: 0.4s;
   }
   img {
