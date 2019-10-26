@@ -60,7 +60,7 @@ Promise.all([
   hydration = new Hydration(data[1]);
   sleep = new Sleep(data[2]);
   activity = new Activity(data[3]);
-  }).then(() => {
+}).then(() => {
     updateBoard();
     updateCharts();
 })
@@ -105,7 +105,7 @@ function updateBoard() {
 function generateRandomUserId() {
   let randomNumOneToFifty = (Math.random() * 50);
   return Math.ceil(randomNumOneToFifty);
-
+}
 
 
 function displaySleepStatus() {
@@ -491,3 +491,62 @@ function changeMode(mode) {
   });
 }
 
+$('.inputs button').on('click', function() {
+  const $vals = $(this).siblings('input');
+  const type = $(this).data('type');
+  let results = [];
+  $vals.each(function() {
+    results = [...results, /\d/g.test($(this).val())];
+  });
+  if (!results.includes(false)) {
+    // switchFetch(type, $vals);
+  }
+  $(this).parent().trigger("reset");
+});
+
+function switchFetch(type, values) {
+  switch (type) {
+    case sleep:
+      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: user.id,
+          date: repository.date,
+          hoursSlept: $(values[0]).val(),
+          sleepQuality: $(values[1]).val()
+        })
+      });
+      break;
+    case hydration:
+      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: user.id,
+          date: repository.date,
+          numOunces: $(values).val()
+        })
+      });
+      break;
+    case activity:
+      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: user.id,
+          date: repository.date,
+          numSteps: $(values[0]).val(),
+          minutesActive: $(values[1]).val(),
+          flightsOfStairs: $(values[2]).val()
+        })
+      });
+      break;
+  }
+}
