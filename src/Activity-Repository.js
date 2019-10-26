@@ -18,31 +18,30 @@ class Activity extends Repository {
     return (userActiveMins.reduce((totalMins, dailyActiveMins) => totalMins + dailyActiveMins, 0) / 7);
   } 
 
-  returnMilesWalkedByDate(user) {	
-    let numOfSteps = this.data.find(activityObj => activityObj.userID === user.id && activityObj.date === this.date).numSteps;	
-    return parseInt(((numOfSteps * user.strideLength) / 5280).toFixed(0));	
+  returnMilesWalkedByDate(dataset, newUser) {	
+    let numOfSteps = dataset.find(activityObj => activityObj.userID === newUser.id && activityObj.date === '2019/09/15').numSteps;	
+    return parseInt(((numOfSteps * newUser.strideLength) / 5280).toFixed(0));	
   } 
 
-  returnThreeDayStepStreak(user) {
-    let userData = user.findCurrentUserData(this.data);
-    return userData.reduce((acc, day, index) => {
+
+  returnThreeDayStepStreak(dataset) {
+    return dataset.reduce((acc, day, index) => {
       if (index < 2) {
         return acc;
       }
-      if ((day.numSteps > userData[index - 1].numSteps) && (userData[index - 1].numSteps > userData[index - 2].numSteps)) {
+      if ((day.numSteps > dataset[index - 1].numSteps) && (dataset[index - 1].numSteps > dataset[index - 2].numSteps)) {
         acc.push({
-          [userData[index].date]: userData[index].numSteps,
-          [userData[index - 1].date]: userData[index - 1].numSteps,
-          [userData[index - 2].date]: userData[index - 2].numSteps,
+          [dataset[index].date]: dataset[index].numSteps,
+          [dataset[index - 1].date]: dataset[index - 1].numSteps,
+          [dataset[index - 2].date]: dataset[index - 2].numSteps,
         });
       }
       return acc;
     }, []);
   }
 
-  republicPlazaChallenge(dataset, user) {
-    let userData = user.findCurrentUserData(dataset);
-    return parseInt((userData.reduce((acc, day) => {
+  republicPlazaChallenge(dataset) {
+    return parseInt((dataset.reduce((acc, day) => {
       acc += day.flightsOfStairs;
       return acc;
     }, 0) / 56));

@@ -1,0 +1,120 @@
+@media only screen and (max-width: 420px) {
+  .header {
+    height: 250px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .header h1 {
+    font-size: 2em;
+  }
+  .header p .header-welcome {
+    font-size: .6em;
+  }
+  .header .dropdown {
+    position: unset;
+  }
+  .header .header-date {
+    font-size: .7em;
+  }
+  .header .switch__dropdown {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .header .switch {
+    margin-right: 35px;
+  }
+}
+
+@media screen and (min-width: 421px) {
+  .header {
+    height: 250px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .header h1 {
+    font-size: 2.5em;
+  }
+  .header p .header-welcome {
+    font-size: .8em;
+  }
+  .header .dropdown {
+    position: unset;
+  }
+  .header .header-date {
+    font-size: 1em;
+  }
+  .header .switch__dropdown {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 20px;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .header .switch {
+    margin-right: 135px;
+  }
+  .header ul {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 775px) {
+  .header {
+    height: 290px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .header h1 {
+    font-size: 3.1em;
+    margin: 0;
+  }
+  .header p {
+    margin: 0;
+  }
+  .header .header-welcome {
+    font-size: 1.8em;
+    margin-top: 20px;
+  }
+  .header .dropdown {
+    position: unset;
+  }
+  .header .header-date {
+    font-size: 1em;
+  }
+  .header .switch__dropdown {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 10px;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .header .switch {
+    margin-right: 535px;
+  }
+  .header ul {
+    margin-top: 15px;
+    width: 37%;
+  }
+}
+/*# sourceMappingURL=media-queries.css.map */

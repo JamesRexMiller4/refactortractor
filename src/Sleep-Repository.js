@@ -6,10 +6,9 @@ class Sleep extends Repository {
     this.isRested = false;
   }
 
-  checkUserRestedByDate(user) {
-    if ((user.findCurrentUserData(this.data).find(data => {
-      return data.date === this.date;
-    }).hoursSlept) >= (8)) {
+  checkUserRestedByDate(dataset, date) {
+    let found = dataset.find(data => data.date === date)
+    if (found.hoursSlept >= 8) {
       return this.isRested = true;
     }
   }
