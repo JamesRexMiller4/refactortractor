@@ -27,7 +27,7 @@ describe('Activity', () => {
   });
 
   it('should be able to find streaks of three days where steps increased for each day', () => {
-    expect(activity.returnThreeDayStepStreak(activity.data, user)).to.eql([{
+    expect(activity.returnThreeDayStepStreak(user)).to.eql([{
       "2019/06/15": 3577,
       "2019/06/16": 6637,
       "2019/06/17": 14329

@@ -12,6 +12,7 @@ class Repository {
   }
 
   returnAverage(metric, dataset = this.data) {
+    console.log(dataset)
     if (metric === 'hoursSlept' || metric === 'sleepQuality') {
       return parseFloat((dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length).toFixed(1));
     } else {
@@ -34,19 +35,19 @@ class Repository {
     return datesWeek;
   }
 
-  findTotalByWeek(metric, user) {
-    return this.returnMetricByWeek(metric, user).reduce((sum, data) => sum + data, 0);
+  findTotalByWeek(metric, dataset) {
+    return dataset.returnMetricByWeek(metric, dataGroup).reduce((sum, data) => sum + data, 0);
   }
 
-  returnMetricByWeek(metric, user) {
-    const dataset = user.findCurrentUserData(this.data);
+  returnMetricByWeek(metric, dataset) {
     let index = dataset.findIndex(stats => stats.date === this.date);
     return dataset.map(stats => stats[metric]).splice(index - 6, 7);
   }
 
-  returnMetricByDate(metric, user)  {
-    const dataset = user.findCurrentUserData(this.data);
-    return dataset.find(userMetric => userMetric.date === this.date)[metric];
+  returnMetricByDate(metric, user, data, date)  {
+    const dataset = user.findCurrentUserData(data);
+    let found = dataset.find(stat => stat.date === date)
+    return found[metric];
   }
 }
 
