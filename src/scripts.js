@@ -499,7 +499,7 @@ $('.inputs button').on('click', function() {
     results = [...results, /\d/g.test($(this).val())];
   });
   if (!results.includes(false)) {
-    // switchFetch(type, $vals);
+    switchFetch(type, $vals);
   }
   $(this).parent().trigger("reset");
 });
