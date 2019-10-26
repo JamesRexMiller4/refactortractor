@@ -506,7 +506,7 @@ $('.inputs button').on('click', function() {
 
 function switchFetch(type, values) {
   switch (type) {
-    case sleep:
+    case 'sleep':
       fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
         method: 'POST',
         headers: {
@@ -520,7 +520,7 @@ function switchFetch(type, values) {
         })
       });
       break;
-    case hydration:
+    case 'hydration':
       fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
         method: 'POST',
         headers: {
@@ -533,7 +533,7 @@ function switchFetch(type, values) {
         })
       });
       break;
-    case activity:
+    case 'activity':
       fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
         method: 'POST',
         headers: {
