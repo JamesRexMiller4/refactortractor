@@ -23,6 +23,7 @@ class Activity extends Repository {
     return parseInt(((numOfSteps * newUser.strideLength) / 5280).toFixed(0));	
   } 
 
+
   returnThreeDayStepStreak(dataset) {
     return dataset.reduce((acc, day, index) => {
       if (index < 2) {
