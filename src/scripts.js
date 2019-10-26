@@ -449,12 +449,9 @@ var stepTrend = new Chart(ctx, {
     }
   }
 });
-<<<<<<< HEAD
-};
-=======
+
 }
-}
->>>>>>> 5cc63d93766bea2aa09d21cacf22ef8c900882a0
+
 
 // *** EVENT LISTENERS FOR HEADER ***
 $('.toggle label').on('click', function() {
