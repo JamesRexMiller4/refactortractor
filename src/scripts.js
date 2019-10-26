@@ -507,6 +507,66 @@ function changeMode(mode) {
   });
 }
 
+$('.inputs button').on('click', function() {
+  const $vals = $(this).siblings('input');
+  const type = $(this).data('type');
+  let results = [];
+  $vals.each(function() {
+    results = [...results, /\d/g.test($(this).val())];
+  });
+  if (!results.includes(false)) {
+    switchFetch(type, $vals);
+  }
+  $(this).parent().trigger("reset");
+});
+
+function switchFetch(type, values) {
+  switch (type) {
+    case 'sleep':
+      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: user.id,
+          date: repository.date,
+          hoursSlept: $(values[0]).val(),
+          sleepQuality: $(values[1]).val()
+        })
+      });
+      break;
+    case 'hydration':
+      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: user.id,
+          date: repository.date,
+          numOunces: $(values).val()
+        })
+      });
+      break;
+    case 'activity':
+      fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID: user.id,
+          date: repository.date,
+          numSteps: $(values[0]).val(),
+          minutesActive: $(values[1]).val(),
+          flightsOfStairs: $(values[2]).val()
+        })
+      });
+      break;
+  }
+}
+
 $('.icon').on('keydown', function(event) {
   if (event.keyCode === 13) {
     $('.icon').click();
@@ -530,6 +590,3 @@ $('.icon3').on('keydown', function(event) {
     $('.icon3').click();
   }
 });
-
-
-
