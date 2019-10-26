@@ -106,8 +106,6 @@ function generateRandomUserId() {
   let randomNumOneToFifty = (Math.random() * 50);
   return Math.ceil(randomNumOneToFifty);
 
-
-
 function displaySleepStatus() {
   sleep.checkUserRestedByDate(user)
   if (sleep.isRested === true) {
@@ -435,6 +433,7 @@ var stepTrend = new Chart(ctx, {
   }
 });
 }
+}
 
 // *** EVENT LISTENERS FOR HEADER ***
 $('.toggle label').on('click', function() {
@@ -459,7 +458,6 @@ $('.icons li img').on('click', function() {
 
 $('#user-admin-info').on('mouseleave', function() {
   $('#user-admin-info').data('type', '').hide();
-
 });
 
 $('.dropdown header').on('click', function() {
@@ -490,4 +488,30 @@ function changeMode(mode) {
     $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
   });
 }
+
+$('.icon').on('keydown', function(event) {
+  if (event.keyCode === 13) {
+    $('.icon').click();
+  }
+});
+
+$('.icon1').on('keydown', function(event) {
+  if (event.keyCode === 13) {
+    $('.icon1').click();
+  }
+});
+
+$('.icon2').on('keydown', function(event) {
+  if (event.keyCode === 13) {
+    $('.icon2').click();
+  }
+});
+
+$('.icon3').on('keydown', function(event) {
+  if (event.keyCode === 13) {
+    $('.icon3').click();
+  }
+});
+
+
 
