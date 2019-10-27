@@ -490,6 +490,9 @@ container img {
   .header .dropdown {
     position: unset;
   }
+  .header .dropdown .menu-position {
+    position: absolute;
+  }
   .header .header-date {
     font-size: 1em;
   }

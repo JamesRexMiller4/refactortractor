@@ -12,7 +12,6 @@ class Repository {
   }
 
   returnAverage(metric, dataset = this.data) {
-    console.log(dataset)
     if (metric === 'hoursSlept' || metric === 'sleepQuality') {
       return parseFloat((dataset.reduce((acc, curVal) => acc + curVal[metric], 0) / dataset.length).toFixed(1));
     } else {
@@ -44,8 +43,7 @@ class Repository {
     return dataset.map(stats => stats[metric]).splice(index - 6, 7);
   }
 
-  returnMetricByDate(metric, user, data, date)  {
-    const dataset = user.findCurrentUserData(data);
+  returnMetricByDate(metric, dataset, date)  {
     let found = dataset.find(stat => stat.date === date)
     return found[metric];
   }

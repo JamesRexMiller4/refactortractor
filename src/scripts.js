@@ -69,15 +69,13 @@ Promise.all([
 })
 
 function updateBoard() {
-  const currentDate = repository.date;
   friendNames = user.findFriendsInfo(repository.data, 'name');
   friendSteps = user.findFriendsInfo(repository.data, 'dailyStepGoal');
-  // console.log(activity.data)
-  // const stepsTrend = activity.returnThreeDayStepStreak(user)[0];
-  hydration.findToday(hydration.data);
-  sleep.findToday(sleep.data);
-  activity.findToday(activity.data);
-  // console.log(hydration.returnMetricByDate('numOunces', user, hydration.data))
+
+  const currentDate = '2019/09/15';
+  const userSleepData = user.findCurrentUserData(sleep.data)
+  const userHydroData = user.findCurrentUserData(hydration.data)
+  const userActivityData = user.findCurrentUserData(activity.data)
 
   $('#user-name').text(user.returnUserFirstName());
   $('#current-date').text(currentDate);
@@ -85,29 +83,29 @@ function updateBoard() {
   $('#user-info-email').text(user.email);
   $('#user-info-address').text(user.address);
   $('#user-info-step-goal').text(user.dailyStepGoal);
-  $('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', user, hydration.data, '2019/09/15'));
-  $('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', user, sleep.data, '2019/09/15'));
-  $('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', user, sleep.data, '2019/09/15'));
-  $('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', user.findCurrentUserData(sleep.data)));
-  $('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', user.findCurrentUserData(sleep.data)));
-  $('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', user.findCurrentUserData(sleep.data)));
-  $('#user-average-hours-slept').text(sleep.returnAverage('hoursSlept', user.findCurrentUserData(sleep.data)));
-  $('#user-current-step-count').text(activity.returnMetricByDate('numSteps', user, activity.data, '2019/09/15'));
+  $('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', userHydroData, currentDate));
+  $('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', userSleepData, currentDate));
+  $('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', userSleepData, currentDate));
+  $('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', userSleepData));
+  $('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', userSleepData));
+  $('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', userSleepData));
+  $('#user-average-hours-slept').text(sleep.returnAverage('hoursSlept', userSleepData));
+  $('#user-current-step-count').text(activity.returnMetricByDate('numSteps', userActivityData, currentDate));
   $('#user-rested').text(displaySleepStatus());
-  $('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', user, activity.data, '2019/09/15'));
-  $('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(user.findCurrentUserData(activity.data), user));
-  $('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', user.findCurrentUserData(activity.data)));
+  $('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', userActivityData, currentDate));
+  $('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(userActivityData, user));
+  $('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', userActivityData));
   $('#all-users-average-step-count').text(activity.returnAverage('numSteps'));
-  $('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', user.findCurrentUserData(activity.data)));
+  $('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', userActivityData));
   $('#all-users-average-stairs-climbed').text(activity.returnAverage('flightsOfStairs'));
-  $('#user-current-active-mins').text(activity.returnAverage('minutesActive', user.findCurrentUserData(activity.data)));
+  $('#user-current-active-mins').text(activity.returnAverage('minutesActive', userActivityData));
   $('#all-users-average-active-mins').text(activity.returnAverage('minutesActive'));
-  $('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', user.findCurrentUserData(activity.data)))
-  $('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', user.findCurrentUserData(activity.data)))
-  $('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', user.findCurrentUserData(activity.data)))
+  $('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', userActivityData))
+  $('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', userActivityData))
+  $('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', userActivityData))
   // $('#winner-name').text(returnFriendChallengeWinner(user, activity.data))
   $('#user-water-trend-week').text(displayWaterStatus());
-  $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(user.findCurrentUserData(activity.data)));
+  $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(userActivityData));
 }
 
 function generateRandomUserId() {
@@ -140,6 +138,7 @@ function displayWaterStatus() {
 
 function returnFriendChallengeWinner(newUser, activityRepo) {
   const names = newUser.rateFriends(repository.data, activityRepo);
+  console.log(names)
   if (names[0] === newUser.name) {
     return `You win!!`;
   }
@@ -223,13 +222,13 @@ function updateCharts() {
       labels: weekDays,
       datasets: [{
         label: 'quality score',
-        data: sleepQualityHrsByWeek,
+        data: weekSleepQualityUserInfo,
         backgroundColor: [
           'rgb(0,0,128, 0.2)',
         ],
         borderColor: [
           'rgba(0,0,128, 1)',
-          'rgba(20,0,128, 1)',
+          'rgba(0,0,128, 1)',
           'rgba(0,0,128, 1)',
           'rgba(0,0,128, 1)',
           'rgba(0,0,128, 1)',
@@ -497,7 +496,6 @@ $('.toggle label').on('click', function() {
 });
 
 $('.icons li img').on('click', function() {
-  const $widget = $(this).data('type');
   const $block = $(this).siblings('container');
   $block.toggle();
 });
@@ -540,7 +538,7 @@ function changeMode(mode) {
   const dark = {'--bcg-color': '#111f28', '--section-bcg-color': '#484e52', '--base-color': '#ffffff', '--accent-color': '#dda0dd'};
   const light = {'--bcg-color': '#c0dbf5', '--section-bcg-color': '#eff7ff', '--base-color': '#000000', '--accent-color': '#214FBA'};
   (mode === 'dark') ? $('body').css(dark) : $('body').css(light);
-  $('.icon').each(function() {
+  $('.icons img').each(function() {
     let $iconType = $(this).data('type');
     $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
   });
@@ -570,8 +568,8 @@ function switchFetch(type, values) {
         body: JSON.stringify({
           userID: user.id,
           date: repository.date,
-          hoursSlept: $(values[0]).val(),
-          sleepQuality: $(values[1]).val()
+          hoursSlept: parseFloat($(values[0]).val()),
+          sleepQuality: parseFloat($(values[1]).val())
         })
       });
       break;
@@ -584,7 +582,7 @@ function switchFetch(type, values) {
         body: JSON.stringify({
           userID: user.id,
           date: repository.date,
-          numOunces: $(values).val()
+          numOunces: parseInt($(values).val())
         })
       });
       break;
@@ -597,9 +595,9 @@ function switchFetch(type, values) {
         body: JSON.stringify({
           userID: user.id,
           date: repository.date,
-          numSteps: $(values[0]).val(),
-          minutesActive: $(values[1]).val(),
-          flightsOfStairs: $(values[2]).val()
+          numSteps: parseInt($(values[0]).val()),
+          minutesActive: parseInt($(values[1]).val()),
+          flightsOfStairs: parseInt($(values[2]).val())
         })
       });
       break;
