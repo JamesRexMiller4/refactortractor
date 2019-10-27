@@ -56,16 +56,13 @@ Promise.all([
     .catch(error => console.error('NO DATA'))
 ]).then(data => {
   repository = new Repository(data[0]);
-  repository.findToday(repository.data);
   const userIdNum = generateRandomUserId();
   const currentUser = repository.findUser(userIdNum);
   user = new User(currentUser);
   hydration = new Hydration(data[1]);
-  hydration.findToday(hydration.data);
   sleep = new Sleep(data[2]);
-  sleep.findToday(sleep.data);
   activity = new Activity(data[3]);
-  activity.findToday(activity.data);
+  repository.findToday(activity.data);
 }).then(() => {
   updateBoard();
   updateCharts();
@@ -77,8 +74,6 @@ function updateBoard() {
   friendSteps = user.findFriendsInfo(repository.data, 'dailyStepGoal');
   // console.log(activity.data)
   // const stepsTrend = activity.returnThreeDayStepStreak(user)[0];
-
-  repository.findToday(repository.data);
   hydration.findToday(hydration.data);
   sleep.findToday(sleep.data);
   activity.findToday(activity.data);
@@ -503,17 +498,8 @@ $('.toggle label').on('click', function() {
 
 $('.icons li img').on('click', function() {
   const $widget = $(this).data('type');
-  const $block = $('#user-admin-info');
-  if ($block.data('type') === $widget) {
-    $block.data('type', '').hide();
-  } else {
-    $block.show().children(`.${$widget}-inputs`).show().siblings().hide();
-    $block.data('type', $widget);
-  }
-});
-
-$('#user-admin-info').on('mouseleave', function() {
-  $('#user-admin-info').data('type', '').hide();
+  const $block = $(this).siblings('container');
+  $block.toggle();
 });
 
 $('.dropdown header').on('click', function() {
@@ -533,7 +519,22 @@ $('.triple-block ul li').on('click', function() {
   'border-bottom': '1px solid var(--base-color)'});
   $(this).siblings().css({'font-weight': '400',
   'border-bottom': 'none'});
+  changeScreenReader(activity, user, $number);
 });
+
+function changeScreenReader(activity, user, number) {
+  const block = $(`.triple-block section:nth-child(${number})`);
+  const metric = block.data('type');
+  const metricName = block.data('values');
+  const weekDays = activity.findWeekDays(activity.data);
+  const stepsUser = activity.returnMetricByWeek(metric, user.findCurrentUserData(activity.data));
+  block.children('canvas').children('span').remove();
+  stepsUser.forEach((el, i) => {
+    block.children('canvas').append(`
+      <span class='screen-reader-text'>On ${weekDays[i]} you made ${el} ${metricName}.</span>
+    `);
+  });
+}
 
 function changeMode(mode) {
   const dark = {'--bcg-color': '#111f28', '--section-bcg-color': '#484e52', '--base-color': '#ffffff', '--accent-color': '#dda0dd'};
@@ -605,26 +606,38 @@ function switchFetch(type, values) {
   }
 }
 
-$('.icon').on('keydown', function(event) {
+$('.icons li>img').on('keydown', function(event) {
   if (event.keyCode === 13) {
-    $('.icon').click();
+    $(this).click();
   }
 });
 
-$('.icon1').on('keydown', function(event) {
+$('.toggle').on('keydown', function(event) {
   if (event.keyCode === 13) {
-    $('.icon1').click();
+    $(this).children('label').click();
   }
 });
 
-$('.icon2').on('keydown', function(event) {
+$('.dropdown').on('keydown', function() {
   if (event.keyCode === 13) {
-    $('.icon2').click();
+    $(this).children('header').click();
   }
 });
 
-$('.icon3').on('keydown', function(event) {
+$('.dropdown div>p').on('keydown', function() {
   if (event.keyCode === 13) {
-    $('.icon3').click();
+    $(this).click();
+  }
+});
+
+$('.inputs button').on('keydown', function() {
+  if (event.keyCode === 13) {
+    $(this).click();
+  }
+});
+
+$('.triple-block ul>li').on('keydown', function() {
+  if (event.keyCode === 13) {
+    $(this).click();
   }
 });
