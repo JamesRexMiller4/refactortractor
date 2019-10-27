@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="styles.css">
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700&display=swap"
-      rel="stylesheet">
-      <meta charset="UTF-8">
-      <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Activity Tracker</title>
   </head>
   <body>
     <header class="header" role="banner">
-      <form class="toggle" tabindex="1" type="button">
+      <form class="toggle" aria-label="Toggle Color Mode" tabindex="0" role="button">
       	<input type="checkbox" id="toggle-switch" />
-      	<label for="toggle-switch"><span class="screen-reader-text">Toggle Color Mode</span></label>
+      	<label for="toggle-switch"></label>
       </form>
-      <section class="dropdown" type="button" tabindex="1">
+      <section class="dropdown" aria-label="Filter widgets" role="" type="button" tabindex="0">
         <input type="hidden" value="All info">
-        <header><p>All info</p></header>
-        <div>
-          <p>All info</p>
-          <p>Today</p>
-          <p>Week</p>
-          <p>Average</p>
+        <header><p aria-label="current filter: all info" role="text">All info</p></header>
+        <div role="menu">
+          <p tabindex="0" aria-label="Show all info" role="button">All info</p>
+          <p tabindex="0" aria-label="Show today info" role="button">Today</p>
+          <p tabindex="0" aria-label="Show week info" role="button">Week</p>
+          <p tabindex="0" aria-label="Show average info" role="button">Average</p>
         </div>
       </section>
-      <p class="header-date">Today"s Date: <span id="current-date"></span></p>
+      <p class="header-date">Today's Date: <span id="current-date"></span></p>
       <h1> Activity Tracker</h1>
       <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
       <ul class="icons">
@@ -54,7 +50,7 @@
           <h3>Add Activity Info</h3>
           <form class="activity-input" action="index.html" method="post">
             <label for="steps-input">Steps</label>
-            <input id="steps-input"
+            <input tabindex="0" id="steps-input"
               pattern="[\d]"
               title="A steps number is a digit."
               name="steps"
@@ -62,7 +58,7 @@
               placeholder="steps"
               required>
             <label for="minutes-input">Minutes</label>
-            <input id="minutes-input"
+            <input tabindex="0" id="minutes-input"
               pattern="[\d]"
               name="minutes"
               title="A minutes number is a digit."
@@ -70,7 +66,7 @@
               placeholder="minutes"
               required>
             <label for="flights-input">Flights</label>
-            <input id="flights-input"
+            <input tabindex="0" id="flights-input"
               pattern="[\d]"
               name="flights"
               title="A flights number is a digit."
@@ -84,7 +80,7 @@
           <h3>Add Water Info</h3>
           <form class="water-input" action="index.html" method="post">
             <label for="ounces-input">Ounces</label>
-            <input id="ounces-input"
+            <input tabindex="0" id="ounces-input"
               pattern="[\d]"
               name="ounces"
               title="A ounces number is a digit."
@@ -98,7 +94,7 @@
           <h3>Add Water Info</h3>
           <form class="sleep-input" action="index.html" method="post">
             <label for="hours-input">Hours</label>
-            <input id="hours-input"
+            <input tabindex="0" id="hours-input"
               pattern="[\d]"
               name="hours"
               title="A hours number is a digit."
@@ -106,7 +102,7 @@
               placeholder="hours"
               required>
             <label for="quality-input">Sleep Quality</label>
-            <input id="quality-input"
+            <input tabindex="0" id="quality-input"
               pattern="[\d]"
               name="quality"
               title="A quality number is a digit."
@@ -122,27 +118,29 @@
       <section>
         <container class="container-center" role="document" tabindex="0" alt="Amount of water you have consumed">
           <h3>Water</h3>
-          <p>You"ve consumed</p>
+          <p>You've consumed</p>
           <span class="number" id="user-water-by-day"></span> <p> ounces of water today</p>
         </container>
         <container tabindex="0">
           <h3>Weekly Water Consumption</h3>
-          <canvas id="user-water-by-week" width="300" height="150"></canvas>
+          <canvas tabindex="0" id="user-water-by-week" width="300" height="150">
+            <span class='screen-reader-text'>This is a graph with weekly info.</span>
+          </canvas>
         </container>
         <container class="container-center" id="user-water-trend-week" tabindex="0">
           <h3>Have You Had Enough Water Today?</h3>
           <img id="water-status" alt="Amount of water you have consumed during the week"></img>
-          <p id="water-comment">Keep up the good work! You"ve averaged more than 64 ounces per day this week</p>
+          <p id="water-comment">Keep up the good work! You've averaged more than 64 ounces per day this week</p>
         </container>
         <container class="container-center" tabindex="0">
           <h3>Your Water Average</h3>
-          <p>You"ve consumed</p>
+          <p>You've consumed</p>
           <span class="number" id="user-water-by-average">57</span> <p> ounces of water average</p>
         </container>
       </section>
       <section>
         <container class="container-center" id="user-sleep-day" role="document" tabindex="0">
-          <h3>Last Night"s Sleep</h3>
+          <h3>Last Night's Sleep</h3>
           <p class="number" id="user-sleep-by-day"></p>
           <h4>hours slept</h4>
           <p class="number" id="user-sleep-quality-by-day"></p>
@@ -155,7 +153,9 @@
         </container>
         <container id="user-sleep-week" tabindex="0">
           <h3>Your Sleep Quality & Hours</h3>
-          <canvas id="user-sleep-by-week"></canvas>
+          <canvas tabindex="0" id="user-sleep-by-week">
+            <span class='screen-reader-text'>This is a graph with weekly info.</span>
+          </canvas>
         </container>
         <container class="container-center" role="document" tabindex="0">
           <h3>Your Sleep Averages</h3>
@@ -168,7 +168,7 @@
       </section>
       <section>
         <container class="container-center" id="user-activity-day" role="document" tabindex="0">
-          <h3>Today"s Activity</h3>
+          <h3>Today's Activity</h3>
           <p class="number" id="user-current-step-count"></p>
           <h4>steps</h4>
           <p class="number" id="user-current-mins-active"></p>
@@ -182,22 +182,28 @@
           <p>In the last year you have climbed the Republic Plaza Building in Denver, CO <span id="republic-plaza-challenge"></span> times!</p>
         </container>
         <container class="triple-block" tabindex="0">
-          <section>
+          <section data-type="numSteps" data-values="steps">
             <h3>Your Step Count This Week</h3>
-            <canvas id="user-step-count-by-week"></canvas>
+            <canvas tabindex="0" id="user-step-count-by-week">
+              <span class='screen-reader-text'>This is a graph with weekly info.</span>
+            </canvas>
           </section>
-          <section>
+          <section data-type="minutesActive" data-values="minutes">
             <h3>Your Active Minutes This Week</h3>
-            <canvas id="user-mins-active-by-week"></canvas>
+            <canvas tabindex="0" id="user-mins-active-by-week">
+              <span class='screen-reader-text'>This is a graph with weekly info.</span>
+            </canvas>
           </section>
-          <section>
+          <section data-type="flightsOfStairs" data-values="flights">
             <h3>Your Stairs Climbed This Week</h3>
-            <canvas id="user-stairs-climbed-by-week"></canvas>
+            <canvas tabindex="0" id="user-stairs-climbed-by-week">
+              <span class='screen-reader-text'>This is a graph with weekly info.</span>
+            </canvas>
           </section>
           <ul>
-            <li data-number="1">Steps</li>
-            <li data-number="2">Minutes</li>
-            <li data-number="3">Stairs</li>
+            <li tabindex="0" data-number="1" role="button">Steps</li>
+            <li tabindex="0" data-number="2" role="button">Minutes</li>
+            <li tabindex="0" data-number="3" role="button">Stairs</li>
           </ul>
         </container>
       </section>
@@ -206,7 +212,9 @@
       <container role="document" tabindex="0">
         <h3>Friends: Weekly Step Challenge</h3>
         <p id="winner-name"></p>
-        <canvas id="friend-info"></canvas>
+        <canvas tabindex="0" id="friend-info">
+          <span class='screen-reader-text'>This is a graph with weekly challenge results.</span>
+        </canvas>
       </container>
       <container class="you-vs-world" role="document" tabindex="0">
         <h3>You vs The World</h3>
@@ -222,7 +230,9 @@
       </container>
       <container class="container-center" id="user-rested" tabindex="0">
         <h3>Step Trend</h3>
-        <canvas id="step-trend"></canvas>
+        <canvas tabindex="0" id="step-trend">
+          <span class='screen-reader-text'>This is a graph with step trend info.</span>
+        </canvas>
       </container>
     </main>
     </article>
