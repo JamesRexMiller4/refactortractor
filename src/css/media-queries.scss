@@ -3,14 +3,12 @@ $break-tablet: 421px;
 $break-largeSize: 775px;
 
 @mixin headerTemplate {
-  background-color: lavender;
   height: 18em;
   display: flex;
   flex-direction: column;
 }
 
 @media only screen and (max-width: $break-mobile) {
-
   .header {
     @include headerTemplate;
       &>h1 {
@@ -36,48 +34,36 @@ $break-largeSize: 775px;
 }
 
 @media screen and (min-width: $break-tablet) {
-
   .header {
     @include headerTemplate;
-    height: 25em;
+    height: 20em;
       &>label {
         width: 90%;
       }
       &>h1 {
         font-size: 2.5em;
-        margin-top: 1em;
+        margin-top: .1em;
       }
       &>p {
         font-size: 1.5em;
       }
       .dropdown {
-        width: 50%;
+        width: 30%;
         z-index: 1;
       }
       .header-date {
-        font-size: 1.8em;
-        margin-top: 4em;
-      }
-      .switch__dropdown {
-        display: flex;
-        margin-bottom: 20px;
-        justify-content: space-between;
-      }
-      .switch {
-        margin-right: 135px;
+        font-size: 1.2em;
+        margin-top: 3em;
       }
   }
 }
 
 @media screen and (min-width: $break-largeSize){
-
   .header {
     @include headerTemplate;
-      h1 {
-        font-size: 3.1em;
-        margin: 0;
-      }
-      p {
+    height: 21em;
+      &>h1 {
+        font-size: 3.5em;
         margin: 0;
       }
       .header-welcome {
@@ -85,22 +71,14 @@ $break-largeSize: 775px;
         margin-top: 20px;
       }
       .dropdown {
-        position: absolute;
+        width: 18%;
+        z-index: 1;
       }
       .header-date {
-        font-size: 1em;
+        font-size: 1.3em;
       }
-      .switch__dropdown {
-        display: flex;
-        margin-bottom: 10px;
-        justify-content: space-between;
-      }
-      .switch {
-        margin-right: 535px;
-      }
-      ul {
-        margin-top: 15px;
-        width: 37%;
+      &>ul {
+        width: 45%;
       }
   }
 }
