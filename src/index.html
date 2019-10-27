@@ -1,148 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="styles.css">
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700&display=swap"
-      rel="stylesheet">
-      <meta charset="UTF-8">
-      <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Activity Tracker</title>
   </head>
   <body>
     <header class="header" role="banner">
-      <form class="toggle" tabindex="1" type="button">
+      <form class="toggle" aria-label="Toggle Color Mode" tabindex="0" role="button">
       	<input type="checkbox" id="toggle-switch" />
-      	<label for="toggle-switch"><span class="screen-reader-text">Toggle Color Mode</span></label>
+      	<label for="toggle-switch"></label>
       </form>
-      <section class="dropdown" type="button" tabindex="1">
+      <section class="dropdown" aria-label="Filter widgets" role="" type="button" tabindex="0">
         <input type="hidden" value="All info">
-        <header><p>All info</p></header>
-        <div>
-          <p>All info</p>
-          <p>Today</p>
-          <p>Week</p>
-          <p>Average</p>
+        <header><p aria-label="current filter: all info" role="text">All info</p></header>
+        <div role="menu">
+          <p tabindex="0" aria-label="Show all info" role="button">All info</p>
+          <p tabindex="0" aria-label="Show today info" role="button">Today</p>
+          <p tabindex="0" aria-label="Show week info" role="button">Week</p>
+          <p tabindex="0" aria-label="Show average info" role="button">Average</p>
         </div>
       </section>
-      <p class="header-date">Today"s Date: <span id="current-date"></span></p>
+      <p class="header-date">Today's Date: <span id="current-date"></span></p>
       <h1> Activity Tracker</h1>
       <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
       <ul class="icons">
         <li>
-            <img class="icon3" tabindex="4" src="../images/water-lightmode.svg" alt="add water icon" data-type="water" role="button">
+            <img class="icon3" tabindex="0" src="../images/water-lightmode.svg" alt="add water info" data-type="water" role="button">
+            <container tabindex="0" role="form" data-type="water">
+              <section class="water-inputs inputs">
+                <h3>Add Water Info</h3>
+                <form class="water-input" action="index.html" method="post">
+                  <label for="ounces-input">Ounces</label>
+                  <p class='input-hint'>(Example: 64)</p>
+                  <input id="ounces-input"
+                    tabindex="0"
+                    pattern="[\d]+"
+                    title="A ounces number is a digit."
+                    max= "100"
+                    type="number"
+                    required>
+                  <button type="button" name="button" data-type="hydration">Update Info</button>
+                </form>
+              </section>
+            </container>
         </li>
         <li>
-          <img class="icon1" tabindex="3" src="../images/sleep-lightmode.svg" alt="add sleep icon" data-type="sleep" role="button">
+          <img class="icon1" tabindex="0" src="../images/sleep-lightmode.svg" alt="add sleep info" data-type="sleep" role="button">
+          <container tabindex="0" role="form" data-type="sleep">
+            <section class="sleep-inputs inputs">
+              <h3>Add Sleep Info</h3>
+              <form class="sleep-input" action="index.html" method="post">
+                <label for="hours-input">Hours</label>
+                <p class='input-hint'>(Example: 8)</p>
+                <input id="hours-input"
+                  tabindex="0"
+                  pattern="[0-9]+"
+                  title="A hours number is a digit."
+                  max="12"
+                  step='.5'
+                  type="number"
+                  required>
+                <label for="quality-input">Sleep Quality</label>
+                <p class='input-hint'>(Example: 4.5)</p>
+                <input id="quality-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A quality number is a digit."
+                  max= "5"
+                  step='.5'
+                  type="number"
+                  required>
+                <button type="button" name="button" data-type="sleep">Update Info</button>
+              </form>
+            </section>
+          </container>
         </li>
         <li>
-          <img class="icon2" tabindex="2" src="../images/activities-lightmode.svg" alt="add activity icon" data-type="activities" role="button">
+          <img class="icon2" tabindex="0" src="../images/activities-lightmode.svg" alt="add activity info" data-type="activities" role="button">
+          <container tabindex="0" role="form" data-type="activities">
+            <section class="activities-inputs inputs">
+              <h3>Add Activity Info</h3>
+              <form class="activity-input" action="index.html" method="post">
+                <label for="steps-input">Steps</label>
+                <p class='input-hint'>(Example: 10000)</p>
+                <input id="steps-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A steps number is a digit."
+                  max="30000"
+                  type="number"
+                  required>
+                <label for="minutes-input">Minutes</label>
+                <p class='input-hint'>(Example: 60)</p>
+                <input id="minutes-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A minutes number is a digit."
+                  max="480"
+                  type="number"
+                  required>
+                <label for="flights-input">Flights</label>
+                <p class='input-hint'>(Example: 8)</p>
+                <input id="flights-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A flights number is a digit."
+                  min="0"
+                  max="32"
+                  type="number"
+                  required>
+                <button type="button" name="button" data-type="activity">Update Info</button>
+              </form>
+            </section>
+          </container>
         </li>
         <li>
-          <img class="icon" tabindex="1" src="../images/user-lightmode.svg" alt="user icon" data-type="user" role="button">
+          <img class="icon" tabindex="0" src="../images/user-lightmode.svg" alt="see user info" data-type="user" role="button">
+          <container tabindex="0" role="document" data-type="user">
+            <section class="user-inputs">
+              <h3>User Info</h3>
+              <p class="user-info">Name: <span id="user-info-name"></span></p>
+              <p class="user-info">Email: <span id="user-info-email"></span></p>
+              <p class="user-info">Address: <span id="user-info-address"></span></p>
+              <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
+            </section>
+          </container>
         </li>
       </ul>
-      <container id="user-admin-info" role="document">
-        <section class="user-inputs">
-          <h3>User Info</h3>
-          <p class="user-info">Name: <span id="user-info-name"></span></p>
-          <p class="user-info">Email: <span id="user-info-email"></span></p>
-          <p class="user-info">Address: <span id="user-info-address"></span></p>
-          <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
-        </section>
-        <section class="activities-inputs inputs">
-          <h3>Add Activity Info</h3>
-          <form class="activity-input" action="index.html" method="post">
-            <label for="steps-input">Steps</label>
-            <input id="steps-input"
-              pattern="[\d]"
-              title="A steps number is a digit."
-              name="steps"
-              type="number"
-              placeholder="steps"
-              required>
-            <label for="minutes-input">Minutes</label>
-            <input id="minutes-input"
-              pattern="[\d]"
-              name="minutes"
-              title="A minutes number is a digit."
-              type="number"
-              placeholder="minutes"
-              required>
-            <label for="flights-input">Flights</label>
-            <input id="flights-input"
-              pattern="[\d]"
-              name="flights"
-              title="A flights number is a digit."
-              type="number"
-              placeholder="flights"
-              required>
-            <button type="button" name="button" data-type="activity">Update Info</button>
-          </form>
-        </section>
-        <section class="water-inputs inputs">
-          <h3>Add Water Info</h3>
-          <form class="water-input" action="index.html" method="post">
-            <label for="ounces-input">Ounces</label>
-            <input id="ounces-input"
-              pattern="[\d]"
-              name="ounces"
-              title="A ounces number is a digit."
-              type="number"
-              placeholder="ounces"
-              required>
-            <button type="button" name="button" data-type="hydration">Update Info</button>
-          </form>
-        </section>
-        <section class="sleep-inputs inputs">
-          <h3>Add Water Info</h3>
-          <form class="sleep-input" action="index.html" method="post">
-            <label for="hours-input">Hours</label>
-            <input id="hours-input"
-              pattern="[\d]"
-              name="hours"
-              title="A hours number is a digit."
-              type="number"
-              placeholder="hours"
-              required>
-            <label for="quality-input">Sleep Quality</label>
-            <input id="quality-input"
-              pattern="[\d]"
-              name="quality"
-              title="A quality number is a digit."
-              type="number"
-              placeholder="quality"
-              required>
-            <button type="button" name="button" data-type="sleep">Update Info</button>
-          </form>
-        </section>
-      </container>
     </header>
     <main role="main">
       <section>
         <container class="container-center" role="document" tabindex="0" alt="Amount of water you have consumed">
           <h3>Water</h3>
-          <p>You"ve consumed</p>
+          <p>You've consumed</p>
           <span class="number" id="user-water-by-day"></span> <p> ounces of water today</p>
         </container>
         <container tabindex="0">
           <h3>Weekly Water Consumption</h3>
-          <canvas id="user-water-by-week" width="300" height="150"></canvas>
+          <canvas tabindex="0" id="user-water-by-week" width="300" height="150">
+            <span class='screen-reader-text'>This is a graph with weekly info.</span>
+          </canvas>
         </container>
         <container class="container-center" id="user-water-trend-week" tabindex="0">
           <h3>Have You Had Enough Water Today?</h3>
           <img id="water-status" alt="Amount of water you have consumed during the week"></img>
-          <p id="water-comment">Keep up the good work! You"ve averaged more than 64 ounces per day this week</p>
+          <p id="water-comment">Keep up the good work! You've averaged more than 64 ounces per day this week</p>
         </container>
         <container class="container-center" tabindex="0">
           <h3>Your Water Average</h3>
-          <p>You"ve consumed</p>
+          <p>You've consumed</p>
           <span class="number" id="user-water-by-average">57</span> <p> ounces of water average</p>
         </container>
       </section>
       <section>
         <container class="container-center" id="user-sleep-day" role="document" tabindex="0">
-          <h3>Last Night"s Sleep</h3>
+          <h3>Last Night's Sleep</h3>
           <p class="number" id="user-sleep-by-day"></p>
           <h4>hours slept</h4>
           <p class="number" id="user-sleep-quality-by-day"></p>
@@ -155,7 +168,9 @@
         </container>
         <container id="user-sleep-week" tabindex="0">
           <h3>Your Sleep Quality & Hours</h3>
-          <canvas id="user-sleep-by-week"></canvas>
+          <canvas tabindex="0" id="user-sleep-by-week">
+            <span class='screen-reader-text'>This is a graph with weekly info.</span>
+          </canvas>
         </container>
         <container class="container-center" role="document" tabindex="0">
           <h3>Your Sleep Averages</h3>
@@ -168,7 +183,7 @@
       </section>
       <section>
         <container class="container-center" id="user-activity-day" role="document" tabindex="0">
-          <h3>Today"s Activity</h3>
+          <h3>Today's Activity</h3>
           <p class="number" id="user-current-step-count"></p>
           <h4>steps</h4>
           <p class="number" id="user-current-mins-active"></p>
@@ -182,22 +197,28 @@
           <p>In the last year you have climbed the Republic Plaza Building in Denver, CO <span id="republic-plaza-challenge"></span> times!</p>
         </container>
         <container class="triple-block" tabindex="0">
-          <section>
+          <section data-type="numSteps" data-values="steps">
             <h3>Your Step Count This Week</h3>
-            <canvas id="user-step-count-by-week"></canvas>
+            <canvas tabindex="0" id="user-step-count-by-week">
+              <span class='screen-reader-text'>This is a graph with weekly info.</span>
+            </canvas>
           </section>
-          <section>
+          <section data-type="minutesActive" data-values="minutes">
             <h3>Your Active Minutes This Week</h3>
-            <canvas id="user-mins-active-by-week"></canvas>
+            <canvas tabindex="0" id="user-mins-active-by-week">
+              <span class='screen-reader-text'>This is a graph with weekly info.</span>
+            </canvas>
           </section>
-          <section>
+          <section data-type="flightsOfStairs" data-values="flights">
             <h3>Your Stairs Climbed This Week</h3>
-            <canvas id="user-stairs-climbed-by-week"></canvas>
+            <canvas tabindex="0" id="user-stairs-climbed-by-week">
+              <span class='screen-reader-text'>This is a graph with weekly info.</span>
+            </canvas>
           </section>
           <ul>
-            <li data-number="1">Steps</li>
-            <li data-number="2">Minutes</li>
-            <li data-number="3">Stairs</li>
+            <li tabindex="0" data-number="1" role="button">Steps</li>
+            <li tabindex="0" data-number="2" role="button">Minutes</li>
+            <li tabindex="0" data-number="3" role="button">Stairs</li>
           </ul>
         </container>
       </section>
@@ -206,7 +227,9 @@
       <container role="document" tabindex="0">
         <h3>Friends: Weekly Step Challenge</h3>
         <p id="winner-name"></p>
-        <canvas id="friend-info"></canvas>
+        <canvas tabindex="0" id="friend-info">
+          <span class='screen-reader-text'>This is a graph with weekly challenge results.</span>
+        </canvas>
       </container>
       <container class="you-vs-world" role="document" tabindex="0">
         <h3>You vs The World</h3>
@@ -222,7 +245,9 @@
       </container>
       <container class="container-center" id="user-rested" tabindex="0">
         <h3>Step Trend</h3>
-        <canvas id="step-trend"></canvas>
+        <canvas tabindex="0" id="step-trend">
+          <span class='screen-reader-text'>This is a graph with step trend info.</span>
+        </canvas>
       </container>
     </main>
     </article>

@@ -33,6 +33,7 @@
       cursor: pointer;
       list-style-type: none;
       margin-left: 0.9em;
+      position: relative;
       img {
         height: 1.8em;
         width: 1.8em;
@@ -59,10 +60,8 @@
   position: absolute;
   border-radius: 0 0 0.6em 0.6em;
   box-shadow: none;
-  width: 30%;
-  top: 8.1em;
-  right: 0;
-  z-index: 2000;
+  width: 30vw;
+  z-index: 20;
   label {
     display: block;
     font-weight: 700;
@@ -72,18 +71,18 @@
     font-weight: bold;
   }
   input {
-    @extend .elements;
+    @extend %elements;
     width: 100%;
   }
   button {
     @extend label;
-    @extend .elements;
+    @extend %elements;
     cursor: pointer;
     margin: auto;
   }
 }
 
-.elements {
+%elements {
   font-size: 1em;
   font-family: $base-font;
   margin-bottom: 0.9em;

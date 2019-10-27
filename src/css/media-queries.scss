@@ -15,7 +15,7 @@ $break-largeSize: 775px;
       font-size: .6em;
     }
     .dropdown {
-      position: unset;
+      position: absolute;
     }
     .header-date {
       font-size: .7em;
@@ -44,7 +44,7 @@ $break-largeSize: 775px;
       font-size: .8em;
     }
     .dropdown {
-      position: unset;
+      position: absolute;
     }
     .header-date {
       font-size: 1em;
@@ -66,7 +66,6 @@ $break-largeSize: 775px;
 @media screen and (min-width: $break-largeSize){
 
   .header {
-    // background-color: lavender;
     height: 290px;
     display: flex;
     flex-direction: column;
@@ -82,7 +81,7 @@ $break-largeSize: 775px;
       margin-top: 20px;
     }
     .dropdown {
-      position: unset;
+      position: absolute;
     }
     .header-date {
       font-size: 1em;
