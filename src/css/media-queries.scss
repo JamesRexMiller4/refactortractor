@@ -11,22 +11,27 @@ $break-largeSize: 775px;
 @media only screen and (max-width: $break-mobile) {
   .header {
     @include headerTemplate;
+    
       &>h1 {
         font-size: 2.2em;
         margin-top: 2em;
       }
+      
       &>p {
         font-size: 1.8em;
       }
+
       .dropdown {
         margin-top: 2em;
         width: 60%;
         z-index: 1;
       }
+
       .header-date {
         font-size: 1em;
         margin-top: 1em;
       }
+
       .header-welcome {
         font-size: 1.5em;
       }
@@ -37,20 +42,25 @@ $break-largeSize: 775px;
   .header {
     @include headerTemplate;
     height: 20em;
+
       &>label {
         width: 90%;
       }
+
       &>h1 {
         font-size: 2.5em;
         margin-top: .1em;
       }
+
       &>p {
         font-size: 1.5em;
       }
+
       .dropdown {
         width: 30%;
         z-index: 1;
       }
+
       .header-date {
         font-size: 1.2em;
         margin-top: 3em;
@@ -62,21 +72,26 @@ $break-largeSize: 775px;
   .header {
     @include headerTemplate;
     height: 21em;
+
       &>h1 {
         font-size: 3.5em;
         margin: 0;
       }
+
       .header-welcome {
         font-size: 1.8em;
         margin-top: 20px;
       }
+
       .dropdown {
         width: 18%;
         z-index: 1;
       }
+
       .header-date {
         font-size: 1.3em;
       }
+
       &>ul {
         width: 45%;
       }
