@@ -26,16 +26,91 @@
       <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
       <ul class="icons">
         <li>
-            <img class="icon3" tabindex="4" src="../images/water-lightmode.svg" alt="add water icon" data-type="water" role="button">
+            <img class="icon3" tabindex="0" src="../images/water-lightmode.svg" alt="add water info" data-type="water" role="button">
+            <container tabindex="0" role="form" data-type="water">
+              <section class="water-inputs inputs">
+                <h3>Add Water Info</h3>
+                <form class="water-input" action="index.html" method="post">
+                  <label for="ounces-input">Ounces</label>
+                  <input id="ounces-input"
+                    tabindex="0"
+                    pattern="[\d]+"
+                    title="A ounces number is a digit."
+                    type="number"
+                    required>
+                  <button type="button" name="button" data-type="hydration">Update Info</button>
+                </form>
+              </section>
+            </container>
         </li>
         <li>
-          <img class="icon1" tabindex="3" src="../images/sleep-lightmode.svg" alt="add sleep icon" data-type="sleep" role="button">
+          <img class="icon1" tabindex="0" src="../images/sleep-lightmode.svg" alt="add sleep info" data-type="sleep" role="button">
+          <container tabindex="0" role="form" data-type="sleep">
+            <section class="sleep-inputs inputs">
+              <h3>Add Sleep Info</h3>
+              <form class="sleep-input" action="index.html" method="post">
+                <label for="hours-input">Hours</label>
+                <input id="hours-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A hours number is a digit."
+                  type="number"
+                  required>
+                <label for="quality-input">Sleep Quality</label>
+                <input id="quality-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A quality number is a digit."
+                  type="number"
+                  required>
+                <button type="button" name="button" data-type="sleep">Update Info</button>
+              </form>
+            </section>
+          </container>
         </li>
         <li>
-          <img class="icon2" tabindex="2" src="../images/activities-lightmode.svg" alt="add activity icon" data-type="activities" role="button">
+          <img class="icon2" tabindex="0" src="../images/activities-lightmode.svg" alt="add activity info" data-type="activities" role="button">
+          <container tabindex="0" role="form" data-type="activities">
+            <section class="activities-inputs inputs">
+              <h3>Add Activity Info</h3>
+              <form class="activity-input" action="index.html" method="post">
+                <label for="steps-input">Steps</label>
+                <input id="steps-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A steps number is a digit."
+                  type="number"
+                  required>
+                <label for="minutes-input">Minutes</label>
+                <input id="minutes-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A minutes number is a digit."
+                  type="number"
+                  required>
+                <label for="flights-input">Flights</label>
+                <input id="flights-input"
+                  tabindex="0"
+                  pattern="[\d]+"
+                  title="A flights number is a digit."
+                  type="number"
+                  required>
+                <button type="button" name="button" data-type="activity">Update Info</button>
+              </form>
+            </section>
+          </container>
         </li>
         <li>
-          <img class="icon" tabindex="1" src="../images/user-lightmode.svg" alt="user icon" data-type="user" role="button">
+          <img class="icon" tabindex="0" src="../images/user-lightmode.svg" alt="see user info" data-type="user" role="button">
+          <container tabindex="0" role="document" data-type="user">
+            <section class="user-inputs">
+              <h3>User Info</h3>
+              <p class="user-info">Name: <span id="user-info-name"></span></p>
+              <p class="user-info">Email: <span id="user-info-email"></span></p>
+              <p class="user-info">Address: <span id="user-info-address"></span></p>
+              <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
+            </section>
+          </container>
         </li>
       </ul>
       <container id="user-admin-info" role="document">
