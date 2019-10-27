@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import pattern from 'patternomaly';
 
 import User from './User';
 import Repository from './Repository';
