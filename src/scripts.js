@@ -34,8 +34,8 @@ let repository;
 let hydration;
 let sleep;
 let activity;
-let friendNames;
-let friendSteps;
+let friendNames = [];
+let friendSteps = [];
 
 Promise.all([
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
@@ -69,9 +69,15 @@ Promise.all([
 })
 
 function updateBoard() {
-  friendNames = user.findFriendsInfo(repository.data, 'name');
-  friendSteps = user.findFriendsInfo(repository.data, 'dailyStepGoal');
-
+  user.rateFriends(repository.data, activity).forEach(person => {
+    if (person.name !== user.returnUserFirstName()) {
+      friendNames.push(person.name);
+      friendSteps.push(person.steps);
+    } else {
+      friendNames.push('You');
+      friendSteps.push(person.steps);
+    }
+  });
   const currentDate = '2019/09/15';
   const userSleepData = user.findCurrentUserData(sleep.data)
   const userHydroData = user.findCurrentUserData(hydration.data)
@@ -103,7 +109,7 @@ function updateBoard() {
   $('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', userActivityData))
   $('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', userActivityData))
   $('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', userActivityData))
-  // $('#winner-name').text(returnFriendChallengeWinner(user, activity.data))
+  $('#winner-name').text(returnFriendChallengeWinner(user, activity))
   $('#user-water-trend-week').text(displayWaterStatus());
   $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(userActivityData));
 }
@@ -138,17 +144,14 @@ function displayWaterStatus() {
 
 function returnFriendChallengeWinner(newUser, activityRepo) {
   const names = newUser.rateFriends(repository.data, activityRepo);
-  console.log(names)
-  if (names[0] === newUser.name) {
+  if (names[0].name === newUser.returnUserFirstName()) {
     return `You win!!`;
   }
-  return `${names[0]} is the Winner!`
+  return `${names[0].name} is the Winner!`
 }
 
 function updateCharts() {
   const stepsTrend = activity.returnThreeDayStepStreak(user.findCurrentUserData(activity.data))[0];
-  friendNames = user.findFriendsInfo(repository.data, 'name');
-  friendSteps = user.findFriendsInfo(repository.data, 'dailyStepGoal');
 
   Chart.defaults.global.defaultFontColor = 'black';
   const weekDays = repository.findWeekDays(sleep.data);

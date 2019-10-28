@@ -35,7 +35,7 @@ class Repository {
   }
 
   findTotalByWeek(metric, dataset) {
-    return dataset.returnMetricByWeek(metric, dataGroup).reduce((sum, data) => sum + data, 0);
+    return this.returnMetricByWeek(metric, dataset).reduce((sum, data) => sum + data, 0);
   }
 
   returnMetricByWeek(metric, dataset) {
