@@ -22,9 +22,9 @@ module.exports = {
               {
                 loader: 'file-loader',
                 options: {
-                  name: '[name].[ext]',
+                  name: './images/[hash].[ext]',
                   outputPath: 'images/',
-                  publicPath: '/refactortractor/'
+                  publicPath: 'images/'
                 }
               }
             ]
