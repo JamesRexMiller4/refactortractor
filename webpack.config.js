@@ -23,8 +23,8 @@ module.exports = {
                 loader: 'file-loader',
                 options: {
                   name: '[name].[ext]',
-                  outputPath: '/refactortractor',
-                  publicPath: '/refactortractor/'
+                  outputPath: './images',
+                  publicPath: './images'
                 }
               }
             ]
