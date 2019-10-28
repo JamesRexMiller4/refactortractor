@@ -29,13 +29,13 @@ import './images/activities-darkmode.svg'
 
 import Chart from 'chart.js';
 
-let user;
-let repository;
-let hydration;
-let sleep;
-let activity;
-let friendNames = [];
-let friendSteps = [];
+let user,
+    repository,
+    hydration,
+    sleep,
+    activity;
+let friendNames = [],
+    friendSteps = [];
 let userSleepData,
     userHydroData,
     userActivityData;
@@ -77,6 +77,7 @@ function updateBoard() {
   userSleepData = user.findCurrentUserData(sleep.data);
   userHydroData = user.findCurrentUserData(hydration.data);
   userActivityData = user.findCurrentUserData(activity.data);
+
   $('#user-name').text(user.returnUserFirstName());
   $('#current-date').text(currentDate);
   updateUserInfo();
@@ -84,7 +85,6 @@ function updateBoard() {
   updateSleepUserInfo();
   updateActivityUserInfo();
   updateFriendChallenge();
-  $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(userActivityData));
 }
 
 function updateUserInfo() {
@@ -117,6 +117,7 @@ function updateActivityUserInfo() {
     $(`.you-vs-world span[data-info="all-${el}"]`).text(activity.returnAverage(el));
   });
   $('#user-activity-day p[data-info="miles"]').text(activity.returnMilesWalkedByDate(userActivityData, user));
+  $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(userActivityData));
 }
 
 function generateRandomUserId() {
@@ -523,7 +524,13 @@ function updateStepTrendChart() {
   });
 }
 
-// *** EVENT LISTENERS FOR HEADER ***
+// *** EVENT LISTENERS ***
+$('body').on('keydown', function(event) {
+  if (event.keyCode === 13) {
+    $(event.target).click();
+  }
+});
+
 $('.toggle label').on('click', function() {
   if ($(this).siblings().prop('checked')) {
     changeMode('light');
@@ -544,9 +551,10 @@ $('.dropdown header').on('click', function() {
 });
 
 $('.dropdown div p').on('click', function() {
+  const $type = $(this).text().split(' ')[0].toLowerCase();
   $('.dropdown header p').text($(this).text());
-  $('.dropdown input').val($(this).text());
   $(this).parent().hide();
+  applyFilter($type);
 });
 
 $('.triple-block ul li').on('click', function() {
@@ -558,6 +566,41 @@ $('.triple-block ul li').on('click', function() {
   'border-bottom': 'none'});
   changeScreenReader(activity, user, $number);
 });
+
+$('.inputs button').on('click', function() {
+  const $vals = $(this).siblings('input');
+  const type = $(this).data('type');
+  let results = [];
+  $vals.each(function() {
+    results = [...results, /\d/g.test($(this).val())];
+  });
+  if (!results.includes(false)) {
+    switchFetch(type, $vals);
+  }
+  $(this).parent().trigger("reset");
+});
+
+$('body').mouseup(function (event){
+  const elements = [...$('.icons container'), ...$('.dropdown div')];
+  elements.forEach(el => {
+    if (!$(el).is(event.target) && $(el).has(event.target).length === 0) {
+        $(el).hide();
+    }
+  });
+});
+
+$('.last').on('blur', function() {
+  $('.icons container').hide();
+});
+
+$('.end').on('blur', function() {
+  $('.dropdown div').hide();
+});
+
+function applyFilter(type) {
+  $(`.main container`).hide();
+  $(`.main container.${type}`).show();
+}
 
 function changeScreenReader(activity, user, number) {
   const block = $(`.triple-block section:nth-child(${number})`);
@@ -582,19 +625,6 @@ function changeMode(mode) {
     $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
   });
 }
-
-$('.inputs button').on('click', function() {
-  const $vals = $(this).siblings('input');
-  const type = $(this).data('type');
-  let results = [];
-  $vals.each(function() {
-    results = [...results, /\d/g.test($(this).val())];
-  });
-  if (!results.includes(false)) {
-    switchFetch(type, $vals);
-  }
-  $(this).parent().trigger("reset");
-});
 
 function switchFetch(type, values) {
   switch (type) {
@@ -642,9 +672,3 @@ function switchFetch(type, values) {
       break;
   }
 }
-
-$('body').on('keydown', function(event) {
-  if (event.keyCode === 13) {
-    $(event.target).click();
-  }
-});
