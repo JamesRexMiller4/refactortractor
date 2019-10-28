@@ -22,7 +22,7 @@ module.exports = {
               {
                 loader: 'file-loader',
                 options: {
-                  name: './images/[hash].[ext]',
+                  name: '[name].[ext]',
                   outputPath: 'images/',
                   publicPath: 'images/'
                 }
