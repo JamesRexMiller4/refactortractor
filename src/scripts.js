@@ -167,14 +167,21 @@ function returnFriendChallengeWinner(newUser, activityRepo) {
   return `${names[0].name} is the Winner!`
 }
 
-function updateCharts() {
-  const stepsTrend = activity.returnThreeDayStepStreak(user.findCurrentUserData(activity.data))[0];
-
-  Chart.defaults.global.defaultFontColor = 'black';
+function updateCharts(color) {
+  Chart.defaults.global.defaultFontColor = color;
   const weekDays = repository.findWeekDays(sleep.data);
+  updateChartWaterByWeek(weekDays);
+  updateChartSleepByWeek(weekDays);
+  updateChartStepsByWeek(weekDays);
+  updateChartMinutesByWeek(weekDays);
+  updateChartStairsByWeek(weekDays);
+  updateFriendChallengeChart();
+  updateStepTrendChart();
+}
 
+function updateChartWaterByWeek(weekDays) {
   var ctx = $('#user-water-by-week');
-  const weekHydroUserInfo = hydration.returnMetricByWeek('numOunces', user.findCurrentUserData(hydration.data));
+  const weekHydroUserInfo = hydration.returnMetricByWeek('numOunces', userHydroData);
   weekHydroUserInfo.forEach((el, i) => {
     ctx.append(`
       <span class='screen-reader-text'>${el} ounces were drinked on ${weekDays[i]}.</span>
@@ -221,9 +228,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartSleepByWeek(weekDays) {
   var ctx = $('#user-sleep-by-week');
-  const weekSleepQualityUserInfo = sleep.returnMetricByWeek('sleepQuality', user.findCurrentUserData(sleep.data));
+  const weekSleepQualityUserInfo = sleep.returnMetricByWeek('sleepQuality', userSleepData);
   weekSleepQualityUserInfo.forEach((el, i) => {
     ctx.append(`
       <span class='screen-reader-text'> On ${weekDays[i]} your sleep quality was ${el}.</span>
@@ -293,9 +302,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartStepsByWeek(weekDays) {
   var ctx = $('#user-step-count-by-week');
-  const stepsUser = activity.returnMetricByWeek('numSteps', user.findCurrentUserData(activity.data));
+  const stepsUser = activity.returnMetricByWeek('numSteps', userActivityData);
   stepsUser.forEach((el, i) => {
     ctx.append(`
       <span class='screen-reader-text'>On ${weekDays[i]} you made ${el} steps.</span>
@@ -337,9 +348,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartMinutesByWeek(weekDays) {
   var ctx = $('#user-mins-active-by-week');
-  const minutesUser = activity.returnMetricByWeek('minutesActive', user.findCurrentUserData(activity.data));
+  const minutesUser = activity.returnMetricByWeek('minutesActive', userActivityData);
   var activityByWeek = new Chart(ctx, {
     type: 'line',
     data: {
@@ -374,9 +387,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartStairsByWeek(weekDays) {
   var ctx = $('#user-stairs-climbed-by-week');
-  const flightsUser = activity.returnMetricByWeek('flightsOfStairs', user.findCurrentUserData(activity.data));
+  const flightsUser = activity.returnMetricByWeek('flightsOfStairs', userActivityData);
   var stairsByWeek = new Chart(ctx, {
     type: 'line',
     data: {
@@ -411,7 +426,9 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateFriendChallengeChart() {
   var ctx = $('#friend-info');
   friendSteps.forEach((el, i) => {
     ctx.append(`
@@ -461,7 +478,10 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateStepTrendChart() {
+  const stepsTrend = activity.returnThreeDayStepStreak(userActivityData)[0];
   var ctx = $('#step-trend');
   Object.keys(stepsTrend).forEach(el => {
     ctx.append(`
@@ -501,18 +521,17 @@ function updateCharts() {
       }
     }
   });
-
 }
-
 
 // *** EVENT LISTENERS FOR HEADER ***
 $('.toggle label').on('click', function() {
   if ($(this).siblings().prop('checked')) {
     changeMode('light');
+    updateCharts('dark');
   } else {
     changeMode('dark');
+    updateCharts('white');
   }
-  Chart.defaults.global.defaultFontColor = $('body').css('--base-color');
 });
 
 $('.icons li img').on('click', function() {
