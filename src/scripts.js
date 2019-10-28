@@ -29,13 +29,17 @@ import './images/activities-darkmode.svg'
 
 import Chart from 'chart.js';
 
-let user;
-let repository;
-let hydration;
-let sleep;
-let activity;
-let friendNames;
-let friendSteps;
+let user,
+    repository,
+    hydration,
+    sleep,
+    activity;
+let friendNames = [],
+    friendSteps = [];
+let userSleepData,
+    userHydroData,
+    userActivityData;
+let currentDate;
 
 Promise.all([
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
@@ -62,49 +66,57 @@ Promise.all([
   hydration = new Hydration(data[1]);
   sleep = new Sleep(data[2]);
   activity = new Activity(data[3]);
-  repository.findToday(activity.data);
+  repository.findToday(hydration.data);
 }).then(() => {
   updateBoard();
-  updateCharts();
+  updateCharts('black');
 })
 
 function updateBoard() {
-  friendNames = user.findFriendsInfo(repository.data, 'name');
-  friendSteps = user.findFriendsInfo(repository.data, 'dailyStepGoal');
-
-  const currentDate = '2019/09/15';
-  const userSleepData = user.findCurrentUserData(sleep.data)
-  const userHydroData = user.findCurrentUserData(hydration.data)
-  const userActivityData = user.findCurrentUserData(activity.data)
+  currentDate = '2019/09/15';
+  userSleepData = user.findCurrentUserData(sleep.data);
+  userHydroData = user.findCurrentUserData(hydration.data);
+  userActivityData = user.findCurrentUserData(activity.data);
 
   $('#user-name').text(user.returnUserFirstName());
   $('#current-date').text(currentDate);
-  $('#user-info-name').text(user.name);
-  $('#user-info-email').text(user.email);
-  $('#user-info-address').text(user.address);
-  $('#user-info-step-goal').text(user.dailyStepGoal);
-  $('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', userHydroData, currentDate));
-  $('#user-sleep-by-day').text(sleep.returnMetricByDate('hoursSlept', userSleepData, currentDate));
-  $('#user-sleep-quality-by-day').text(sleep.returnMetricByDate('sleepQuality', userSleepData, currentDate));
-  $('#user-sleep-by-week').text(sleep.returnMetricByWeek('hoursSlept', userSleepData));
-  $('#user-sleep-quality-by-week').text(sleep.returnMetricByWeek('sleepQuality', userSleepData));
-  $('#user-average-sleep-quality').text(sleep.returnAverage('sleepQuality', userSleepData));
-  $('#user-average-hours-slept').text(sleep.returnAverage('hoursSlept', userSleepData));
-  $('#user-current-step-count').text(activity.returnMetricByDate('numSteps', userActivityData, currentDate));
+  updateUserInfo();
+  updateWaterUserInfo();
+  updateSleepUserInfo();
+  updateActivityUserInfo();
+  updateFriendChallenge();
+}
+
+function updateUserInfo() {
+  let info = ['name', 'email', 'address', 'dailyStepGoal'];
+  info.forEach(el => {
+    $(`.user-inputs span[data-info=${el}]`).text(user[el]);
+  })
+}
+
+function updateWaterUserInfo() {
+    $('#user-water-by-day').text(hydration.returnMetricByDate('numOunces', userHydroData, currentDate));
+    $('#user-water-by-average').text(hydration.returnAverage('numOunces', userHydroData));
+    $('#user-water-trend-week').text(displayWaterStatus());
+}
+
+function updateSleepUserInfo() {
+  let info = ['hoursSlept', 'sleepQuality'];
+  info.forEach(el => {
+    $(`#user-sleep-day p[data-info=${el}]`).text(sleep.returnMetricByDate(el, userSleepData, currentDate));
+    $(`#user-average-sleep p[data-info=${el}]`).text(sleep.returnAverage(el, userSleepData));
+  });
   $('#user-rested').text(displaySleepStatus());
-  $('#user-current-mins-active').text(activity.returnMetricByDate('minutesActive', userActivityData, currentDate));
-  $('#user-current-miles-walked').text(activity.returnMilesWalkedByDate(userActivityData, user));
-  $('#user-current-step-count-vs-average').text(activity.returnAverage('numSteps', userActivityData));
-  $('#all-users-average-step-count').text(activity.returnAverage('numSteps'));
-  $('#user-current-stairs-climbed').text(activity.returnAverage('flightsOfStairs', userActivityData));
-  $('#all-users-average-stairs-climbed').text(activity.returnAverage('flightsOfStairs'));
-  $('#user-current-active-mins').text(activity.returnAverage('minutesActive', userActivityData));
-  $('#all-users-average-active-mins').text(activity.returnAverage('minutesActive'));
-  $('#user-step-count-by-week').text(activity.returnMetricByWeek('numsSteps', userActivityData))
-  $('#user-stairs-climbed-by-week').text(activity.returnMetricByWeek('flightsOfStairs', userActivityData))
-  $('#user-mins-active-by-week').text(activity.returnMetricByWeek('minutesActive', userActivityData))
-  // $('#winner-name').text(returnFriendChallengeWinner(user, activity.data))
-  $('#user-water-trend-week').text(displayWaterStatus());
+}
+
+function updateActivityUserInfo() {
+  let info = ['numSteps', 'minutesActive', 'flightsOfStairs'];
+  info.forEach(el => {
+    $(`#user-activity-day p[data-info=${el}]`).text(activity.returnMetricByDate(el, userActivityData, currentDate));
+    $(`.you-vs-world span[data-info="user-${el}"]`).text(activity.returnAverage(el, userActivityData));
+    $(`.you-vs-world span[data-info="all-${el}"]`).text(activity.returnAverage(el));
+  });
+  $('#user-activity-day p[data-info="miles"]').text(activity.returnMilesWalkedByDate(userActivityData, user));
   $('#republic-plaza-challenge').text(activity.republicPlazaChallenge(userActivityData));
 }
 
@@ -117,7 +129,6 @@ function displaySleepStatus() {
   sleep.checkUserRestedByDate(user.findCurrentUserData(sleep.data), '2019/09/15')
   if (sleep.isRested === true) {
     $('#sleep-status').attr({src: '../images/ghost-happy.svg', alt: 'happy ghost icon'});
-    $('#sleep-staus')
     $('#sleep-comment').text('You\'ve been getting enough sleep!');
   } else {
     $('#sleep-status').attr({src: '../images/ghost-sad.svg', alt: 'sad ghost icon'});
@@ -136,25 +147,42 @@ function displayWaterStatus() {
   }
 }
 
-function returnFriendChallengeWinner(newUser, activityRepo) {
-  const names = newUser.rateFriends(repository.data, activityRepo);
-  console.log(names)
-  if (names[0] === newUser.name) {
-    return `You win!!`;
-  }
-  return `${names[0]} is the Winner!`
+function updateFriendChallenge() {
+  user.rateFriends(repository.data, activity).forEach(person => {
+    if (person.name !== user.returnUserFirstName()) {
+      friendNames.push(person.name);
+      friendSteps.push(person.steps);
+    } else {
+      friendNames.push('You');
+      friendSteps.push(person.steps);
+    }
+  });
+  $('#winner-name').text(returnFriendChallengeWinner(user, activity));
 }
 
-function updateCharts() {
-  const stepsTrend = activity.returnThreeDayStepStreak(user.findCurrentUserData(activity.data))[0];
-  friendNames = user.findFriendsInfo(repository.data, 'name');
-  friendSteps = user.findFriendsInfo(repository.data, 'dailyStepGoal');
+function returnFriendChallengeWinner(newUser, activityRepo) {
+  const names = newUser.rateFriends(repository.data, activityRepo);
+  if (names[0].name === newUser.returnUserFirstName()) {
+    return `You win!!`;
+  }
+  return `${names[0].name} is the Winner!`
+}
 
-  Chart.defaults.global.defaultFontColor = 'black';
+function updateCharts(color) {
+  Chart.defaults.global.defaultFontColor = color;
   const weekDays = repository.findWeekDays(sleep.data);
+  updateChartWaterByWeek(weekDays);
+  updateChartSleepByWeek(weekDays);
+  updateChartStepsByWeek(weekDays);
+  updateChartMinutesByWeek(weekDays);
+  updateChartStairsByWeek(weekDays);
+  updateFriendChallengeChart();
+  updateStepTrendChart();
+}
 
+function updateChartWaterByWeek(weekDays) {
   var ctx = $('#user-water-by-week');
-  const weekHydroUserInfo = hydration.returnMetricByWeek('numOunces', user.findCurrentUserData(hydration.data));
+  const weekHydroUserInfo = hydration.returnMetricByWeek('numOunces', userHydroData);
   weekHydroUserInfo.forEach((el, i) => {
     ctx.append(`
       <span class='screen-reader-text'>${el} ounces were drinked on ${weekDays[i]}.</span>
@@ -201,9 +229,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartSleepByWeek(weekDays) {
   var ctx = $('#user-sleep-by-week');
-  const weekSleepQualityUserInfo = sleep.returnMetricByWeek('sleepQuality', user.findCurrentUserData(sleep.data));
+  const weekSleepQualityUserInfo = sleep.returnMetricByWeek('sleepQuality', userSleepData);
   weekSleepQualityUserInfo.forEach((el, i) => {
     ctx.append(`
       <span class='screen-reader-text'> On ${weekDays[i]} your sleep quality was ${el}.</span>
@@ -273,9 +303,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartStepsByWeek(weekDays) {
   var ctx = $('#user-step-count-by-week');
-  const stepsUser = activity.returnMetricByWeek('numSteps', user.findCurrentUserData(activity.data));
+  const stepsUser = activity.returnMetricByWeek('numSteps', userActivityData);
   stepsUser.forEach((el, i) => {
     ctx.append(`
       <span class='screen-reader-text'>On ${weekDays[i]} you made ${el} steps.</span>
@@ -317,9 +349,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartMinutesByWeek(weekDays) {
   var ctx = $('#user-mins-active-by-week');
-  const minutesUser = activity.returnMetricByWeek('minutesActive', user.findCurrentUserData(activity.data));
+  const minutesUser = activity.returnMetricByWeek('minutesActive', userActivityData);
   var activityByWeek = new Chart(ctx, {
     type: 'line',
     data: {
@@ -354,9 +388,11 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateChartStairsByWeek(weekDays) {
   var ctx = $('#user-stairs-climbed-by-week');
-  const flightsUser = activity.returnMetricByWeek('flightsOfStairs', user.findCurrentUserData(activity.data));
+  const flightsUser = activity.returnMetricByWeek('flightsOfStairs', userActivityData);
   var stairsByWeek = new Chart(ctx, {
     type: 'line',
     data: {
@@ -391,7 +427,9 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateFriendChallengeChart() {
   var ctx = $('#friend-info');
   friendSteps.forEach((el, i) => {
     ctx.append(`
@@ -441,7 +479,10 @@ function updateCharts() {
       }
     }
   });
+}
 
+function updateStepTrendChart() {
+  const stepsTrend = activity.returnThreeDayStepStreak(userActivityData)[0];
   var ctx = $('#step-trend');
   Object.keys(stepsTrend).forEach(el => {
     ctx.append(`
@@ -481,18 +522,23 @@ function updateCharts() {
       }
     }
   });
-
 }
 
+// *** EVENT LISTENERS ***
+$('body').on('keydown', function(event) {
+  if (event.keyCode === 13) {
+    $(event.target).click();
+  }
+});
 
-// *** EVENT LISTENERS FOR HEADER ***
 $('.toggle label').on('click', function() {
   if ($(this).siblings().prop('checked')) {
     changeMode('light');
+    updateCharts('dark');
   } else {
     changeMode('dark');
+    updateCharts('white');
   }
-  Chart.defaults.global.defaultFontColor = $('body').css('--base-color');
 });
 
 $('.icons li img').on('click', function() {
@@ -505,9 +551,10 @@ $('.dropdown header').on('click', function() {
 });
 
 $('.dropdown div p').on('click', function() {
+  const $type = $(this).text().split(' ')[0].toLowerCase();
   $('.dropdown header p').text($(this).text());
-  $('.dropdown input').val($(this).text());
   $(this).parent().hide();
+  applyFilter($type);
 });
 
 $('.triple-block ul li').on('click', function() {
@@ -519,6 +566,65 @@ $('.triple-block ul li').on('click', function() {
   'border-bottom': 'none'});
   changeScreenReader(activity, user, $number);
 });
+
+$('.inputs button').on('click', function() {
+  const $vals = $(this).siblings('input');
+  const type = $(this).data('type');
+  let results = [];
+  $vals.each(function() {
+    results = [...results, /\d/g.test($(this).val())];
+  });
+  if (!results.includes(false)) {
+    switchFetch(type, $vals);
+    showSuccess(this);
+  } else {
+    showError(this);
+  }
+  $(this).parent().trigger("reset");
+});
+
+$('body').mouseup(function (event){
+  const elements = [...$('.icons container'), ...$('.dropdown div')];
+  elements.forEach(el => {
+    if (!$(el).is(event.target) && $(el).has(event.target).length === 0) {
+      $(el).hide();
+    }
+  });
+});
+
+$('.last').on('blur', function() {
+  $('.icons container').hide();
+});
+
+$('.end').on('blur', function() {
+  $('.dropdown div').hide();
+});
+
+function applyFilter(type) {
+  $(`.main container`).hide();
+  $(`.main container.${type}`).show();
+}
+
+function showSuccess(target) {
+  $(target).siblings('.error').show();
+  $(target).siblings('.error').text('Info has been sent');
+  $(target).siblings('.error').css('color', 'green');
+  setTimeout(function() {
+    $('.error').hide();
+    $('input').css({'border': '1px solid black', 'box-shadow': 'none'});
+  }, 2000);
+}
+
+function showError(target) {
+  $(target).siblings('.error').show();
+  $(target).siblings('.error').text('Please, enter valid data');
+  $(target).siblings('.error').css('color', 'red')
+  $(target).siblings('input').css({'border': '1px solid red', 'box-shadow': '0 0 2px 0 red'});
+  setTimeout(function() {
+    $('.error').hide();
+    $('input').css({'border': '1px solid black', 'box-shadow': 'none'});
+  }, 2000);
+}
 
 function changeScreenReader(activity, user, number) {
   const block = $(`.triple-block section:nth-child(${number})`);
@@ -543,19 +649,6 @@ function changeMode(mode) {
     $(this).attr('src', `./images/${$iconType}-${mode}mode.svg`);
   });
 }
-
-$('.inputs button').on('click', function() {
-  const $vals = $(this).siblings('input');
-  const type = $(this).data('type');
-  let results = [];
-  $vals.each(function() {
-    results = [...results, /\d/g.test($(this).val())];
-  });
-  if (!results.includes(false)) {
-    switchFetch(type, $vals);
-  }
-  $(this).parent().trigger("reset");
-});
 
 function switchFetch(type, values) {
   switch (type) {
@@ -603,39 +696,3 @@ function switchFetch(type, values) {
       break;
   }
 }
-
-$('.icons li>img').on('keydown', function(event) {
-  if (event.keyCode === 13) {
-    $(this).click();
-  }
-});
-
-$('.toggle').on('keydown', function(event) {
-  if (event.keyCode === 13) {
-    $(this).children('label').click();
-  }
-});
-
-$('.dropdown').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).children('header').click();
-  }
-});
-
-$('.dropdown div>p').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).click();
-  }
-});
-
-$('.inputs button').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).click();
-  }
-});
-
-$('.triple-block ul>li').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).click();
-  }
-});
