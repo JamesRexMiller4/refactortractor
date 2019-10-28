@@ -12,17 +12,20 @@ class User {
   }
 
   findFriendsInfo(dataset, info) {
-    return dataset.filter(person => person.friends.includes(this.id)).map(user => user[info]);
+    return dataset.filter(person => this.friends.includes(person.id)).map(user => user[info]);
   }
 
-  rateFriends(repo, activeRepo) {
+  rateFriends(repo, activity) {
     const ids = [...this.friends, this.id];
-    let friendsRepo =  repo.filter(activeUser => ids.includes(activeUser.id))
-    friendsRepo.reduce((challengeData, friend) => {
+    let friendsRepo =  repo.filter(activeUser => ids.includes(activeUser.id));
+    let results = friendsRepo.reduce((challengeData, friend) => {
       let userNew = new User(friend);
-      challengeData.push({name: userNew['name'], steps: activeRepo.findTotalByWeek('numSteps', userNew.findCurrentUserData(activeRepo.data))});
+      let steps = activity.findTotalByWeek('numSteps', userNew.findCurrentUserData(activity.data));
+      challengeData.push({name: userNew.returnUserFirstName(), steps: parseInt(steps)});
       return challengeData;
-    }, []).sort((userOne, userTwo) => userTwo.numSteps - userOne.numSteps);
+    }, []);
+    let sorted = results.sort((userOne, userTwo) => userTwo.steps - userOne.steps);
+    return sorted;
   }
 }
 export default User;

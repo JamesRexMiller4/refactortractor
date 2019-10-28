@@ -3,6 +3,7 @@ $bcg-color: var(--bcg-color);
 $section-bcg-color: var(--section-bcg-color);
 $base-color: var(--base-color);
 $accent-color: var(--accent-color);
+$error-color: #d12017;
 
 * {
   border: none;
@@ -119,12 +120,21 @@ container {
       list-style-type: none;
       margin-right: 0.9em;
       padding-bottom: 0.3em;
+      &:first-child {
+        border-bottom: 2px solid $base-color;
+        font-weight: 700;
+      }
       &:hover {
         border-bottom: 2px solid $base-color;
         font-weight: 700;
       }
     }
   }
+}
+
+canvas {
+  width: 300px;
+  height: 150px;
 }
 
 @import "./header";
