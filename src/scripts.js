@@ -576,6 +576,9 @@ $('.inputs button').on('click', function() {
   });
   if (!results.includes(false)) {
     switchFetch(type, $vals);
+    showSuccess(this);
+  } else {
+    showError(this);
   }
   $(this).parent().trigger("reset");
 });
@@ -584,7 +587,7 @@ $('body').mouseup(function (event){
   const elements = [...$('.icons container'), ...$('.dropdown div')];
   elements.forEach(el => {
     if (!$(el).is(event.target) && $(el).has(event.target).length === 0) {
-        $(el).hide();
+      $(el).hide();
     }
   });
 });
@@ -600,6 +603,27 @@ $('.end').on('blur', function() {
 function applyFilter(type) {
   $(`.main container`).hide();
   $(`.main container.${type}`).show();
+}
+
+function showSuccess(target) {
+  $(target).siblings('.error').show();
+  $(target).siblings('.error').text('Info has been sent');
+  $(target).siblings('.error').css('color', 'green');
+  setTimeout(function() {
+    $('.error').hide();
+    $('input').css({'border': '1px solid black', 'box-shadow': 'none'});
+  }, 2000);
+}
+
+function showError(target) {
+  $(target).siblings('.error').show();
+  $(target).siblings('.error').text('Please, enter valid data');
+  $(target).siblings('.error').css('color', 'red')
+  $(target).siblings('input').css({'border': '1px solid red', 'box-shadow': '0 0 2px 0 red'});
+  setTimeout(function() {
+    $('.error').hide();
+    $('input').css({'border': '1px solid black', 'box-shadow': 'none'});
+  }, 2000);
 }
 
 function changeScreenReader(activity, user, number) {
