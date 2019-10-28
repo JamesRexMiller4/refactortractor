@@ -7,13 +7,13 @@
   </head>
   <body>
     <header class="header" role="banner">
-      <form class="toggle" aria-label="Toggle Color Mode" tabindex="0" role="button">
+      <form class="toggle" aria-label="Toggle Color Mode" role="button">
       	<input type="checkbox" id="toggle-switch" />
-      	<label for="toggle-switch"></label>
+      	<label tabindex="0" for="toggle-switch"></label>
       </form>
-      <section class="dropdown" aria-label="Filter widgets" role="" type="button" tabindex="0">
+      <section class="dropdown" aria-label="Filter widgets" role="" type="button">
         <input type="hidden" value="All info">
-        <header><p aria-label="current filter: all info" role="text">All info</p></header>
+        <header tabindex="0"><p aria-label="current filter: all info" role="text">All info</p></header>
         <div role="menu">
           <p tabindex="0" aria-label="Show all info" role="button">All info</p>
           <p tabindex="0" aria-label="Show today info" role="button">Today</p>

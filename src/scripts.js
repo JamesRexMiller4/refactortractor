@@ -62,7 +62,7 @@ Promise.all([
   hydration = new Hydration(data[1]);
   sleep = new Sleep(data[2]);
   activity = new Activity(data[3]);
-  repository.findToday(activity.data);
+  repository.findToday(hydration.data);
 }).then(() => {
   updateBoard();
   updateCharts();
@@ -607,38 +607,8 @@ function switchFetch(type, values) {
   }
 }
 
-$('.icons li>img').on('keydown', function(event) {
+$('body').on('keydown', function(event) {
   if (event.keyCode === 13) {
-    $(this).click();
-  }
-});
-
-$('.toggle').on('keydown', function(event) {
-  if (event.keyCode === 13) {
-    $(this).children('label').click();
-  }
-});
-
-$('.dropdown').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).children('header').click();
-  }
-});
-
-$('.dropdown div>p').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).click();
-  }
-});
-
-$('.inputs button').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).click();
-  }
-});
-
-$('.triple-block ul>li').on('keydown', function() {
-  if (event.keyCode === 13) {
-    $(this).click();
+    $(event.target).click();
   }
 });
