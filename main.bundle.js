@@ -45274,9 +45274,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_coffin_svg__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_images_coffin_svg__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _images_ghost_1_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./images/ghost (1).svg */ "./src/images/ghost (1).svg");
 /* harmony import */ var _images_ghost_1_svg__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_images_ghost_1_svg__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _images_ghost_happy_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./images/ghost-happy.svg */ "ghost-happy.svg");
+/* harmony import */ var _images_ghost_happy_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./images/ghost-happy.svg */ "./src/images/ghost-happy.svg");
 /* harmony import */ var _images_ghost_happy_svg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_images_ghost_happy_svg__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _images_ghost_sad_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./images/ghost-sad.svg */ "ghost-sad.svg");
+/* harmony import */ var _images_ghost_sad_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./images/ghost-sad.svg */ "./src/images/ghost-sad.svg");
 /* harmony import */ var _images_ghost_sad_svg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_images_ghost_sad_svg__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _images_glass_empty_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./images/glass-empty.svg */ "glass-empty.svg");
 /* harmony import */ var _images_glass_empty_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_glass_empty_svg__WEBPACK_IMPORTED_MODULE_13__);
@@ -45430,10 +45430,10 @@ function generateRandomUserId() {
 function displaySleepStatus() {
   sleep.checkUserRestedByDate(user.findCurrentUserData(sleep.data), '2019/09/15')
   if (sleep.isRested === true) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: 'ghost-happy.svg', alt: 'happy ghost icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: './ghost-happy.svg', alt: 'happy ghost icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-comment').text('You\'ve been getting enough sleep!');
   } else {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: 'ghost-sad.svg', alt: 'sad ghost icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: './ghost-sad.svg', alt: 'sad ghost icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-comment').text('Getting 8 hours of sleep will make you more productive!');
   }
 }
@@ -45441,10 +45441,10 @@ function displaySleepStatus() {
 function displayWaterStatus() {
   let checkWater = hydration.returnDidUserDrinkEnoughWater('numOunces', user, hydration.data)
   if (checkWater === true) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: 'glass-full.svg', alt: 'full water glass icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: './glass-full.svg', alt: 'full water glass icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-comment').text('Keep up the good work! You\'ve averaged more than 64 ounces per day this week');
   } else {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: 'glass-empty.svg', alt: 'empty water glass icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: './glass-empty.svg', alt: 'empty water glass icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-comment').text('You need more water. Make sure you\'re staying hydrated!');
   }
 }
