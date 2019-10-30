@@ -17,7 +17,7 @@ describe('Hydration', () => {
   });
 
   it('should return a boolean determining whether the user drank enough water for the last week', () => {
-    expect(hydration.returnDidUserDrinkEnoughWater('numOunces', user)).to.equal(false);
+    expect(hydration.returnDidUserDrinkEnoughWater('numOunces', user, hydration.data)).to.equal(false);
   })
   
 });
