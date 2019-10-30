@@ -1,4 +1,6 @@
-# RefactorTractor Group Project by Raisa Primerova, Garrett Iannuzzi, and James Miller
+# RefactorTractor Group Project 
+
+## by Raisa Primerova, Garrett Iannuzzi, and James Miller
 
 ## Overview: 
 
