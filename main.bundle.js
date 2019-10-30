@@ -45430,10 +45430,10 @@ function generateRandomUserId() {
 function displaySleepStatus() {
   sleep.checkUserRestedByDate(user.findCurrentUserData(sleep.data), '2019/09/15')
   if (sleep.isRested === true) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: './ghost-happy.svg', alt: 'happy ghost icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: '../images/ghost-happy.svg', alt: 'happy ghost icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-comment').text('You\'ve been getting enough sleep!');
   } else {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: './ghost-sad.svg', alt: 'sad ghost icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-status').attr({src: '../images/ghost-sad.svg', alt: 'sad ghost icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sleep-comment').text('Getting 8 hours of sleep will make you more productive!');
   }
 }
