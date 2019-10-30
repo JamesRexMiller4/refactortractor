@@ -45116,9 +45116,9 @@ module.exports = "./dark.svg";
 
 /***/ }),
 
-/***/ "ghost (1).svg":
+/***/ "./src/images/ghost (1).svg":
 /*!**********************************!*\
-  !*** ghost (1).svg ***!
+  !*** ./src/images/ghost (1).svg ***!
   \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45127,9 +45127,9 @@ module.exports = "./ghost (1).svg";
 
 /***/ }),
 
-/***/ "ghost-happy.svg":
+/***/ "./src/images/ghost-happy.svg":
 /*!************************************!*\
-  !*** ghost-happy.svg ***!
+  !*** ./src/images/ghost-happy.svg ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45138,9 +45138,9 @@ module.exports = "./ghost-happy.svg";
 
 /***/ }),
 
-/***/ "ghost-sad.svg":
+/***/ "./src/images/ghost-sad.svg":
 /*!**********************************!*\
-  !*** ghost-sad.svg ***!
+  !*** ./src/images/ghost-sad.svg ***!
   \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45149,9 +45149,9 @@ module.exports = "./ghost-sad.svg";
 
 /***/ }),
 
-/***/ "glass-empty.svg":
+/***/ "./src/images/glass-empty.svg":
 /*!************************************!*\
-  !*** glass-empty.svg ***!
+  !*** ./src/images/glass-empty.svg ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45160,9 +45160,9 @@ module.exports = "./glass-empty.svg";
 
 /***/ }),
 
-/***/ "glass-full.svg":
+/***/ "./src/images/glass-full.svg":
 /*!***********************************!*\
-  !*** glass-full.svg ***!
+  !*** ./src/images/glass-full.svg ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45278,9 +45278,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_ghost_happy_svg__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_images_ghost_happy_svg__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _images_ghost_sad_svg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./images/ghost-sad.svg */ "./src/images/ghost-sad.svg");
 /* harmony import */ var _images_ghost_sad_svg__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_images_ghost_sad_svg__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _images_glass_empty_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./images/glass-empty.svg */ "glass-empty.svg");
+/* harmony import */ var _images_glass_empty_svg__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./images/glass-empty.svg */ "./src/images/glass-empty.svg");
 /* harmony import */ var _images_glass_empty_svg__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_images_glass_empty_svg__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _images_glass_full_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./images/glass-full.svg */ "glass-full.svg");
+/* harmony import */ var _images_glass_full_svg__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./images/glass-full.svg */ "./src/images/glass-full.svg");
 /* harmony import */ var _images_glass_full_svg__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_images_glass_full_svg__WEBPACK_IMPORTED_MODULE_14__);
 /* harmony import */ var _images_user_lightmode_svg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./images/user-lightmode.svg */ "./src/images/user-lightmode.svg");
 /* harmony import */ var _images_user_lightmode_svg__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_images_user_lightmode_svg__WEBPACK_IMPORTED_MODULE_15__);
@@ -45441,10 +45441,10 @@ function displaySleepStatus() {
 function displayWaterStatus() {
   let checkWater = hydration.returnDidUserDrinkEnoughWater('numOunces', user, hydration.data)
   if (checkWater === true) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: './glass-full.svg', alt: 'full water glass icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: '../images/glass-full.svg', alt: 'full water glass icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-comment').text('Keep up the good work! You\'ve averaged more than 64 ounces per day this week');
   } else {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: './glass-empty.svg', alt: 'empty water glass icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: '../images/glass-empty.svg', alt: 'empty water glass icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-comment').text('You need more water. Make sure you\'re staying hydrated!');
   }
 }
