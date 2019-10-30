@@ -45441,10 +45441,10 @@ function displaySleepStatus() {
 function displayWaterStatus() {
   let checkWater = hydration.returnDidUserDrinkEnoughWater('numOunces', user, hydration.data)
   if (checkWater === true) {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: 'glass-full.svg', alt: 'full water glass icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: './glass-full.svg', alt: 'full water glass icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-comment').text('Keep up the good work! You\'ve averaged more than 64 ounces per day this week');
   } else {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: 'glass-empty.svg', alt: 'empty water glass icon'});
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-status').attr({src: './glass-empty.svg', alt: 'empty water glass icon'});
     jquery__WEBPACK_IMPORTED_MODULE_0___default()('#water-comment').text('You need more water. Make sure you\'re staying hydrated!');
   }
 }
