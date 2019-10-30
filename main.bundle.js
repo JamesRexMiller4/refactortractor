@@ -45127,9 +45127,9 @@ module.exports = "./ghost (1).svg";
 
 /***/ }),
 
-/***/ "./src/images/ghost-happy.svg":
+/***/ "ghost-happy.svg":
 /*!************************************!*\
-  !*** ./src/images/ghost-happy.svg ***!
+  !*** ghost-happy.svg ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45138,9 +45138,9 @@ module.exports = "./ghost-happy.svg";
 
 /***/ }),
 
-/***/ "./src/images/ghost-sad.svg":
+/***/ "ghost-sad.svg":
 /*!**********************************!*\
-  !*** ./src/images/ghost-sad.svg ***!
+  !*** ghost-sad.svg ***!
   \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45149,9 +45149,9 @@ module.exports = "./ghost-sad.svg";
 
 /***/ }),
 
-/***/ "./src/images/glass-empty.svg":
+/***/ "glass-empty.svg":
 /*!************************************!*\
-  !*** ./src/images/glass-empty.svg ***!
+  !*** glass-empty.svg ***!
   \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -45160,9 +45160,9 @@ module.exports = "./glass-empty.svg";
 
 /***/ }),
 
-/***/ "./src/images/glass-full.svg":
+/***/ "glass-full.svg":
 /*!***********************************!*\
-  !*** ./src/images/glass-full.svg ***!
+  !*** glass-full.svg ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
