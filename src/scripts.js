@@ -527,6 +527,7 @@ function updateStepTrendChart() {
 // *** EVENT LISTENERS ***
 $('body').on('keydown', function(event) {
   if (event.keyCode === 13) {
+    event.preventDefault();
     $(event.target).click();
   }
 });
@@ -567,7 +568,7 @@ $('.triple-block ul li').on('click', function() {
   changeScreenReader(activity, user, $number);
 });
 
-$('.inputs button').on('click', function() {
+$('.inputs button').on('click', function(event) {
   const $vals = $(this).siblings('input');
   const type = $(this).data('type');
   let results = [];

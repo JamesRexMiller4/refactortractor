@@ -8,7 +8,7 @@ import activityTestData from '../test-data/activity-test-data';
 import userTestData from '../test-data/user-test-data.js';
 
 describe('Activity', () => {
-  let activity, user, userRepo;
+  let activity, user, userRepo, currentDate;
 
   beforeEach(() => {
     userRepo = new Repository(userTestData);
@@ -23,11 +23,11 @@ describe('Activity', () => {
   });
 
   it('should calculate a user\'s miles walked on a given day', function () {
-    expect(activity.returnMilesWalkedByDate(user)).to.equal(6);
+    expect(activity.returnMilesWalkedByDate(activity.data, user)).to.equal(6);
   });
 
   it('should be able to find streaks of three days where steps increased for each day', () => {
-    expect(activity.returnThreeDayStepStreak(user)).to.eql([{
+    expect(activity.returnThreeDayStepStreak(user.findCurrentUserData(activity.data))).to.eql([{
       "2019/06/15": 3577,
       "2019/06/16": 6637,
       "2019/06/17": 14329
@@ -41,7 +41,7 @@ describe('Activity', () => {
   });
 
   it('should return the number of times the user has climbed the equivelant of Republic Plaza', () => {
-    expect(activity.republicPlazaChallenge(activity.data, user)).to.equal(2);
+    expect(activity.republicPlazaChallenge(user.findCurrentUserData(activity.data))).to.equal(2);
   });
 
 });

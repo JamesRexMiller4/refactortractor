@@ -8,15 +8,17 @@ import userTestData from '../test-data/user-test-data';
 import sleepTestData from '../test-data/sleep-test-data';
 
 describe('Sleep', () => {
-  let sleepRepo, user, userRepo;
+  let sleepRepo, user, userRepo, currentDate;
   beforeEach(() => {
+    currentDate = '2019/09/15'
     userRepo = new Repository(userTestData);
     user = new User(userRepo.findUser(1));
     sleepRepo = new Sleep(sleepTestData);
+    sleepRepo.findToday(sleepTestData)
   });
   
   it('should return a boolean indicating whether a user got enough sleep on a particular date', () => {
-    sleepRepo.findToday(sleepTestData);
-    expect(sleepRepo.checkUserRestedByDate(user)).to.equal(true)
+    sleepRepo.findToday(sleepRepo.data);
+    expect(sleepRepo.checkUserRestedByDate(user.findCurrentUserData(sleepRepo.data), sleepRepo.date)).to.equal(true)
   });
 });
