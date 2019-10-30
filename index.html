@@ -7,18 +7,18 @@
   </head>
   <body>
     <header class="header" role="banner">
-      <form class="toggle" aria-label="Toggle Color Mode" tabindex="0" role="button">
+      <form class="toggle" aria-label="Toggle Color Mode" role="button">
       	<input type="checkbox" id="toggle-switch" />
-      	<label for="toggle-switch"></label>
+      	<label tabindex="0" for="toggle-switch"></label>
       </form>
-      <section class="dropdown" aria-label="Filter widgets" role="" type="button" tabindex="0">
+      <section class="dropdown" aria-label="Filter widgets" role="button" type="button">
         <input type="hidden" value="All info">
-        <header><p aria-label="current filter: all info" role="text">All info</p></header>
+        <header tabindex="0"><p aria-label="current filter: all info">All info</p></header>
         <div role="menu">
           <p tabindex="0" aria-label="Show all info" role="button">All info</p>
           <p tabindex="0" aria-label="Show today info" role="button">Today</p>
           <p tabindex="0" aria-label="Show week info" role="button">Week</p>
-          <p tabindex="0" aria-label="Show average info" role="button">Average</p>
+          <p tabindex="0" class="end" aria-label="Show average info" role="button">Average</p>
         </div>
       </section>
       <p class="header-date">Today's Date: <span id="current-date"></span></p>
@@ -26,11 +26,12 @@
       <p class="header-welcome">Welcome, <span id="user-name"></span>!</p>
       <ul class="icons">
         <li>
-            <img class="icon3" tabindex="0" src="../images/water-lightmode.svg" alt="add water info" data-type="water" role="button">
-            <container tabindex="0" role="form" data-type="water">
+            <img class="icon3" tabindex="0" src="water-lightmode.svg" alt="add water info" data-type="water" role="button">
+            <container class="header-block" tabindex="0" role="form" data-type="water">
               <section class="water-inputs inputs">
                 <h3>Add Water Info</h3>
                 <form class="water-input" action="index.html" method="post">
+                  <p class="error">Please, enter valid data in all inputs</p>
                   <label for="ounces-input">Ounces</label>
                   <p class='input-hint'>(Example: 64)</p>
                   <input id="ounces-input"
@@ -40,17 +41,18 @@
                     max= "100"
                     type="number"
                     required>
-                  <button type="button" name="button" data-type="hydration">Update Info</button>
+                  <button class="last" type="button" name="button" data-type="hydration">Update Info</button>
                 </form>
               </section>
             </container>
         </li>
         <li>
-          <img class="icon1" tabindex="0" src="../images/sleep-lightmode.svg" alt="add sleep info" data-type="sleep" role="button">
-          <container tabindex="0" role="form" data-type="sleep">
+          <img class="icon1" tabindex="0" src="sleep-lightmode.svg" alt="add sleep info" data-type="sleep" role="button">
+          <container class="header-block" tabindex="0" role="form" data-type="sleep">
             <section class="sleep-inputs inputs">
               <h3>Add Sleep Info</h3>
               <form class="sleep-input" action="index.html" method="post">
+                <p class="error">Please, enter valid data in all inputs</p>
                 <label for="hours-input">Hours</label>
                 <p class='input-hint'>(Example: 8)</p>
                 <input id="hours-input"
@@ -71,17 +73,18 @@
                   step='.5'
                   type="number"
                   required>
-                <button type="button" name="button" data-type="sleep">Update Info</button>
+                <button class="last" type="button" name="button" data-type="sleep">Update Info</button>
               </form>
             </section>
           </container>
         </li>
         <li>
-          <img class="icon2" tabindex="0" src="../images/activities-lightmode.svg" alt="add activity info" data-type="activities" role="button">
-          <container tabindex="0" role="form" data-type="activities">
+          <img class="icon2" tabindex="0" src="activities-lightmode.svg" alt="add activity info" data-type="activities" role="button">
+          <container class="header-block" tabindex="0" role="form" data-type="activities">
             <section class="activities-inputs inputs">
               <h3>Add Activity Info</h3>
               <form class="activity-input" action="index.html" method="post">
+                <p class="error">Please, enter valid data in all inputs</p>
                 <label for="steps-input">Steps</label>
                 <p class='input-hint'>(Example: 10000)</p>
                 <input id="steps-input"
@@ -110,93 +113,95 @@
                   max="32"
                   type="number"
                   required>
-                <button type="button" name="button" data-type="activity">Update Info</button>
+                <button class="last" type="button" name="button" data-type="activity">Update Info</button>
               </form>
             </section>
           </container>
         </li>
         <li>
-          <img class="icon" tabindex="0" src="../images/user-lightmode.svg" alt="see user info" data-type="user" role="button">
-          <container tabindex="0" role="document" data-type="user">
+          <img class="icon" tabindex="0" src="user-lightmode.svg" alt="see user info" data-type="user" role="button">
+          <container class="header-block" tabindex="0" role="document" data-type="user">
             <section class="user-inputs">
               <h3>User Info</h3>
-              <p class="user-info">Name: <span id="user-info-name"></span></p>
-              <p class="user-info">Email: <span id="user-info-email"></span></p>
-              <p class="user-info">Address: <span id="user-info-address"></span></p>
-              <p class="user-info">Step Goal: <span id="user-info-step-goal"></span></p>
+              <p class="user-info">Name: <span data-info='name'></span></p>
+              <p class="user-info">Email: <span data-info='email'></span></p>
+              <p class="user-info">Address: <span data-info='address'></span></p>
+              <p tabindex="0" class="user-info last">Step Goal: <span data-info='dailyStepGoal'></span></p>
             </section>
           </container>
         </li>
       </ul>
     </header>
-    <main role="main">
+    <main class="main" role="main">
       <section>
-        <container class="container-center" role="document" tabindex="0" alt="Amount of water you have consumed">
+        <container class="today all" role="document" tabindex="0" alt="Amount of water you have consumed">
           <h3>Water</h3>
           <p>You've consumed</p>
           <span class="number" id="user-water-by-day"></span> <p> ounces of water today</p>
         </container>
-        <container tabindex="0">
+        <container class="week all" tabindex="0">
           <h3>Weekly Water Consumption</h3>
-          <canvas tabindex="0" id="user-water-by-week" width="300" height="150">
+          <canvas tabindex="0" id="user-water-by-week">
             <span class='screen-reader-text'>This is a graph with weekly info.</span>
           </canvas>
         </container>
-        <container class="container-center" id="user-water-trend-week" tabindex="0">
+        <container class="today all" id="user-water-trend-week" tabindex="0">
           <h3>Have You Had Enough Water Today?</h3>
           <img id="water-status" alt="Amount of water you have consumed during the week"></img>
           <p id="water-comment">Keep up the good work! You've averaged more than 64 ounces per day this week</p>
         </container>
-        <container class="container-center" tabindex="0">
+        <container class="average all" tabindex="0">
           <h3>Your Water Average</h3>
           <p>You've consumed</p>
-          <span class="number" id="user-water-by-average">57</span> <p> ounces of water average</p>
+          <span class="number" id="user-water-by-average"></span> <p> ounces of water average</p>
         </container>
       </section>
       <section>
-        <container class="container-center" id="user-sleep-day" role="document" tabindex="0">
+        <container class="today all" id="user-sleep-day" role="document" tabindex="0">
           <h3>Last Night's Sleep</h3>
-          <p class="number" id="user-sleep-by-day"></p>
+          <p class="number" data-info="hoursSlept"></p>
           <h4>hours slept</h4>
-          <p class="number" id="user-sleep-quality-by-day"></p>
+          <p class="number" data-info="sleepQuality"></p>
           <h4>sleep quality</h4>
         </container>
-        <container class="container-center" id="user-rested" role="document" tabindex="0">
+        <container class="today all" id="user-rested" role="document" tabindex="0">
           <h3 >How Rested Are You Today?</h3>
           <img id="sleep-status" alt="Image determining if you have slept enough"></img>
           <p id="sleep-comment">Getting 8 hours of sleep will make you more productive!</p>
         </container>
-        <container id="user-sleep-week" tabindex="0">
+        <container class="week all" id="user-sleep-week" tabindex="0">
           <h3>Your Sleep Quality & Hours</h3>
           <canvas tabindex="0" id="user-sleep-by-week">
             <span class='screen-reader-text'>This is a graph with weekly info.</span>
           </canvas>
         </container>
-        <container class="container-center" role="document" tabindex="0">
+        <container class="average all" id="user-average-sleep" role="document" tabindex="0">
           <h3>Your Sleep Averages</h3>
-          <p class="number" id="user-average-hours-slept">
-          <h4>hours slept</h4>
-          <p class="number" id="user-average-sleep-quality"></p>
-          <h4>sleep quality</h4>
+          <p class="number" data-info="hoursSlept">
           </p>
+          <h4>hours slept</h4>
+          <p class="number" data-info="sleepQuality"></p>
+          <h4>sleep quality</h4>
         </container>
       </section>
       <section>
-        <container class="container-center" id="user-activity-day" role="document" tabindex="0">
+        <container class="today all" id="user-activity-day" role="document" tabindex="0">
           <h3>Today's Activity</h3>
-          <p class="number" id="user-current-step-count"></p>
+          <p class="number" data-info="numSteps"></p>
           <h4>steps</h4>
-          <p class="number" id="user-current-mins-active"></p>
+          <p class="number" data-info="minutesActive"></p>
           <h4>active minutes</h4>
-          <p class="number" id="user-current-miles-walked"></p>
+          <p class="number" data-info="miles"></p>
           <h4>miles</h4>
+          <p class="number" data-info="flightsOfStairs"></p>
+          <h4>flights</h4>
         </container>
-        <container id="building-challenge" role="document" tabindex="0">
+        <container class="today all" id="building-challenge" role="document" tabindex="0">
           <h3>Republic Plaza Challenge</h3>
-          <img src="../images/building.svg" alt="svg image of the Republic Plaza building">
+          <img src="building.svg" alt="svg image of the Republic Plaza building">
           <p>In the last year you have climbed the Republic Plaza Building in Denver, CO <span id="republic-plaza-challenge"></span> times!</p>
         </container>
-        <container class="triple-block" tabindex="0">
+        <container class="triple-block week all" tabindex="0">
           <section data-type="numSteps" data-values="steps">
             <h3>Your Step Count This Week</h3>
             <canvas tabindex="0" id="user-step-count-by-week">
@@ -234,14 +239,14 @@
       <container class="you-vs-world" role="document" tabindex="0">
         <h3>You vs The World</h3>
         <h4>Step Count</h4>
-        <p>You: <span id="user-current-step-count-vs-average"></span></p>
-        <p>World Avg: <span id="all-users-average-step-count"></span></p>
+        <p>You: <span data-info="user-numSteps"></span></p>
+        <p>World Avg: <span  data-info="all-numSteps"></span></p>
         <h4>Daily Active Minutes</h4>
-        <p>You: <span id="user-current-active-mins"></span></p>
-        <p>World Avg: <span id="all-users-average-active-mins"></span></p>
+        <p>You: <span data-info="user-minutesActive"></span></p>
+        <p>World Avg: <span data-info="all-minutesActive"></span></p>
         <h4>Stairs Climbed</h4>
-        <p>You: <span id="user-current-stairs-climbed"></span></p>
-        <p>World Avg: <span id="all-users-average-stairs-climbed"></span></p>
+        <p>You: <span data-info="user-flightsOfStairs"></span></p>
+        <p>World Avg: <span data-info="all-flightsOfStairs"></span></p>
       </container>
       <container class="container-center" id="user-rested" tabindex="0">
         <h3>Step Trend</h3>
