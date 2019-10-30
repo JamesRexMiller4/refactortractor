@@ -45116,14 +45116,14 @@ module.exports = "./dark.svg";
 
 /***/ }),
 
-/***/ "./src/images/ghost (1).svg":
+/***/ "ghost (1).svg":
 /*!**********************************!*\
-  !*** ./src/images/ghost (1).svg ***!
+  !*** ghost (1).svg ***!
   \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "./ghost (1).svg";
+module.exports = "ghost (1).svg";
 
 /***/ }),
 
@@ -45134,7 +45134,7 @@ module.exports = "./ghost (1).svg";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "./ghost-happy.svg";
+module.exports = "ghost-happy.svg";
 
 /***/ }),
 
@@ -45145,7 +45145,7 @@ module.exports = "./ghost-happy.svg";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "./ghost-sad.svg";
+module.exports = "ghost-sad.svg";
 
 /***/ }),
 
@@ -45156,7 +45156,7 @@ module.exports = "./ghost-sad.svg";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "./glass-empty.svg";
+module.exports = "glass-empty.svg";
 
 /***/ }),
 
@@ -45167,7 +45167,7 @@ module.exports = "./glass-empty.svg";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "./glass-full.svg";
+module.exports = "glass-full.svg";
 
 /***/ }),
 
